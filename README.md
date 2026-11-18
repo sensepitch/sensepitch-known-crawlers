@@ -144,6 +144,7 @@ describing them. For the full release:
       "info_url": "https://docs.stripe.com/ips",
       "download_url": "https://stripe.com/files/ips/ips_webhooks.txt",
       "fetched_at": "2026-11-18T04:02:20Z",
+      "originalCreationTime": null,
       "ipv4_prefixes": 15,
       "ipv6_prefixes": 0
     }
@@ -152,7 +153,10 @@ describing them. For the full release:
 ```
 
 `types` and `tier` come from the registry, and `fetched_at` is the download
-time of the released version from its provenance. `types` at the top level
+time of the released version from its provenance. `originalCreationTime`
+is the publisher's own `creationTime` from the downloaded JSON, copied
+unchanged, or `null` when the publisher does not provide one, such as for text
+and HTML feeds. `types` at the top level
 maps every type used in the release to its description from
 `registry/types.yaml`, and `tiers` describes the tiers the release covers. A
 release names itself after its zip, e.g. `sensepitch-verified-ips-tier1`, in `name`.

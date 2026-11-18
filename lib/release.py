@@ -15,6 +15,7 @@ from registry import TYPES_FILE, entry_paths, load_entry, load_types
 
 SCHEMA = 1
 NAME = "sensepitch-verified-ips"
+PUBLISHER_JSON_FORMATS = {"json", "json-sanitised"}
 TIERS = {
     "1": "Default public website allow tier for mainstream web search, AI search, "
          "and public user-facing fetches.",
@@ -36,6 +37,9 @@ def describe(name, entry):
     if not sum(counts.values()):
         raise ValueError(f"{path}: empty list")
     fetched_at = json.loads(Path(f"provenance/{name}.json").read_text())["fetched_at"]
+    original_update = None
+    if entry["format"] in PUBLISHER_JSON_FORMATS:
+        original_update = json.loads(Path(f"raw-data/{name}").read_bytes()).get("creationTime")
     vendor, specialisation = name.split("/")
     return data, {
         "id": name,
@@ -47,6 +51,7 @@ def describe(name, entry):
         "info_url": entry["info_url"],
         "download_url": entry["download_url"],
         "fetched_at": fetched_at,
+        "originalCreationTime": original_update,
         "ipv4_prefixes": counts[4],
         "ipv6_prefixes": counts[6],
     }

@@ -604,7 +604,7 @@ t_release() {
   echo '# a release builds a zip per tier and a full zip, each with its lists and an index'
   setup_case
   registry 'text one/good https://example.test/good' 'text two/fail https://example.test/fail' \
-    'text three/hook https://example.test/hook'
+    'json three/hook https://example.test/crlf'
   sed -i 's/search-engine-crawler/webhook/; s/tier: 1/tier: 3/' registry/three/hook.yaml
   run_update
   bash release.sh 2024.01.02 > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
@@ -622,13 +622,14 @@ t_release() {
     and .lists == [{id:"one/good", path:"lists/one/good.json", vendor:"one", specialisation:"good",
       types:["search-engine-crawler"], tier:1, info_url:"https://example.test/info",
       download_url:"https://example.test/good", fetched_at:$meta[0].fetched_at,
-      ipv4_prefixes:1, ipv6_prefixes:0}]' >/dev/null || fail 'incorrect tier 1 index'
+      originalCreationTime:null, ipv4_prefixes:1, ipv6_prefixes:0}]' >/dev/null || fail 'incorrect tier 1 index'
   unzip -p dist/sensepitch-verified-ips-tier2-2024.01.02.zip index.json | jq -e '
     .name == "sensepitch-verified-ips-tier2" and (.tiers | keys) == ["2"] and .types == {} and .lists == []' \
     >/dev/null || fail 'incorrect tier 2 index'
   unzip -p dist/sensepitch-verified-ips-all-tiers-2024.01.02.zip index.json | jq -e '
     .name == "sensepitch-verified-ips-all-tiers" and (.tiers | keys) == ["1", "2", "3"]
-    and (.types | keys) == ["search-engine-crawler", "webhook"] and ([.lists[].id] == ["one/good", "three/hook"])' \
+    and (.types | keys) == ["search-engine-crawler", "webhook"] and ([.lists[].id] == ["one/good", "three/hook"])
+    and .lists[1].originalCreationTime == "2024-01-01"' \
     >/dev/null || fail 'incorrect full index'
   rm dist/sensepitch-verified-ips-tier1-2024.01.02.zip dist/sensepitch-verified-ips-tier2-2024.01.02.zip
   if bash release.sh 2024.01.02 2>/dev/null; then fail 'existing release overwritten'; fi
