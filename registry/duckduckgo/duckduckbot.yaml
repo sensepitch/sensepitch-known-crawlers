@@ -1,0 +1,6 @@
+download_url: https://duckduckgo.com/duckduckbot.json
+info_url: https://duckduckgo.com/duckduckgo-help-pages/results/duckduckbot
+format: json
+types:
+  - search-engine-crawler
+tier: 1

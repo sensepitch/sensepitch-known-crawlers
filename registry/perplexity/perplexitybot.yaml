@@ -1,0 +1,6 @@
+download_url: https://www.perplexity.ai/perplexitybot.json
+info_url: https://docs.perplexity.ai/docs/resources/perplexity-crawlers
+format: json
+types:
+  - ai-search-crawler
+tier: 1

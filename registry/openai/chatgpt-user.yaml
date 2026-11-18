@@ -1,0 +1,6 @@
+download_url: https://openai.com/chatgpt-user.json
+info_url: https://developers.openai.com/api/docs/bots
+format: json
+types:
+  - user-triggered-fetcher
+tier: 1

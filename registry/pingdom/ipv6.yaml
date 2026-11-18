@@ -1,0 +1,6 @@
+download_url: https://my.pingdom.com/probes/ipv6
+info_url: https://documentation.solarwinds.com/en/success_center/pingdom/content/topics/pingdom-probe-servers-ip-addresses.htm
+format: text
+types:
+  - monitor
+tier: 3

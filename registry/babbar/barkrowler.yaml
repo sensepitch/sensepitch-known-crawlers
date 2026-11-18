@@ -1,0 +1,6 @@
+download_url: https://www.babbar.tech/barkrowler-ip-ranges.json
+info_url: https://www.babbar.tech/crawler
+format: json
+types:
+  - seo-tool
+tier: 2

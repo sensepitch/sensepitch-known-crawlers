@@ -1,0 +1,9 @@
+download_url: https://developers.google.com/static/crawling/ipranges/special-crawlers.json
+info_url: https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests
+format: json
+types:
+  - mixed-pool
+  - ads-crawler
+  - security-crawler
+  - webhook
+tier: 2

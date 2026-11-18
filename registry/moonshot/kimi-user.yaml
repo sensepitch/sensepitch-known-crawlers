@@ -1,0 +1,6 @@
+download_url: https://www.kimi.ai/policies/kimi-user.json
+info_url: https://www.kimi.ai/policies/kimi-crawlers
+format: json
+types:
+  - user-triggered-fetcher
+tier: 1

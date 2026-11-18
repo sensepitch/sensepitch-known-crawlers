@@ -1,0 +1,6 @@
+download_url: https://openai.com/adsbot.json
+info_url: https://developers.openai.com/api/docs/bots
+format: json
+types:
+  - ads-crawler
+tier: 2

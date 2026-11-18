@@ -1,0 +1,6 @@
+download_url: https://www.cloudflare.com/ips-v4
+info_url: https://www.cloudflare.com/ips/
+format: text
+types:
+  - cdn
+tier: 3

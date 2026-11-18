@@ -1,0 +1,6 @@
+download_url: https://about.marginalia-search.com/article/crawler/
+info_url: https://about.marginalia-search.com/article/crawler/
+format: marginalia-html
+types:
+  - search-engine-crawler
+tier: 2

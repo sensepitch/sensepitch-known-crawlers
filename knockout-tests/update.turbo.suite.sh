@@ -19,7 +19,7 @@ setup_case() {
   trap 'rm -rf "$CASE_DIR"' EXIT
   mkdir -p "$CASE_DIR/repo/lib" "$CASE_DIR/bin"
   cp "$ROOT/update.sh" "$CASE_DIR/repo/"
-  cp "$ROOT/lib/iplist.py" "$CASE_DIR/repo/lib/"
+  cp "$ROOT/lib/iplist.py" "$ROOT/lib/registry.py" "$CASE_DIR/repo/lib/"
   cat > "$CASE_DIR/bin/curl" <<'SH'
 #!/usr/bin/env bash
 [[ ${1:-} == -q && ${2:-} == --noproxy && ${3:-} == '*' ]] || exit 90
@@ -50,7 +50,15 @@ SH
 
 run_update() { bash update.sh > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"; }
 expect_failure() { if run_update; then fail 'update unexpectedly succeeded'; fi; }
-registry() { printf '%s\n' "$@" > sources.tsv; }
+registry() {
+  local directory=${REGISTRY_DIR:-registry} source format name url info_url
+  for source in "$@"; do
+    read -r format name url info_url <<< "$source"
+    mkdir -p "$directory/${name%/*}"
+    printf 'format: %s\ndownload_url: %s\ninfo_url: %s\ntypes: [search-engine-crawler]\ntier: 1\n' \
+      "$format" "$url" "${info_url:-https://example.test/info}" > "$directory/$name.yaml"
+  done
+}
 validate() { python3 lib/iplist.py "$@" > "$CASE_DIR/validation-out" 2> "$CASE_DIR/validation-err"; }
 expect_invalid() { if validate "$@"; then fail 'invalid list unexpectedly accepted'; fi; }
 
@@ -64,7 +72,7 @@ t_source_is_inert() {
     source "$2/update.sh"
     [[ $PWD == "$original" && $(set +o) == "$before" && $(trap -p EXIT) == "$old_trap" ]]
     declare -F update_main >/dev/null
-    [[ ! -e other && ! -e json && ! -e "$CALLS" ]]
+    [[ ! -e other && ! -e lists && ! -e "$CALLS" ]]
   ' _ "$CASE_DIR" "$CASE_DIR/repo" || fail 'sourcing changed the caller or performed work'
   assert_file "$CASE_DIR/trap-fired"
 }
@@ -77,7 +85,7 @@ t_sourced_entry_point() {
   source "$CASE_DIR/repo/update.sh"
   update_main > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
   assert_eq "$CASE_DIR" "$PWD"
-  assert_file "$CASE_DIR/repo/other/json/one/good.json"
+  assert_file "$CASE_DIR/repo/lists/one/good.json"
 }
 
 t_text_download() {
@@ -88,7 +96,7 @@ t_text_download() {
   assert_eq 'https://example.test/good' "$(cat "$CALLS")"
   assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   assert_eq '192.0.2.0/24' "$(cat other/raw/one/good)"
-  jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/24"' other/json/one/good.json >/dev/null || fail 'incorrect converted list'
+  jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/24"' lists/one/good.json >/dev/null || fail 'incorrect converted list'
 }
 
 t_json_download() {
@@ -96,8 +104,7 @@ t_json_download() {
   setup_case
   registry 'json one/good https://example.test/json'
   run_update
-  cmp other/raw/one/good json/one/good.json || fail 'JSON download changed'
-  assert_missing other/json/one/good.json
+  cmp other/raw/one/good lists/one/good.json || fail 'JSON download changed'
 }
 
 t_unchanged_downloads() {
@@ -105,7 +112,7 @@ t_unchanged_downloads() {
   setup_case
   registry 'text one/text https://example.test/good' 'json one/json https://example.test/json'
   run_update
-  touch -t 200001010000 other/raw/one/text other/json/one/text.json other/raw/one/json json/one/json.json
+  touch -t 200001010000 other/raw/one/text lists/one/text.json other/raw/one/json lists/one/json.json
   touch "$CASE_DIR/marker"
   for name in text json; do
     jq '.fetched_at = "2000-01-01T00:00:00Z"' "other/provenance/one/$name.json" > "$CASE_DIR/meta"
@@ -114,8 +121,8 @@ t_unchanged_downloads() {
     printf '0\n' > "other/provenance/one/$name.failure"
   done
   run_update
-  assert_eq $'one/text: no change\none/json: no change' "$(cat "$CASE_DIR/stdout")"
-  for file in other/raw/one/text other/json/one/text.json other/raw/one/json json/one/json.json other/provenance/one/text.json other/provenance/one/json.json; do
+  assert_eq $'one/json: no change\none/text: no change' "$(cat "$CASE_DIR/stdout")"
+  for file in other/raw/one/text lists/one/text.json other/raw/one/json lists/one/json.json other/provenance/one/text.json other/provenance/one/json.json; do
     [[ $file -ot $CASE_DIR/marker ]] || fail "unchanged file was rewritten: $file"
   done
   for name in text json; do
@@ -145,11 +152,11 @@ t_changed_data_provenance() {
   run_update
   jq '.fetched_at = "2000-01-01T00:00:00Z"' other/provenance/one/good.json > "$CASE_DIR/meta"
   cp "$CASE_DIR/meta" other/provenance/one/good.json
-  cp other/json/one/good.json "$CASE_DIR/list"
+  cp lists/one/good.json "$CASE_DIR/list"
   export MOCK_BODY=$'192.0.2.0/25\n192.0.2.128/25'
   run_update
   assert_update_log 'one/good: updated (raw): 13 -> 28 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
-  cmp "$CASE_DIR/list" other/json/one/good.json || fail 'equivalent list changed'
+  cmp "$CASE_DIR/list" lists/one/good.json || fail 'equivalent list changed'
   jq -e '.fetched_at != "2000-01-01T00:00:00Z"' other/provenance/one/good.json >/dev/null || fail 'changed data not recorded'
 }
 
@@ -158,10 +165,10 @@ t_equivalent_converted_list() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  cp other/json/one/good.json "$CASE_DIR/previous"
+  cp lists/one/good.json "$CASE_DIR/previous"
   registry 'text one/good https://example.test/equivalent'
   run_update
-  cmp "$CASE_DIR/previous" other/json/one/good.json || fail 'equivalent list changed'
+  cmp "$CASE_DIR/previous" lists/one/good.json || fail 'equivalent list changed'
   assert_eq 2 "$(wc -l < other/raw/one/good | tr -d ' ')"
   jq -e '.source_url == "https://example.test/equivalent"' other/provenance/one/good.json >/dev/null || fail 'provenance not refreshed'
 }
@@ -171,12 +178,12 @@ t_changed_converted_list() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  cp other/json/one/good.json "$CASE_DIR/previous"
+  cp lists/one/good.json "$CASE_DIR/previous"
   registry 'text one/good https://example.test/larger'
   run_update
   assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 512 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/larger' 'https://example.test/larger/redirected'
-  if cmp -s "$CASE_DIR/previous" other/json/one/good.json; then fail 'changed list was retained'; fi
-  jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/23"' other/json/one/good.json >/dev/null || fail 'changed network missing'
+  if cmp -s "$CASE_DIR/previous" lists/one/good.json; then fail 'changed list was retained'; fi
+  jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/23"' lists/one/good.json >/dev/null || fail 'changed network missing'
 }
 
 t_coverage_log() {
@@ -210,34 +217,32 @@ t_coverage_rounding() {
   assert_eq '1 million (1,000,000) -> 1 million (1,000,001)' "$(python3 lib/iplist.py --format-coverage 1000000 1000001)"
 }
 
-t_json_migration() {
-  echo '# migration retains CRLF raw bytes and writes consolidated LF JSON'
+t_json_sanitisation() {
+  echo '# switching to sanitised JSON retains CRLF raw bytes and writes consolidated LF JSON'
   setup_case
   registry 'json one/good https://example.test/crlf'
   run_update
   cp other/raw/one/good "$CASE_DIR/original"
-  registry 'json-converted one/good https://example.test/crlf'
+  registry 'json-sanitised one/good https://example.test/crlf'
   run_update
   cmp "$CASE_DIR/original" other/raw/one/good || fail 'raw bytes changed'
-  assert_missing json/one/good.json
-  assert_file other/json/one/good.json
-  if LC_ALL=C grep -q $'\r' other/json/one/good.json; then fail 'converted JSON contains CRLF'; fi
-  jq -e '.creationTime == "2024-01-01" and .prefixes[0].ipv4Prefix == "192.0.2.0/24"' other/json/one/good.json >/dev/null || fail 'incorrect migrated list'
+  assert_file lists/one/good.json
+  if LC_ALL=C grep -q $'\r' lists/one/good.json; then fail 'converted JSON contains CRLF'; fi
+  jq -e '.creationTime == "2024-01-01" and .prefixes[0].ipv4Prefix == "192.0.2.0/24"' lists/one/good.json >/dev/null || fail 'incorrect migrated list'
   run_update
   assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
 }
 
-t_json_migration_rejection() {
-  echo '# invalid migration retains the previous list and continues other sources'
+t_json_sanitisation_rejection() {
+  echo '# rejected sanitised download retains the previous list and continues other sources'
   setup_case
   registry 'json one/good https://example.test/crlf'
   run_update
-  cp json/one/good.json "$CASE_DIR/previous"
-  registry 'json-converted one/good https://example.test/empty' 'text two/good https://example.test/good'
+  cp lists/one/good.json "$CASE_DIR/previous"
+  registry 'json-sanitised one/good https://example.test/empty' 'text two/good https://example.test/good'
   expect_failure
-  cmp "$CASE_DIR/previous" json/one/good.json || fail 'old list changed'
-  assert_missing other/json/one/good.json
-  assert_file other/json/two/good.json
+  cmp "$CASE_DIR/previous" lists/one/good.json || fail 'old list changed'
+  assert_file lists/two/good.json
 }
 
 t_direct_with_proxy_environment() {
@@ -259,17 +264,19 @@ t_unexpected_proxy() {
 }
 
 t_git_raw_crlf() {
-  echo '# Git stores raw CRLF bytes without line-ending or whitespace warnings'
+  echo '# Git preserves CRLF bytes in raw downloads and published JSON'
   setup_case
   cp "$ROOT/.gitattributes" .
-  mkdir -p other/raw/one
-  printf '192.0.2.0/24\r\n' > other/raw/one/good
+  registry 'json one/good https://example.test/crlf'
+  run_update
   git init -q
   git config core.autocrlf input
-  git add .gitattributes other/raw/one/good 2> "$CASE_DIR/git-stderr"
-  [[ ! -s $CASE_DIR/git-stderr ]] || fail 'Git warned while adding raw bytes'
+  git add .gitattributes other/raw/one/good lists/one/good.json 2> "$CASE_DIR/git-stderr"
+  [[ ! -s $CASE_DIR/git-stderr ]] || fail 'Git warned while adding publisher bytes'
   git show :other/raw/one/good > "$CASE_DIR/staged"
   cmp other/raw/one/good "$CASE_DIR/staged" || fail 'Git altered raw bytes'
+  git show :lists/one/good.json > "$CASE_DIR/staged"
+  cmp other/raw/one/good "$CASE_DIR/staged" || fail 'Git altered published bytes'
   git diff --cached --check || fail 'Git reported CRLF as trailing whitespace'
 }
 
@@ -280,14 +287,14 @@ t_invalid_previous_list() {
   run_update
   cp other/raw/one/good "$CASE_DIR/raw"
   cp other/provenance/one/good.json "$CASE_DIR/meta"
-  printf '%s\n' '{"prefixes":[]}' > other/json/one/good.json
-  cp other/json/one/good.json "$CASE_DIR/invalid"
+  printf '%s\n' '{"prefixes":[]}' > lists/one/good.json
+  cp lists/one/good.json "$CASE_DIR/invalid"
   registry 'text one/good https://example.test/equivalent' 'text two/good https://example.test/good'
   expect_failure
   cmp "$CASE_DIR/raw" other/raw/one/good || fail 'raw data changed after failure'
   cmp "$CASE_DIR/meta" other/provenance/one/good.json || fail 'provenance changed after failure'
-  cmp "$CASE_DIR/invalid" other/json/one/good.json || fail 'previous data changed after failure'
-  assert_file other/json/two/good.json
+  cmp "$CASE_DIR/invalid" lists/one/good.json || fail 'previous data changed after failure'
+  assert_file lists/two/good.json
 }
 
 t_identical_invalid_json() {
@@ -333,7 +340,7 @@ t_new_retrieval_failure() {
   assert_eq 2 "$(wc -l < "$CALLS" | tr -d ' ')"
   assert_file other/provenance/one/fail.failure
   [[ $(cat other/provenance/one/fail.failure) =~ ^[0-9]+$ ]] || fail 'invalid failure time'
-  assert_file other/json/two/good.json
+  assert_file lists/two/good.json
 }
 
 t_persistent_failure() {
@@ -344,7 +351,7 @@ t_persistent_failure() {
   registry 'text one/fail https://example.test/fail' 'text two/good https://example.test/good'
   expect_failure
   assert_eq 0 "$(cat other/provenance/one/fail.failure)"
-  assert_file other/json/two/good.json
+  assert_file lists/two/good.json
 }
 
 t_recovery() {
@@ -373,8 +380,8 @@ t_configuration_overrides() {
   setup_case
   mkdir -p custom-state
   printf '0\n' > custom-state/one_fail.failure
-  printf '%s\n' 'text one/fail https://example.test/fail' > custom-sources
-  export SOURCES_FILE=custom-sources STATE_DIR=custom-state
+  export REGISTRY_DIR=custom-sources STATE_DIR=custom-state
+  registry 'text one/fail https://example.test/fail'
   expect_failure
   assert_eq 0 "$(cat other/provenance/one/fail.failure)"
   assert_missing custom-state/one_fail.failure
@@ -389,10 +396,19 @@ t_missing_registry() {
 t_invalid_source() {
   echo '# invalid registry entries fail the run without preventing later downloads'
   setup_case
-  registry 'unknown one/bad https://example.test/good' 'text two/good https://example.test/good'
+  registry 'unknown one/bad https://example.test/unknown' 'text two/good https://example.test/good'
+  printf 'types: [\n' > registry/one/malformed.yaml
+  registry 'text one/duplicate https://example.test/duplicate'
+  printf 'tier: 3\n' >> registry/one/duplicate.yaml
+  registry 'text one/wrong-tier https://example.test/wrong-tier'
+  sed -i 's/tier: 1/tier: true/' registry/one/wrong-tier.yaml
+  sed -i 's/tier: 1/tier: 3/' registry/two/good.yaml
   expect_failure
-  assert_eq 1 "$(wc -l < "$CALLS" | tr -d ' ')"
-  assert_file other/json/two/good.json
+  assert_eq 'https://example.test/good' "$(cat "$CALLS")"
+  for name in bad malformed duplicate wrong-tier; do
+    grep -Fq "registry/one/$name.yaml:" "$CASE_DIR/stderr" || fail "missing diagnostic for $name"
+  done
+  assert_file lists/two/good.json
 }
 
 t_validation_preserves_data() {
@@ -401,16 +417,16 @@ t_validation_preserves_data() {
   registry 'text one/good https://example.test/good'
   run_update
   cp other/raw/one/good "$CASE_DIR/raw"
-  cp other/json/one/good.json "$CASE_DIR/list"
+  cp lists/one/good.json "$CASE_DIR/list"
   cp other/provenance/one/good.json "$CASE_DIR/meta"
   printf '0\n' > other/provenance/one/good.failure
   registry 'text one/good https://example.test/empty' 'text two/good https://example.test/good'
   expect_failure
   cmp "$CASE_DIR/raw" other/raw/one/good || fail 'raw data changed'
-  cmp "$CASE_DIR/list" other/json/one/good.json || fail 'valid list changed'
+  cmp "$CASE_DIR/list" lists/one/good.json || fail 'valid list changed'
   cmp "$CASE_DIR/meta" other/provenance/one/good.json || fail 'provenance changed'
   assert_eq 0 "$(cat other/provenance/one/good.failure)"
-  assert_file other/json/two/good.json
+  assert_file lists/two/good.json
 }
 
 t_unique_coverage() {

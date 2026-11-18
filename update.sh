@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-valid_source() {
-  local format=$1 name=$2 url=$3
-  [[ $name =~ ^[a-z0-9-]+/[a-z0-9-]+$ && $format =~ ^(text|json|json-converted|json-array|fastly|ahrefs|amazon-html|marginalia-html|semrush-html|you-html|sail)$ && $url == https://* ]]
-}
-
 record_download_failure() {
   local name=$1 failure=$2 now=$3 first
   [[ -f $failure ]] || printf '%s\n' "$now" > "$failure"
@@ -25,16 +20,9 @@ copy_if_changed() {
 
 update_source() {
   local format=$1 name=$2 url=$3 tmp=$4 legacy_state=$5
-  local raw meta dest previous legacy_dest failure legacy_failure now raw_changed=0 list_changed=0 coverage old_ips new_ips old_size=0 new_size provenance changes
-  if ! valid_source "$format" "$name" "$url"; then
-    echo "Invalid source: $name" >&2
-    return 1
-  fi
+  local raw meta dest failure legacy_failure now raw_changed=0 list_changed=0 coverage old_ips new_ips old_size=0 new_size provenance changes
   raw="other/raw/$name"; meta="other/provenance/$name.json"
-  if [[ $format == json ]]; then dest="json/$name.json"; else dest="other/json/$name.json"; fi
-  previous=$dest
-  legacy_dest="json/$name.json"
-  if [[ $format == json-converted && ! -f $dest && -f $legacy_dest ]]; then previous=$legacy_dest; fi
+  dest="lists/$name.json"
   failure="other/provenance/$name.failure"
   legacy_failure="$legacy_state/${name//\//_}.failure"
   mkdir -p "$(dirname "$raw")" "$(dirname "$meta")" "$(dirname "$dest")" || return 1
@@ -50,7 +38,7 @@ update_source() {
     echo "Invalid connection metadata: $name" >&2
     return 1
   fi
-  if ! coverage=$(python3 lib/iplist.py "$format" "$tmp/body" "$tmp/result" "$previous"); then
+  if ! coverage=$(python3 lib/iplist.py "$format" "$tmp/body" "$tmp/result" "$dest"); then
     echo "Validation failed: $name" >&2
     return 1
   fi
@@ -64,7 +52,6 @@ update_source() {
   fi
   copy_if_changed "$tmp/body" "$raw" && copy_if_changed "$tmp/result" "$dest" || return 1
   if (( raw_changed || list_changed )); then cp "$tmp/meta" "$meta" || return 1; fi
-  if [[ $format == json-converted ]]; then rm -f "$legacy_dest" || return 1; fi
   rm -f "$failure" "$legacy_failure" || return 1
   if (( raw_changed || list_changed )); then
     if (( raw_changed && list_changed )); then changes='raw and list'; elif (( raw_changed )); then changes=raw; else changes=list; fi
@@ -78,20 +65,14 @@ update_source() {
 update_main() (
   set -uo pipefail
   cd "$(dirname "${BASH_SOURCE[0]}")" || return 1
-  local registry=${SOURCES_FILE:-sources.tsv} legacy_state=${STATE_DIR:-.state}
-  local tmp status=0 format name url publisher_page extra
-  mkdir -p other/raw other/provenance json other/json || return 1
+  local registry=${REGISTRY_DIR:-registry} legacy_state=${STATE_DIR:-.state}
+  local tmp status=0 format name url
   tmp=$(mktemp -d) || return 1
   trap 'rm -rf "$tmp"' EXIT
-  while read -r format name url publisher_page extra; do
-    [[ -z $format || $format == \#* ]] && continue
-    if [[ -n $extra || ( -n $publisher_page && $publisher_page != https://* ) ]]; then
-      echo "Invalid publisher page: $name" >&2
-      status=1
-      continue
-    fi
+  python3 lib/registry.py "$registry" > "$tmp/sources" || status=1
+  while IFS=$'\t' read -r format name url; do
     update_source "$format" "$name" "$url" "$tmp" "$legacy_state" || status=1
-  done < "$registry" || return 1
+  done < "$tmp/sources" || return 1
   return "$status"
 )
 

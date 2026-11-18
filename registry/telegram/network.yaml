@@ -1,0 +1,7 @@
+download_url: https://core.telegram.org/resources/cidr.txt
+info_url: https://core.telegram.org/bots/webhooks
+format: text
+types:
+  - mixed-pool
+  - webhook
+tier: 3

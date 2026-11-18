@@ -1,0 +1,6 @@
+download_url: https://docs.parallel.ai/resources/shapbot.json
+info_url: https://parallel.ai/parallel-web-systems-bots
+format: json
+types:
+  - ai-search-crawler
+tier: 1

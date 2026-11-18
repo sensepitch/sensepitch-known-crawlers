@@ -1,0 +1,6 @@
+download_url: https://stripe.com/files/ips/ips_webhooks.txt
+info_url: https://docs.stripe.com/ips
+format: text
+types:
+  - webhook
+tier: 3

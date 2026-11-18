@@ -1,0 +1,6 @@
+download_url: https://mistral.ai/mistralai-index-ips.json
+info_url: https://docs.mistral.ai/robots
+format: json
+types:
+  - ai-search-crawler
+tier: 1

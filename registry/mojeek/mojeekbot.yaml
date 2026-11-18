@@ -1,0 +1,6 @@
+download_url: https://www.mojeek.com/mojeekbot.json
+info_url: https://www.mojeek.com/bot.html
+format: json
+types:
+  - search-engine-crawler
+tier: 2

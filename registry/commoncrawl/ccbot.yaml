@@ -1,0 +1,6 @@
+download_url: https://index.commoncrawl.org/ccbot.json
+info_url: https://www.commoncrawl.org/faq
+format: json
+types:
+  - dataset-crawler
+tier: 3

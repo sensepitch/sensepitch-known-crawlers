@@ -1,0 +1,8 @@
+download_url: https://developers.google.com/static/crawling/ipranges/common-crawlers.json
+info_url: https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests
+format: json
+types:
+  - search-engine-crawler
+  - mixed-pool
+  - seo-tool
+tier: 1

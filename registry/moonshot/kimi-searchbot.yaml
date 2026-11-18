@@ -1,0 +1,6 @@
+download_url: https://www.kimi.ai/policies/kimi-searchbot.json
+info_url: https://www.kimi.ai/policies/kimi-crawlers
+format: json
+types:
+  - ai-search-crawler
+tier: 1

@@ -1,0 +1,6 @@
+download_url: https://betteruptime.com/ips.txt
+info_url: https://betterstack.com/docs/uptime/start/#what-ip-addresses-does-better-stack-use-for-monitoring
+format: text
+types:
+  - monitor
+tier: 3

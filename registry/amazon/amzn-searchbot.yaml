@@ -1,0 +1,6 @@
+download_url: https://developer.amazon.com/amazonbot/searchbot-ip-addresses/
+info_url: https://developer.amazon.com/docs/amazonbot/amazonbot.html
+format: amazon-html
+types:
+  - ai-search-crawler
+tier: 1

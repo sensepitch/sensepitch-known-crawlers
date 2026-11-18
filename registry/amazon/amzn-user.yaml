@@ -1,0 +1,6 @@
+download_url: https://developer.amazon.com/amazonbot/live-ip-addresses/
+info_url: https://developer.amazon.com/docs/amazonbot/amazonbot.html
+format: amazon-html
+types:
+  - user-triggered-fetcher
+tier: 1

@@ -1,0 +1,9 @@
+download_url: https://cdn.discordapp.com/ipranges/discord.json
+info_url: https://support.discord.com/hc/en-us/articles/42500550752919-About-Discord-Link-Previews-and-the-Discordbot
+format: json
+types:
+  - mixed-pool
+  - preview
+  - api
+  - media-proxy
+tier: 3

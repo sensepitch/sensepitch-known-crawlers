@@ -1,0 +1,6 @@
+download_url: https://ip-ranges.mollie.com/ips.txt
+info_url: https://help.mollie.com/hc/en-us/articles/213470829-Which-IP-addresses-does-Mollie-use
+format: text
+types:
+  - webhook
+tier: 3

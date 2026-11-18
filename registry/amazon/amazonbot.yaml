@@ -1,0 +1,6 @@
+download_url: https://developer.amazon.com/amazonbot/ip-addresses/
+info_url: https://developer.amazon.com/docs/amazonbot/amazonbot.html
+format: amazon-html
+types:
+  - ai-training-crawler
+tier: 3

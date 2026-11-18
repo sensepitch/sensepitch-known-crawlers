@@ -1,0 +1,6 @@
+download_url: https://api.bunny.net/system/edgeserverlist/ipv6/plain
+info_url: https://bunny.net/blog/ipv6-returns-to-bunnycdn/
+format: text
+types:
+  - cdn
+tier: 3

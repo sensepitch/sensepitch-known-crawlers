@@ -1,0 +1,6 @@
+download_url: https://rssapi.net/ips.txt
+info_url: https://rssapi.net/faq
+format: text
+types:
+  - feed-fetcher
+tier: 3

@@ -1,0 +1,9 @@
+download_url: https://claude.com/crawling/bots.json
+info_url: https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+format: json
+types:
+  - mixed-pool
+  - ai-search-crawler
+  - ai-training-crawler
+  - user-triggered-fetcher
+tier: 1

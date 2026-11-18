@@ -1,0 +1,6 @@
+download_url: https://uptimerobot.com/inc/files/ips/IPv4andIPv6.txt
+info_url: https://uptimerobot.com/help/locations/
+format: text
+types:
+  - monitor
+tier: 3

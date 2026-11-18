@@ -55,7 +55,7 @@ def read_sail(data):
 
 def read(data, kind):
     data = data.decode('utf-8')
-    if kind in ('json', 'json-converted'):
+    if kind in ('json', 'json-sanitised'):
         obj = json.loads(data)
         entries = [p[k] for p in obj['prefixes'] for k in ('ipv4Prefix', 'ipv6Prefix') if k in p]
         if len(entries) != len(obj['prefixes']):
@@ -142,7 +142,7 @@ try:
                 raise ValueError(f'IPv{version} coverage dropped by 50% or more')
     if kind == 'json':
         pathlib.Path(output).write_bytes(source_data)
-    elif kind == 'json-converted':
+    elif kind == 'json-sanitised':
         source_obj = json.loads(source_data)
         if previous_data is not None and current == old:
             creation_time = json.loads(previous_data).get('creationTime')

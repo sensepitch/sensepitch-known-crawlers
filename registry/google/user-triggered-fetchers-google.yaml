@@ -1,0 +1,10 @@
+download_url: https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json
+info_url: https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests
+format: json
+types:
+  - user-triggered-fetcher
+  - mixed-pool
+  - preview
+  - feed-fetcher
+  - site-verification
+tier: 1

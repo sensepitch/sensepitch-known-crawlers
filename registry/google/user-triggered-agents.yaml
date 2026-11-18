@@ -1,0 +1,6 @@
+download_url: https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json
+info_url: https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests
+format: json
+types:
+  - user-triggered-fetcher
+tier: 1

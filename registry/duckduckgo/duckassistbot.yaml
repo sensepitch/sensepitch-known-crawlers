@@ -1,0 +1,6 @@
+download_url: https://duckduckgo.com/duckassistbot.json
+info_url: https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot
+format: json
+types:
+  - ai-search-crawler
+tier: 1

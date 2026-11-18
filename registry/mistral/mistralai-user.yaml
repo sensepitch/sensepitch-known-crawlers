@@ -1,0 +1,6 @@
+download_url: https://mistral.ai/mistralai-user-ips.json
+info_url: https://docs.mistral.ai/robots
+format: json
+types:
+  - user-triggered-fetcher
+tier: 1

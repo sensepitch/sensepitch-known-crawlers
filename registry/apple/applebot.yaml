@@ -1,0 +1,6 @@
+download_url: https://search.developer.apple.com/applebot.json
+info_url: https://support.apple.com/en-us/119829
+format: json
+types:
+  - search-engine-crawler
+tier: 1

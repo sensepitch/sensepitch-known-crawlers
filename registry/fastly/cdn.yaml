@@ -1,0 +1,6 @@
+download_url: https://api.fastly.com/public-ip-list
+info_url: https://www.fastly.com/documentation/reference/api/utils/public-ip-list/
+format: fastly
+types:
+  - cdn
+tier: 3

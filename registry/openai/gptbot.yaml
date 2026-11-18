@@ -1,0 +1,6 @@
+download_url: https://openai.com/gptbot.json
+info_url: https://developers.openai.com/api/docs/bots
+format: json
+types:
+  - ai-training-crawler
+tier: 3

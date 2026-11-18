@@ -1,0 +1,8 @@
+download_url: https://api.ahrefs.com/v3/public/crawler-ips
+info_url: https://ahrefs.com/robot/
+format: ahrefs
+types:
+  - search-engine-crawler
+  - seo-tool
+  - mixed-pool
+tier: 2

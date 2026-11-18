@@ -1,0 +1,6 @@
+download_url: https://www.kimi.ai/policies/kimibot.json
+info_url: https://www.kimi.ai/policies/kimi-crawlers
+format: json
+types:
+  - ai-training-crawler
+tier: 3

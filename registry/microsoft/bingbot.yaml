@@ -1,0 +1,6 @@
+download_url: https://www.bing.com/toolbox/bingbot.json
+info_url: https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0
+format: json-sanitised
+types:
+  - search-engine-crawler
+tier: 1

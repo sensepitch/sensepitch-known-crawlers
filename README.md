@@ -7,18 +7,57 @@ for blanking out in web analytics.
 Inspired by: https://github.com/AnTheMaker/GoodBots
 
 Unlike GoodBots, this project is intended to fetch lists directly from their
-publishers, retain each original download, and record its provenance. Original
-downloads belong in `other/raw/`; unchanged Google-compatible lists belong in
-`json/`, and converted lists in `other/json/`. Published JSON lists use
-`<company>/<specialization>.json` names.
+publishers, retain each original download, and record its provenance.
 
-Run `bash update.sh` to refresh the sources in `sources.tsv`. Each row provides
-the format, list name, download URL and authoritative publisher page. Open the
-publisher page to check for new feeds, replacement URLs or changes in scope.
-The updater fetches the download URL. It requires Bash,
-curl with JSON write-out support, jq and Python 3.11 or later. The script can also be
-sourced from Bash; call `update_main` to run an update without changing the
-caller's directory or shell settings. Run the test suite with `knockout.sh`.
+## Repository layout
+
+- `lists/<vendor>/<specialisation>.json` holds the published Google-compatible lists.
+- `registry/<vendor>/<specialisation>.yaml` defines each source.
+- `other/raw/<vendor>/<specialisation>` holds the original publisher bytes.
+- `other/provenance/<vendor>/<specialisation>.json` holds download provenance.
+
+## Source registry
+
+For example, `registry/google/common-crawlers.yaml` contains the following entry.
+
+```yaml
+download_url: https://developers.google.com/static/crawling/ipranges/common-crawlers.json
+info_url: https://developers.google.com/crawling/docs/crawlers-fetchers/verify-google-requests
+format: json
+types:
+  - search-engine-crawler
+  - mixed-pool
+  - seo-tool
+tier: 1
+```
+
+Both URLs must use HTTPS. The updater fetches `download_url`. Use `info_url`
+to verify a feed's scope and check for publisher changes.
+
+- `json` publishes Google-compatible downloads verbatim.
+- `json-sanitised` consolidates Google-compatible prefixes and emits LF JSON.
+- Custom formats use the named parsers `text`, `json-array`, `fastly`, `ahrefs`,
+  `amazon-html`, `marginalia-html`, `semrush-html`, `you-html`, and `sail`.
+
+Use a nonempty list of unique kebab-case labels in `types`. For a shared feed,
+include `mixed-pool` and each documented use. The integer `tier` applies to
+the entire feed.
+
+1. Default public website allow tier for mainstream web search, AI search, and
+   public user-facing fetches. It includes Google's common crawlers and
+   Anthropic's shared crawler pool.
+2. Specialist search, SEO tools, site auditing, and advertising crawlers.
+3. Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks,
+   and broad service pools.
+
+## Updates
+
+Run `bash update.sh` to refresh every source in `registry/`. Set `REGISTRY_DIR`
+to use a different registry directory. The updater requires Bash, curl with
+JSON write-out support, jq, and Python 3.11 or later with PyYAML installed
+(`python3 -m pip install PyYAML`). The script can also be sourced from Bash.
+Call `update_main` to update without changing the caller's directory or shell
+settings. Run the test suite with `knockout.sh`.
 To run an individual case, use, for example,
 `bash knockout-tests/update.turbo.suite.sh text_download`.
 
@@ -27,9 +66,10 @@ connected peer IP and proxy use in `other/provenance/`. Updates ignore curl
 configuration and proxy settings, resolve publisher hostnames normally, and
 connect directly, including after redirects. Historical provenance can still
 record a proxy peer or unknown proxy use. Raw downloads retain the exact
-publisher bytes, including line endings; Microsoft's processed list is
-consolidated and stored with LF endings in `other/json/`. Raw downloads and derived lists
-are committed so their changes can be inspected. IP ranges describe the
+publisher bytes, including line endings. Microsoft's processed list is
+consolidated and stored with LF endings in `lists/microsoft/bingbot.json`.
+Raw downloads and published lists are committed so their changes can be
+inspected. IP ranges describe the
 published service and do not alone prove the identity of a request.
 For converted lists, `creationTime` is retained when the consolidated networks
 are unchanged. Provenance is updated when the downloaded data or published
@@ -45,13 +85,14 @@ alone do not update provenance.
 
 Updates reject malformed or empty lists, and reductions of at least 50% in
 unique IPv4 or IPv6 coverage compared with the previous valid list. Other
-sources are still attempted. Validation errors fail the run immediately;
-download failures are recorded alongside provenance as
-`other/provenance/<company>/<specialization>.failure`, containing the Unix
+sources are still attempted. Invalid registry entries and list validation
+errors cause a failing exit status in the same run. Download failures are
+recorded alongside provenance as
+`other/provenance/<vendor>/<specialisation>.failure`, containing the Unix
 timestamp of the first failure. They fail the run once they persist for 24
-hours. Commit these records to track failures; a successful update removes the
-active record, with its history retained in Git. Existing `.state/` records
-are moved to the new location on the next update.
+hours. Commit these records to track failures. A successful update removes
+the active record, with its history retained in Git. Existing `.state/` records
+are moved to `other/provenance/` on the next update.
 
 ## Regular checks
 

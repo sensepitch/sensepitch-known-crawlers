@@ -1,0 +1,6 @@
+download_url: https://imagekit.io/public-ip-list
+info_url: https://imagekit.io/docs/integration/connect-external-storage
+format: json-array
+types:
+  - origin-fetcher
+tier: 3
