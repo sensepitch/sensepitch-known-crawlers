@@ -13,6 +13,7 @@ publishers, retain each original download, and record its provenance.
 
 - `lists/<vendor>/<specialisation>.json` holds the published Google-compatible lists.
 - `registry/<vendor>/<specialisation>.yaml` defines each source.
+- `registry/types.yaml` defines the types that sources can use.
 - `raw-data/<vendor>/<specialisation>` holds the original publisher bytes.
 - `provenance/<vendor>/<specialisation>.json` holds download provenance.
 
@@ -39,8 +40,9 @@ to verify a feed's scope and check for publisher changes.
 - Custom formats use the named parsers `text`, `json-array`, `fastly`, `ahrefs`,
   `amazon-html`, `marginalia-html`, `semrush-html`, `you-html`, and `sail`.
 
-Use a nonempty list of unique kebab-case labels in `types`. For a shared feed,
-include `mixed-pool` and each documented use. The integer `tier` applies to
+Use a nonempty list of unique kebab-case labels in `types`, each defined with
+a description in `registry/types.yaml`. Add a new type there before using it.
+For a shared feed, include `mixed-pool` and each documented use. The integer `tier` applies to
 the entire feed.
 
 1. Default public website allow tier for mainstream web search, AI search, and
@@ -105,6 +107,60 @@ timestamp of the first failure. They fail the run once they persist for 24
 hours. Commit these records to track failures. A successful update removes
 the active record, with its history retained in Git. Existing `.state/` records
 are moved to `provenance/` on the next update.
+
+## Releases
+
+Run `bash release.sh [YYYY.MM.DD[.N]]` to build releases from the committed
+lists in `dist/`:
+
+- `sensepitch-verified-ips-tier1-<version>.zip`,
+  `sensepitch-verified-ips-tier2-<version>.zip` and
+  `sensepitch-verified-ips-tier3-<version>.zip` each hold the lists of one tier.
+- `sensepitch-verified-ips-all-tiers-<version>.zip` holds the lists of all three tiers.
+
+The version defaults to the current UTC date; append `.N` for further releases
+on the same day. All four zips are built on each run, even when a tier has no
+lists. If any of them already exists, none is written.
+
+Each zip contains `lists/<vendor>/<specialisation>.json` and an `index.json`
+describing them. For the full release:
+
+```json
+{
+  "schema": 1,
+  "name": "sensepitch-verified-ips-all-tiers",
+  "version": "2026.11.18",
+  "generated": "2026-11-18T06:00:00Z",
+  "tiers": { "1": "...", "2": "...", "3": "..." },
+  "types": { "search-engine-crawler": "Crawls the public web to build a search engine index.", "...": "..." },
+  "lists": [
+    {
+      "id": "stripe/webhooks",
+      "path": "lists/stripe/webhooks.json",
+      "vendor": "stripe",
+      "specialisation": "webhooks",
+      "types": ["webhook"],
+      "tier": 3,
+      "info_url": "https://docs.stripe.com/ips",
+      "download_url": "https://stripe.com/files/ips/ips_webhooks.txt",
+      "fetched_at": "2026-11-18T04:02:20Z",
+      "ipv4_prefixes": 15,
+      "ipv6_prefixes": 0
+    }
+  ]
+}
+```
+
+`types` and `tier` come from the registry, and `fetched_at` is the download
+time of the released version from its provenance. `types` at the top level
+maps every type used in the release to its description from
+`registry/types.yaml`, and `tiers` describes the tiers the release covers. A
+release names itself after its zip, e.g. `sensepitch-verified-ips-tier1`, in `name`.
+`schema` changes only for incompatible
+changes to `index.json`. Sources that have never been retrieved are skipped
+with a warning. A release still includes the last valid list for a source with
+an active retrieval failure, and warns about it. Any other missing or invalid
+list fails the build.
 
 ## Regular checks
 

@@ -18,8 +18,8 @@ setup_case() {
   CASE_DIR=$(mktemp -d)
   trap 'rm -rf "$CASE_DIR"' EXIT
   mkdir -p "$CASE_DIR/repo/lib" "$CASE_DIR/bin"
-  cp "$ROOT/update.sh" "$CASE_DIR/repo/"
-  cp "$ROOT/lib/iplist.py" "$ROOT/lib/registry.py" "$CASE_DIR/repo/lib/"
+  cp "$ROOT/update.sh" "$ROOT/release.sh" "$CASE_DIR/repo/"
+  cp "$ROOT/lib/iplist.py" "$ROOT/lib/registry.py" "$ROOT/lib/release.py" "$CASE_DIR/repo/lib/"
   export MOCK_CERT="$CASE_DIR/cert.pem"
   openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -noenc \
     -subj /CN=example.test -days 1 -keyout /dev/null -out "$MOCK_CERT" 2>/dev/null
@@ -65,6 +65,8 @@ run_update() { bash update.sh "$@" > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"; }
 expect_failure() { if run_update "$@"; then fail 'update unexpectedly succeeded'; fi; }
 registry() {
   local directory=${REGISTRY_DIR:-registry} source format name url info_url
+  mkdir -p "$directory"
+  [[ -f $directory/types.yaml ]] || printf 'search-engine-crawler: >-\n  Crawls for a\n  search engine.\nwebhook: Sends events.\n' > "$directory/types.yaml"
   for source in "$@"; do
     read -r format name url info_url <<< "$source"
     mkdir -p "$directory/${name%/*}"
@@ -596,6 +598,70 @@ prefix_sets = ["browser"]
 TOML
   validate sail input output -
   jq -e '.prefixes == [{"ipv4Prefix":"192.0.2.1/32"}]' output >/dev/null
+}
+
+t_release() {
+  echo '# a release builds a zip per tier and a full zip, each with its lists and an index'
+  setup_case
+  registry 'text one/good https://example.test/good' 'text two/fail https://example.test/fail' \
+    'text three/hook https://example.test/hook'
+  sed -i 's/search-engine-crawler/webhook/; s/tier: 1/tier: 3/' registry/three/hook.yaml
+  run_update
+  bash release.sh 2024.01.02 > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
+  assert_eq $'dist/sensepitch-verified-ips-tier1-2024.01.02.zip: 1 lists\ndist/sensepitch-verified-ips-tier2-2024.01.02.zip: 0 lists\ndist/sensepitch-verified-ips-tier3-2024.01.02.zip: 1 lists\ndist/sensepitch-verified-ips-all-tiers-2024.01.02.zip: 2 lists' "$(cat "$CASE_DIR/stdout")"
+  assert_eq 'Warning: two/fail has never been retrieved, skipped' "$(cat "$CASE_DIR/stderr")"
+  members() { python3 -c 'import sys, zipfile; print(*zipfile.ZipFile(sys.argv[1]).namelist(), sep="\n")' "dist/sensepitch-verified-ips-$1.zip"; }
+  assert_eq $'index.json\nlists/one/good.json' "$(members tier1-2024.01.02)"
+  assert_eq 'index.json' "$(members tier2-2024.01.02)"
+  assert_eq $'index.json\nlists/three/hook.json' "$(members tier3-2024.01.02)"
+  assert_eq $'index.json\nlists/one/good.json\nlists/three/hook.json' "$(members all-tiers-2024.01.02)"
+  unzip -p dist/sensepitch-verified-ips-all-tiers-2024.01.02.zip lists/one/good.json | cmp - lists/one/good.json || fail 'list changed in release'
+  unzip -p dist/sensepitch-verified-ips-tier1-2024.01.02.zip index.json | jq -e --slurpfile meta provenance/one/good.json '
+    .schema == 1 and .name == "sensepitch-verified-ips-tier1" and .version == "2024.01.02"
+    and (.tiers | keys) == ["1"] and .types == {"search-engine-crawler": "Crawls for a search engine."}
+    and .lists == [{id:"one/good", path:"lists/one/good.json", vendor:"one", specialisation:"good",
+      types:["search-engine-crawler"], tier:1, info_url:"https://example.test/info",
+      download_url:"https://example.test/good", fetched_at:$meta[0].fetched_at,
+      ipv4_prefixes:1, ipv6_prefixes:0}]' >/dev/null || fail 'incorrect tier 1 index'
+  unzip -p dist/sensepitch-verified-ips-tier2-2024.01.02.zip index.json | jq -e '
+    .name == "sensepitch-verified-ips-tier2" and (.tiers | keys) == ["2"] and .types == {} and .lists == []' \
+    >/dev/null || fail 'incorrect tier 2 index'
+  unzip -p dist/sensepitch-verified-ips-all-tiers-2024.01.02.zip index.json | jq -e '
+    .name == "sensepitch-verified-ips-all-tiers" and (.tiers | keys) == ["1", "2", "3"]
+    and (.types | keys) == ["search-engine-crawler", "webhook"] and ([.lists[].id] == ["one/good", "three/hook"])' \
+    >/dev/null || fail 'incorrect full index'
+  rm dist/sensepitch-verified-ips-tier1-2024.01.02.zip dist/sensepitch-verified-ips-tier2-2024.01.02.zip
+  if bash release.sh 2024.01.02 2>/dev/null; then fail 'existing release overwritten'; fi
+  assert_missing dist/sensepitch-verified-ips-tier1-2024.01.02.zip
+}
+
+t_undefined_type() {
+  echo '# a registry entry with a type missing from types.yaml is invalid'
+  setup_case
+  registry 'text one/bad https://example.test/bad' 'text two/good https://example.test/good'
+  sed -i 's/search-engine-crawler/made-up/' registry/one/bad.yaml
+  expect_failure
+  assert_eq 'https://example.test/good' "$(cat "$CALLS")"
+  grep -Fq 'registry/one/bad.yaml: types not defined in types.yaml: made-up' "$CASE_DIR/stderr" || fail 'missing diagnostic'
+}
+
+t_invalid_types_file() {
+  echo '# an invalid types.yaml fails the run without preventing downloads'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  printf 'Not-Kebab: text\n' > registry/types.yaml
+  expect_failure
+  grep -Fq 'registry/types.yaml: expected a mapping' "$CASE_DIR/stderr" || fail 'missing diagnostic'
+  assert_file lists/one/good.json
+  if bash release.sh 2024.01.02 > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
+}
+
+t_release_missing_list() {
+  echo '# a release fails when a registered list is missing without a failure record'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  if bash release.sh 2024.01.02 > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
+  assert_missing dist
 }
 
 testsuite_main "$@"

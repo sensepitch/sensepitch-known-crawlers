@@ -1,0 +1,51 @@
+# Types used in the `types` list of each source. A feed carries every type it
+# is documented to serve. Registry entries may use only the types defined here.
+
+search-engine-crawler: >-
+  Crawls the public web to build a search engine index.
+ai-search-crawler: >-
+  Crawls or fetches pages to index them for answers and citations in an AI
+  assistant or AI search product.
+ai-training-crawler: >-
+  Collects public web content that may be used to train generative AI models.
+dataset-crawler: >-
+  Crawls the web to build openly published datasets, such as web archives
+  and research corpora.
+seo-tool: >-
+  Crawls for an SEO or site auditing product, either to build its own link
+  index or to audit a customer's site.
+ads-crawler: >-
+  Checks landing pages and ad content for an advertising platform.
+security-crawler: >-
+  Scans pages for malware, phishing and other abuse.
+user-triggered-fetcher: >-
+  Fetches a page in direct response to a user action, such as a chat prompt
+  or an agent task. These fetchers may not follow robots.txt.
+feed-fetcher: >-
+  Retrieves RSS, Atom and other feeds for readers and aggregators.
+preview: >-
+  Fetches a page to build a link preview, snippet or thumbnail when a URL is
+  shared or viewed.
+site-verification: >-
+  Fetches verification files or tags to confirm ownership of a site.
+media-proxy: >-
+  Fetches and caches images and other media on behalf of a platform's users,
+  so the users' own addresses are not exposed.
+origin-fetcher: >-
+  Fetches content from a customer's origin server for a media or delivery
+  service.
+api: >-
+  Outbound requests from a platform's application services, such as calls to
+  endpoints its users or integrations have configured.
+webhook: >-
+  Sends event notifications from a service to an endpoint the site operator
+  has configured.
+monitor: >-
+  Uptime and performance checks from a monitoring service.
+cdn: >-
+  Edge network of a CDN or reverse proxy. Requests from these ranges are
+  forwarded on behalf of other clients, so they identify the network rather
+  than the client.
+mixed-pool: >-
+  The addresses are shared by several services or uses, and a request from
+  them may belong to any of the other types listed for the feed.

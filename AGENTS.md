@@ -1,6 +1,6 @@
 
 - Publish every IP list in Google-compatible JSON at `lists/<vendor>/<specialisation>.json`. Copy compatible publisher JSON verbatim for `json` feeds and use the configured parser for other formats.
-- Define each source in `registry/<vendor>/<specialisation>.yaml` with `download_url`, `info_url`, `format`, `types`, and `tier`. Use a list of types and tag shared feeds with `mixed-pool` plus the documented uses. Follow the README's tier definitions.
+- Define each source in `registry/<vendor>/<specialisation>.yaml` with `download_url`, `info_url`, `format`, `types`, and `tier`. Use a list of types defined in `registry/types.yaml` and tag shared feeds with `mixed-pool` plus the documented uses. Follow the README's tier definitions.
 - Keep and commit the original download bytes in `raw-data/<vendor>/<specialisation>` so changes can be tracked.
 - Fetch lists directly from their publishers, rather than importing GoodBots data.
 - Record the source URL, final URL, UTC download time, connected peer IP, proxy use, and final HTTPS peer's leaf certificate details in provenance. Identify proxy peers accurately.
