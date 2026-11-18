@@ -20,6 +20,9 @@ setup_case() {
   mkdir -p "$CASE_DIR/repo/lib" "$CASE_DIR/bin"
   cp "$ROOT/update.sh" "$CASE_DIR/repo/"
   cp "$ROOT/lib/iplist.py" "$ROOT/lib/registry.py" "$CASE_DIR/repo/lib/"
+  export MOCK_CERT="$CASE_DIR/cert.pem"
+  openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -noenc \
+    -subj /CN=example.test -days 1 -keyout /dev/null -out "$MOCK_CERT" 2>/dev/null
   cat > "$CASE_DIR/bin/curl" <<'SH'
 #!/usr/bin/env bash
 [[ ${1:-} == -q && ${2:-} == --noproxy && ${3:-} == '*' ]] || exit 90
@@ -36,20 +39,30 @@ case $url in
   */larger) printf '%s\n' '192.0.2.0/23' > "$out";;
   *) printf '%s\n' "${MOCK_BODY:-192.0.2.0/24}" > "$out";;
 esac
+final_url="$url/redirected" redirects=1 connections=2 proxy_used=0
 case $url in
-  */unknown) printf '{"url_effective":"%s/redirected","remote_ip":"192.0.2.1"}' "$url";;
-  */direct) printf '{"url_effective":"%s","remote_ip":"192.0.2.1","proxy_used":0}' "$url";;
-  */proxy) printf '{"url_effective":"%s","remote_ip":"192.0.2.1","proxy_used":1}' "$url";;
-  *) printf '{"url_effective":"%s/redirected","remote_ip":"%s","proxy_used":0}' "$url" "${MOCK_REMOTE_IP:-192.0.2.1}";;
+  */unknown) proxy_used=null;;
+  */direct) final_url=$url redirects=0 connections=1;;
+  */proxy) proxy_used=1;;
+  */plaintext) final_url="http://example.test/redirected";;
+  */reused) connections=1;;
 esac
+jq -n --arg url "$final_url" --arg peer "${MOCK_REMOTE_IP:-192.0.2.1}" \
+  --argjson proxy "$proxy_used" --argjson redirects "$redirects" --argjson connections "$connections" \
+  --rawfile pem "$MOCK_CERT" '
+  {url_effective:$url, remote_ip:$peer, num_redirects:$redirects, num_connects:$connections,
+   certs:("Subject:CN=example.test\n" + (if $redirects == 0 then "Cert:" else "" end) + $pem)}
+  + (if $proxy == null then {} else {proxy_used:$proxy} end)
+  | if $url | endswith("/missing-cert/redirected") then del(.certs) else . end
+'
 SH
   chmod +x "$CASE_DIR/bin/curl"
   export PATH="$CASE_DIR/bin:$PATH" CALLS="$CASE_DIR/calls"
   cd "$CASE_DIR/repo"
 }
 
-run_update() { bash update.sh > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"; }
-expect_failure() { if run_update; then fail 'update unexpectedly succeeded'; fi; }
+run_update() { bash update.sh "$@" > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"; }
+expect_failure() { if run_update "$@"; then fail 'update unexpectedly succeeded'; fi; }
 registry() {
   local directory=${REGISTRY_DIR:-registry} source format name url info_url
   for source in "$@"; do
@@ -72,7 +85,7 @@ t_source_is_inert() {
     source "$2/update.sh"
     [[ $PWD == "$original" && $(set +o) == "$before" && $(trap -p EXIT) == "$old_trap" ]]
     declare -F update_main >/dev/null
-    [[ ! -e other && ! -e lists && ! -e "$CALLS" ]]
+    [[ ! -e raw-data && ! -e provenance && ! -e lists && ! -e "$CALLS" ]]
   ' _ "$CASE_DIR" "$CASE_DIR/repo" || fail 'sourcing changed the caller or performed work'
   assert_file "$CASE_DIR/trap-fired"
 }
@@ -94,8 +107,8 @@ t_text_download() {
   registry $'text\tone/good\thttps://example.test/good\thttps://example.test/docs'
   run_update
   assert_eq 'https://example.test/good' "$(cat "$CALLS")"
-  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
-  assert_eq '192.0.2.0/24' "$(cat other/raw/one/good)"
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_eq '192.0.2.0/24' "$(cat raw-data/one/good)"
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/24"' lists/one/good.json >/dev/null || fail 'incorrect converted list'
 }
 
@@ -104,7 +117,7 @@ t_json_download() {
   setup_case
   registry 'json one/good https://example.test/json'
   run_update
-  cmp other/raw/one/good lists/one/good.json || fail 'JSON download changed'
+  cmp raw-data/one/good lists/one/good.json || fail 'JSON download changed'
 }
 
 t_unchanged_downloads() {
@@ -112,22 +125,22 @@ t_unchanged_downloads() {
   setup_case
   registry 'text one/text https://example.test/good' 'json one/json https://example.test/json'
   run_update
-  touch -t 200001010000 other/raw/one/text lists/one/text.json other/raw/one/json lists/one/json.json
+  touch -t 200001010000 raw-data/one/text lists/one/text.json raw-data/one/json lists/one/json.json
   touch "$CASE_DIR/marker"
   for name in text json; do
-    jq '.fetched_at = "2000-01-01T00:00:00Z"' "other/provenance/one/$name.json" > "$CASE_DIR/meta"
-    cp "$CASE_DIR/meta" "other/provenance/one/$name.json"
-    touch -t 200001010000 "other/provenance/one/$name.json"
-    printf '0\n' > "other/provenance/one/$name.failure"
+    jq '.fetched_at = "2000-01-01T00:00:00Z"' "provenance/one/$name.json" > "$CASE_DIR/meta"
+    cp "$CASE_DIR/meta" "provenance/one/$name.json"
+    touch -t 200001010000 "provenance/one/$name.json"
+    printf '0\n' > "provenance/one/$name.failure"
   done
   run_update
   assert_eq $'one/json: no change\none/text: no change' "$(cat "$CASE_DIR/stdout")"
-  for file in other/raw/one/text lists/one/text.json other/raw/one/json lists/one/json.json other/provenance/one/text.json other/provenance/one/json.json; do
+  for file in raw-data/one/text lists/one/text.json raw-data/one/json lists/one/json.json provenance/one/text.json provenance/one/json.json; do
     [[ $file -ot $CASE_DIR/marker ]] || fail "unchanged file was rewritten: $file"
   done
   for name in text json; do
-    jq -e '.fetched_at == "2000-01-01T00:00:00Z"' "other/provenance/one/$name.json" >/dev/null || fail "provenance changed: $name"
-    assert_missing "other/provenance/one/$name.failure"
+    jq -e '.fetched_at == "2000-01-01T00:00:00Z"' "provenance/one/$name.json" >/dev/null || fail "provenance changed: $name"
+    assert_missing "provenance/one/$name.failure"
   done
   assert_eq 4 "$(wc -l < "$CALLS" | tr -d ' ')"
 }
@@ -137,12 +150,12 @@ t_changed_connection_provenance() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  jq '.fetched_at = "2000-01-01T00:00:00Z"' other/provenance/one/good.json > "$CASE_DIR/meta"
-  cp "$CASE_DIR/meta" other/provenance/one/good.json
+  jq '.fetched_at = "2000-01-01T00:00:00Z"' provenance/one/good.json > "$CASE_DIR/meta"
+  cp "$CASE_DIR/meta" provenance/one/good.json
   export MOCK_REMOTE_IP=192.0.2.2
   run_update
   assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
-  cmp "$CASE_DIR/meta" other/provenance/one/good.json || fail 'provenance changed without data changes'
+  cmp "$CASE_DIR/meta" provenance/one/good.json || fail 'provenance changed without data changes'
 }
 
 t_changed_data_provenance() {
@@ -150,14 +163,14 @@ t_changed_data_provenance() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  jq '.fetched_at = "2000-01-01T00:00:00Z"' other/provenance/one/good.json > "$CASE_DIR/meta"
-  cp "$CASE_DIR/meta" other/provenance/one/good.json
+  jq '.fetched_at = "2000-01-01T00:00:00Z"' provenance/one/good.json > "$CASE_DIR/meta"
+  cp "$CASE_DIR/meta" provenance/one/good.json
   cp lists/one/good.json "$CASE_DIR/list"
   export MOCK_BODY=$'192.0.2.0/25\n192.0.2.128/25'
   run_update
-  assert_update_log 'one/good: updated (raw): 13 -> 28 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw): 13 -> 28 bytes / 256 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   cmp "$CASE_DIR/list" lists/one/good.json || fail 'equivalent list changed'
-  jq -e '.fetched_at != "2000-01-01T00:00:00Z"' other/provenance/one/good.json >/dev/null || fail 'changed data not recorded'
+  jq -e '.fetched_at != "2000-01-01T00:00:00Z"' provenance/one/good.json >/dev/null || fail 'changed data not recorded'
 }
 
 t_equivalent_converted_list() {
@@ -169,8 +182,8 @@ t_equivalent_converted_list() {
   registry 'text one/good https://example.test/equivalent'
   run_update
   cmp "$CASE_DIR/previous" lists/one/good.json || fail 'equivalent list changed'
-  assert_eq 2 "$(wc -l < other/raw/one/good | tr -d ' ')"
-  jq -e '.source_url == "https://example.test/equivalent"' other/provenance/one/good.json >/dev/null || fail 'provenance not refreshed'
+  assert_eq 2 "$(wc -l < raw-data/one/good | tr -d ' ')"
+  jq -e '.source_url == "https://example.test/equivalent"' provenance/one/good.json >/dev/null || fail 'provenance not refreshed'
 }
 
 t_changed_converted_list() {
@@ -181,7 +194,7 @@ t_changed_converted_list() {
   cp lists/one/good.json "$CASE_DIR/previous"
   registry 'text one/good https://example.test/larger'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 512 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/larger' 'https://example.test/larger/redirected'
+  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 512 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/larger' 'https://example.test/larger/redirected'
   if cmp -s "$CASE_DIR/previous" lists/one/good.json; then fail 'changed list was retained'; fi
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/23"' lists/one/good.json >/dev/null || fail 'changed network missing'
 }
@@ -192,10 +205,10 @@ t_coverage_log() {
   registry 'text one/good https://example.test/good'
   export MOCK_BODY=$'192.0.2.0/24\n192.0.2.0/25\n2001:db8::/64\n2001:db8::/65'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 0 -> 54 bytes / 0 -> 18.45 quintillion IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 54 bytes / 0 -> 18.45 quintillion IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   export MOCK_BODY=$'192.0.2.0/23\n2001:db8::/63'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 54 -> 27 bytes / 18.45 quintillion -> 36.89 quintillion IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 54 -> 27 bytes / 18.45 quintillion -> 36.89 quintillion IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
 }
 
 t_same_size_changes() {
@@ -205,10 +218,10 @@ t_same_size_changes() {
   run_update
   export MOCK_BODY='192.0.3.0/24'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   export MOCK_BODY='192.0.3.1/24'
   run_update
-  assert_update_log 'one/good: updated (raw): 13 -> 13 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw): 13 -> 13 bytes / 256 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
 }
 
 t_coverage_rounding() {
@@ -222,10 +235,10 @@ t_json_sanitisation() {
   setup_case
   registry 'json one/good https://example.test/crlf'
   run_update
-  cp other/raw/one/good "$CASE_DIR/original"
+  cp raw-data/one/good "$CASE_DIR/original"
   registry 'json-sanitised one/good https://example.test/crlf'
   run_update
-  cmp "$CASE_DIR/original" other/raw/one/good || fail 'raw bytes changed'
+  cmp "$CASE_DIR/original" raw-data/one/good || fail 'raw bytes changed'
   assert_file lists/one/good.json
   if LC_ALL=C grep -q $'\r' lists/one/good.json; then fail 'converted JSON contains CRLF'; fi
   jq -e '.creationTime == "2024-01-01" and .prefixes[0].ipv4Prefix == "192.0.2.0/24"' lists/one/good.json >/dev/null || fail 'incorrect migrated list'
@@ -251,7 +264,7 @@ t_direct_with_proxy_environment() {
   export https_proxy=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9
   registry 'text one/good https://example.test/unknown'
   run_update
-  jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'connection was not direct'
+  jq -e '.proxy_used == false' provenance/one/good.json >/dev/null || fail 'connection was not direct'
 }
 
 t_unexpected_proxy() {
@@ -259,8 +272,8 @@ t_unexpected_proxy() {
   setup_case
   registry 'text one/good https://example.test/proxy' 'text two/good https://example.test/good'
   expect_failure
-  assert_missing other/raw/one/good
-  assert_file other/raw/two/good
+  assert_missing raw-data/one/good
+  assert_file raw-data/two/good
 }
 
 t_git_raw_crlf() {
@@ -271,12 +284,12 @@ t_git_raw_crlf() {
   run_update
   git init -q
   git config core.autocrlf input
-  git add .gitattributes other/raw/one/good lists/one/good.json 2> "$CASE_DIR/git-stderr"
+  git add .gitattributes raw-data/one/good lists/one/good.json 2> "$CASE_DIR/git-stderr"
   [[ ! -s $CASE_DIR/git-stderr ]] || fail 'Git warned while adding publisher bytes'
-  git show :other/raw/one/good > "$CASE_DIR/staged"
-  cmp other/raw/one/good "$CASE_DIR/staged" || fail 'Git altered raw bytes'
+  git show :raw-data/one/good > "$CASE_DIR/staged"
+  cmp raw-data/one/good "$CASE_DIR/staged" || fail 'Git altered raw bytes'
   git show :lists/one/good.json > "$CASE_DIR/staged"
-  cmp other/raw/one/good "$CASE_DIR/staged" || fail 'Git altered published bytes'
+  cmp raw-data/one/good "$CASE_DIR/staged" || fail 'Git altered published bytes'
   git diff --cached --check || fail 'Git reported CRLF as trailing whitespace'
 }
 
@@ -285,14 +298,14 @@ t_invalid_previous_list() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  cp other/raw/one/good "$CASE_DIR/raw"
-  cp other/provenance/one/good.json "$CASE_DIR/meta"
+  cp raw-data/one/good "$CASE_DIR/raw"
+  cp provenance/one/good.json "$CASE_DIR/meta"
   printf '%s\n' '{"prefixes":[]}' > lists/one/good.json
   cp lists/one/good.json "$CASE_DIR/invalid"
   registry 'text one/good https://example.test/equivalent' 'text two/good https://example.test/good'
   expect_failure
-  cmp "$CASE_DIR/raw" other/raw/one/good || fail 'raw data changed after failure'
-  cmp "$CASE_DIR/meta" other/provenance/one/good.json || fail 'provenance changed after failure'
+  cmp "$CASE_DIR/raw" raw-data/one/good || fail 'raw data changed after failure'
+  cmp "$CASE_DIR/meta" provenance/one/good.json || fail 'provenance changed after failure'
   cmp "$CASE_DIR/invalid" lists/one/good.json || fail 'previous data changed after failure'
   assert_file lists/two/good.json
 }
@@ -307,11 +320,59 @@ t_identical_invalid_json() {
 }
 
 t_provenance() {
-  echo '# provenance records source, redirect, UTC time, and the directly connected peer'
+  echo '# provenance records the final HTTPS peer and leaf certificate'
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  jq -e '.source_url == "https://example.test/good" and .final_url == "https://example.test/good/redirected" and (.fetched_at | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")) and .connected_peer_ip == "192.0.2.1" and .proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'incorrect provenance'
+  jq -e '.source_url == "https://example.test/good" and .final_url == "https://example.test/good/redirected" and (.fetched_at | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")) and .connected_peer_ip == "192.0.2.1" and .proxy_used == false' provenance/one/good.json >/dev/null || fail 'incorrect provenance'
+  local fingerprint
+  fingerprint=$(openssl x509 -in "$MOCK_CERT" -outform DER | openssl dgst -sha256 -r)
+  jq -e --arg fingerprint "${fingerprint%% *}" '
+    .tls_certificate
+    | .subject == "CN=example.test" and .issuer == "CN=example.test"
+      and .sha256_fingerprint == $fingerprint
+      and (.not_before | fromdateiso8601) < (.not_after | fromdateiso8601)
+  ' provenance/one/good.json >/dev/null || fail 'incorrect certificate metadata'
+}
+
+t_non_https_final_url() {
+  echo '# a plaintext final connection has null certificate provenance'
+  setup_case
+  registry 'text one/good https://example.test/plaintext'
+  run_update
+  jq -e 'has("tls_certificate") and .tls_certificate == null' provenance/one/good.json >/dev/null
+}
+
+t_unusable_certificate_metadata() {
+  echo '# missing certificates and connection reuse fail the run without preventing later updates'
+  setup_case
+  registry 'text one/missing https://example.test/missing-cert' 'text one/reused https://example.test/reused' 'text two/good https://example.test/good'
+  expect_failure --force-update-provenance
+  for name in missing reused; do
+    assert_missing "raw-data/one/$name"
+    assert_missing "provenance/one/$name.json"
+  done
+  assert_file provenance/two/good.json
+}
+
+t_force_update_provenance() {
+  echo '# a forced update refreshes all valid metadata with byte-identical data'
+  setup_case
+  registry 'text one/text https://example.test/good' 'json two/json https://example.test/json'
+  run_update
+  for name in one/text two/json; do
+    touch -t 200001010000 "raw-data/$name" "lists/$name.json"
+    jq 'del(.tls_certificate) | .fetched_at = "2000-01-01T00:00:00Z"' "provenance/$name.json" > "$CASE_DIR/meta"
+    cp "$CASE_DIR/meta" "provenance/$name.json"
+  done
+  touch "$CASE_DIR/marker"
+  source ./update.sh
+  update_main --force-update-provenance > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
+  for name in one/text two/json; do
+    [[ "raw-data/$name" -ot "$CASE_DIR/marker" && "lists/$name.json" -ot "$CASE_DIR/marker" ]] || fail "rewrote data for $name"
+    jq -e '.fetched_at != "2000-01-01T00:00:00Z" and (.tls_certificate | type == "object")' "provenance/$name.json" >/dev/null
+    grep -Fq "$name: updated (provenance)" "$CASE_DIR/stdout"
+  done
 }
 
 t_proxy_unknown() {
@@ -319,8 +380,8 @@ t_proxy_unknown() {
   setup_case
   registry 'text one/good https://example.test/unknown'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/unknown' 'https://example.test/unknown/redirected'
-  jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'proxy use should be false'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/unknown' 'https://example.test/unknown/redirected'
+  jq -e '.proxy_used == false' provenance/one/good.json >/dev/null || fail 'proxy use should be false'
 }
 
 t_proxy_not_used() {
@@ -328,8 +389,8 @@ t_proxy_not_used() {
   setup_case
   registry 'text one/good https://example.test/direct'
   run_update
-  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/direct' 'https://example.test/direct'
-  jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'proxy use should be false'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/direct' 'https://example.test/direct'
+  jq -e '.proxy_used == false' provenance/one/good.json >/dev/null || fail 'proxy use should be false'
 }
 
 t_new_retrieval_failure() {
@@ -338,30 +399,30 @@ t_new_retrieval_failure() {
   registry 'text one/fail https://example.test/fail' 'text two/good https://example.test/good'
   run_update
   assert_eq 2 "$(wc -l < "$CALLS" | tr -d ' ')"
-  assert_file other/provenance/one/fail.failure
-  [[ $(cat other/provenance/one/fail.failure) =~ ^[0-9]+$ ]] || fail 'invalid failure time'
+  assert_file provenance/one/fail.failure
+  [[ $(cat provenance/one/fail.failure) =~ ^[0-9]+$ ]] || fail 'invalid failure time'
   assert_file lists/two/good.json
 }
 
 t_persistent_failure() {
   echo '# a download failure persisting for 24 hours fails the run'
   setup_case
-  mkdir -p other/provenance/one
-  printf '0\n' > other/provenance/one/fail.failure
+  mkdir -p provenance/one
+  printf '0\n' > provenance/one/fail.failure
   registry 'text one/fail https://example.test/fail' 'text two/good https://example.test/good'
   expect_failure
-  assert_eq 0 "$(cat other/provenance/one/fail.failure)"
+  assert_eq 0 "$(cat provenance/one/fail.failure)"
   assert_file lists/two/good.json
 }
 
 t_recovery() {
   echo '# successful retrieval and validation clear the failure record'
   setup_case
-  mkdir -p other/provenance/one
-  printf '0\n' > other/provenance/one/good.failure
+  mkdir -p provenance/one
+  printf '0\n' > provenance/one/good.failure
   registry 'text one/good https://example.test/good'
   run_update
-  assert_missing other/provenance/one/good.failure
+  assert_missing provenance/one/good.failure
 }
 
 t_legacy_failure() {
@@ -371,7 +432,7 @@ t_legacy_failure() {
   printf '0\n' > .state/one_fail.failure
   registry 'text one/fail https://example.test/fail'
   expect_failure
-  assert_eq 0 "$(cat other/provenance/one/fail.failure)"
+  assert_eq 0 "$(cat provenance/one/fail.failure)"
   assert_missing .state/one_fail.failure
 }
 
@@ -383,7 +444,7 @@ t_configuration_overrides() {
   export REGISTRY_DIR=custom-sources STATE_DIR=custom-state
   registry 'text one/fail https://example.test/fail'
   expect_failure
-  assert_eq 0 "$(cat other/provenance/one/fail.failure)"
+  assert_eq 0 "$(cat provenance/one/fail.failure)"
   assert_missing custom-state/one_fail.failure
 }
 
@@ -416,16 +477,16 @@ t_validation_preserves_data() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  cp other/raw/one/good "$CASE_DIR/raw"
+  cp raw-data/one/good "$CASE_DIR/raw"
   cp lists/one/good.json "$CASE_DIR/list"
-  cp other/provenance/one/good.json "$CASE_DIR/meta"
-  printf '0\n' > other/provenance/one/good.failure
+  cp provenance/one/good.json "$CASE_DIR/meta"
+  printf '0\n' > provenance/one/good.failure
   registry 'text one/good https://example.test/empty' 'text two/good https://example.test/good'
-  expect_failure
-  cmp "$CASE_DIR/raw" other/raw/one/good || fail 'raw data changed'
+  expect_failure --force-update-provenance
+  cmp "$CASE_DIR/raw" raw-data/one/good || fail 'raw data changed'
   cmp "$CASE_DIR/list" lists/one/good.json || fail 'valid list changed'
-  cmp "$CASE_DIR/meta" other/provenance/one/good.json || fail 'provenance changed'
-  assert_eq 0 "$(cat other/provenance/one/good.failure)"
+  cmp "$CASE_DIR/meta" provenance/one/good.json || fail 'provenance changed'
+  assert_eq 0 "$(cat provenance/one/good.failure)"
   assert_file lists/two/good.json
 }
 

@@ -1,7 +1,0 @@
-{
-  "source_url": "https://api.ahrefs.com/v3/public/crawler-ips",
-  "final_url": "https://api.ahrefs.com/v3/public/crawler-ips",
-  "fetched_at": "2026-11-17T09:31:32Z",
-  "connected_peer_ip": "104.18.39.141",
-  "proxy_used": null
-}

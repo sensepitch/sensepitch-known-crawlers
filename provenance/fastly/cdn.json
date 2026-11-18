@@ -1,0 +1,14 @@
+{
+  "source_url": "https://api.fastly.com/public-ip-list",
+  "final_url": "https://api.fastly.com/public-ip-list",
+  "fetched_at": "2026-11-18T04:02:00Z",
+  "connected_peer_ip": "146.75.46.35",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=api.fastly.com",
+    "issuer": "CN=Certainly Intermediate R1,O=Certainly,C=US",
+    "not_before": "2026-11-12T08:52:01Z",
+    "not_after": "2026-12-12T08:52:00Z",
+    "sha256_fingerprint": "0abe55c96a13b403a5d8e683e40319271d3c5fe0749a74b98dcf2eafed468226"
+  }
+}

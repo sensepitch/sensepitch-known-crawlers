@@ -1,0 +1,14 @@
+{
+  "source_url": "https://api.bunny.net/system/edgeserverlist/ipv6/plain",
+  "final_url": "https://api.bunny.net/system/edgeserverlist/ipv6/plain",
+  "fetched_at": "2026-11-18T04:01:57Z",
+  "connected_peer_ip": "156.59.92.126",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=api.bunny.net",
+    "issuer": "CN=YR1,O=Let's Encrypt,C=US",
+    "not_before": "2026-10-29T12:35:43Z",
+    "not_after": "2027-01-27T12:35:42Z",
+    "sha256_fingerprint": "99565b08f49b895ccb63bd72dfdf7989344b62ad5db43a70cab9791461403792"
+  }
+}

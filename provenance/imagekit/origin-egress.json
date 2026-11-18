@@ -1,0 +1,14 @@
+{
+  "source_url": "https://imagekit.io/public-ip-list",
+  "final_url": "https://imagekit.io/public-ip-list",
+  "fetched_at": "2026-11-18T04:02:07Z",
+  "connected_peer_ip": "3.168.203.124",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=*.imagekit.io",
+    "issuer": "CN=Amazon RSA 2048 M04,O=Amazon,C=US",
+    "not_before": "2026-10-22T00:00:00Z",
+    "not_after": "2027-05-07T23:59:59Z",
+    "sha256_fingerprint": "762058303abff62e453295fae547cc3a604e1c9a81cdba35ad6260a161e658fb"
+  }
+}

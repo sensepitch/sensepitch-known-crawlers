@@ -1,0 +1,14 @@
+{
+  "source_url": "https://docs.parallel.ai/resources/shapbot.json",
+  "final_url": "https://docs.parallel.ai/resources/shapbot.json",
+  "fetched_at": "2026-11-18T04:02:16Z",
+  "connected_peer_ip": "76.76.21.164",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=docs.parallel.ai",
+    "issuer": "CN=YR1,O=Let's Encrypt,C=US",
+    "not_before": "2026-11-10T10:41:01Z",
+    "not_after": "2027-02-08T10:41:00Z",
+    "sha256_fingerprint": "ac8b0a33716c6a20aa0b8a1fc940afd02f7d30c7d1c63026834acd25e1f3f3f1"
+  }
+}

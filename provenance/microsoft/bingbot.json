@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.bing.com/toolbox/bingbot.json",
+  "final_url": "https://www.bing.com/toolbox/bingbot.json",
+  "fetched_at": "2026-11-18T04:02:09Z",
+  "connected_peer_ip": "23.43.241.209",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=r.bing.com,O=Microsoft Corporation,L=Redmond,ST=WA,C=US",
+    "issuer": "CN=Microsoft TLS G2 ECC CA OCSP 02,O=Microsoft Corporation,C=US",
+    "not_before": "2026-11-05T02:05:19Z",
+    "not_after": "2027-05-22T02:05:19Z",
+    "sha256_fingerprint": "f8ba727ec7af619094ffd48e4dcabc39ef662fa6d1d2ea48602d676e607c2800"
+  }
+}

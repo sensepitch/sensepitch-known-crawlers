@@ -1,0 +1,14 @@
+{
+  "source_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json",
+  "final_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json",
+  "fetched_at": "2026-11-18T04:02:03Z",
+  "connected_peer_ip": "142.250.4.101",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=*.google.com",
+    "issuer": "CN=WE2,O=Google Trust Services,C=US",
+    "not_before": "2026-11-03T08:26:50Z",
+    "not_after": "2027-01-26T08:26:49Z",
+    "sha256_fingerprint": "2b1e9fec6eadf7a870af643f924fbb952f8cc675a93f33926c5e9b392ec574f2"
+  }
+}

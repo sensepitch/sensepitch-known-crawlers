@@ -1,0 +1,14 @@
+{
+  "source_url": "https://index.commoncrawl.org/ccbot.json",
+  "final_url": "https://index.commoncrawl.org/ccbot.json",
+  "fetched_at": "2026-11-18T04:01:58Z",
+  "connected_peer_ip": "54.237.141.66",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=test-index.commoncrawl.org",
+    "issuer": "CN=YE2,O=Let's Encrypt,C=US",
+    "not_before": "2026-10-29T18:06:39Z",
+    "not_after": "2027-01-27T18:06:38Z",
+    "sha256_fingerprint": "a46db4a055c59cb5f5b6ab5449d03ae42255e53309b2223d0d7ed3682282b120"
+  }
+}

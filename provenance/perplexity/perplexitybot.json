@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.perplexity.ai/perplexitybot.json",
+  "final_url": "https://www.perplexity.ai/perplexitybot.json",
+  "fetched_at": "2026-11-18T04:02:17Z",
+  "connected_peer_ip": "104.18.27.48",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=perplexity.ai",
+    "issuer": "CN=YE2,O=Let's Encrypt,C=US",
+    "not_before": "2026-10-13T14:20:35Z",
+    "not_after": "2027-01-11T14:20:34Z",
+    "sha256_fingerprint": "9cf5f2f64828f498c83c043b001a703eb701dbbb3c12b2f64143ddd8a320a56b"
+  }
+}

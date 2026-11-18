@@ -1,0 +1,14 @@
+{
+  "source_url": "https://core.telegram.org/resources/cidr.txt",
+  "final_url": "https://core.telegram.org/resources/cidr.txt",
+  "fetched_at": "2026-11-18T04:02:21Z",
+  "connected_peer_ip": "149.154.167.99",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=*.telegram.org",
+    "issuer": "CN=GoDaddy TLS Intermediate CA DV - R1v1,O=GoDaddy.com,C=US",
+    "not_before": "2026-08-25T15:23:05Z",
+    "not_after": "2027-03-11T15:23:05Z",
+    "sha256_fingerprint": "77937839a340cca03d7c079131555fc196a6727b23eea54039cd8193817a21f6"
+  }
+}

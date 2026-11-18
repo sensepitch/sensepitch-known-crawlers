@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.mojeek.com/mojeekbot.json",
+  "final_url": "https://www.mojeek.com/mojeekbot.json",
+  "fetched_at": "2026-11-18T04:02:11Z",
+  "connected_peer_ip": "5.102.173.68",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=www.mojeek.com,O=Mojeek Limited,L=Croydon,C=GB",
+    "issuer": "CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1,O=DigiCert Inc,C=US",
+    "not_before": "2026-02-13T00:00:00Z",
+    "not_after": "2027-03-16T23:59:59Z",
+    "sha256_fingerprint": "b49b677d01338f5634cb079568f82690e48de3b56552af2d10cc54dc49163b7f"
+  }
+}

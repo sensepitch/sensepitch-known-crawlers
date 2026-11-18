@@ -1,0 +1,14 @@
+{
+  "source_url": "https://my.pingdom.com/probes/ipv6",
+  "final_url": "https://my.pingdom.com/probes/ipv6",
+  "fetched_at": "2026-11-18T04:02:17Z",
+  "connected_peer_ip": "172.66.138.195",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=pingdom.com",
+    "issuer": "CN=YE2,O=Let's Encrypt,C=US",
+    "not_before": "2026-10-10T05:20:09Z",
+    "not_after": "2027-01-08T05:20:08Z",
+    "sha256_fingerprint": "4d75c21d859ec01147d8beea8782a23c5ccf3720a59ca819491b4f70907e86f4"
+  }
+}

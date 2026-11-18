@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.kimi.ai/policies/kimi-user.json",
+  "final_url": "https://www.kimi.ai/policies/kimi-user.json",
+  "fetched_at": "2026-11-18T04:02:12Z",
+  "connected_peer_ip": "104.18.17.93",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=www.kimi.ai",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-10-09T15:17:37Z",
+    "not_after": "2027-01-07T16:17:34Z",
+    "sha256_fingerprint": "0dcc068822b42e57cc5f66153978b923d04465e8ec26f274b231c7911900359e"
+  }
+}

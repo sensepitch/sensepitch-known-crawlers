@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.cloudflare.com/ips-v6",
+  "final_url": "https://www.cloudflare.com/ips-v6",
+  "fetched_at": "2026-11-18T04:01:57Z",
+  "connected_peer_ip": "104.16.123.96",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=www.cloudflare.com",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-11-16T17:06:07Z",
+    "not_after": "2027-02-14T18:06:04Z",
+    "sha256_fingerprint": "2d9beac2bedd71968e698ec04cb0385b298f33b4eb13015205eb4df0394d560c"
+  }
+}

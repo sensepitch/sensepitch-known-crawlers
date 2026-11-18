@@ -1,0 +1,14 @@
+{
+  "source_url": "https://developer.amazon.com/amazonbot/searchbot-ip-addresses/",
+  "final_url": "https://developer.amazon.com/amazonbot/searchbot-ip-addresses/",
+  "fetched_at": "2026-11-18T04:01:48Z",
+  "connected_peer_ip": "44.215.133.6",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=developer.amazon.com",
+    "issuer": "CN=Amazon RSA 2048 M04,O=Amazon,C=US",
+    "not_before": "2026-11-06T00:00:00Z",
+    "not_after": "2027-05-22T23:59:59Z",
+    "sha256_fingerprint": "10f426c673fa8f38a46e6ee3aedbea89170559a3046b483ea390588ac57cf112"
+  }
+}

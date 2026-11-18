@@ -1,0 +1,14 @@
+{
+  "source_url": "https://rssapi.net/ips.txt",
+  "final_url": "https://rssapi.net/ips.txt",
+  "fetched_at": "2026-11-18T04:02:18Z",
+  "connected_peer_ip": "172.67.173.74",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=rssapi.net",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-10-13T11:26:20Z",
+    "not_after": "2027-01-11T12:26:18Z",
+    "sha256_fingerprint": "683dab04a7f6b4c23c679788b0abd668e7630c9d3269eecaee871a7d1b6fd8fa"
+  }
+}

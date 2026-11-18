@@ -1,0 +1,14 @@
+{
+  "source_url": "https://about.marginalia-search.com/article/crawler/",
+  "final_url": "https://about.marginalia-search.com/article/crawler/",
+  "fetched_at": "2026-11-18T04:02:08Z",
+  "connected_peer_ip": "193.183.0.162",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=marginalia.nu",
+    "issuer": "CN=YE2,O=Let's Encrypt,C=US",
+    "not_before": "2026-10-01T19:59:55Z",
+    "not_after": "2026-12-30T19:59:54Z",
+    "sha256_fingerprint": "a3d008611f8493a6cbbd271dcb457e4c96e6d52787a8807f8d0df1cb21ce82f6"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "source_url": "https://cdn.discordapp.com/ipranges/discord.json",
+  "final_url": "https://cdn.discordapp.com/ipranges/discord.json",
+  "fetched_at": "2026-11-18T04:01:59Z",
+  "connected_peer_ip": "162.159.130.233",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=discordapp.com",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-10-26T23:33:04Z",
+    "not_after": "2027-01-25T00:32:59Z",
+    "sha256_fingerprint": "5aaefca6e5fe5410d5ae4bef90a658e71f551e83297911663fd20af67081315d"
+  }
+}

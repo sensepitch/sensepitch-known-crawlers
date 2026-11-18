@@ -1,0 +1,14 @@
+{
+  "source_url": "https://search.developer.apple.com/applebot.json",
+  "final_url": "https://search.developer.apple.com/applebot.json",
+  "fetched_at": "2026-11-18T04:01:54Z",
+  "connected_peer_ip": "17.138.128.4",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=search.developer.apple.com,O=Apple Inc.,ST=California,C=US",
+    "issuer": "CN=Apple Public Server ECC CA 1 - G1,O=Apple Inc.,C=US",
+    "not_before": "2026-11-03T03:13:46Z",
+    "not_after": "2027-01-28T18:58:39Z",
+    "sha256_fingerprint": "df7719bc64e9aeb05c3e71ae6f2c569e9631adcc39a9dc4bc321bf3ba4a04802"
+  }
+}

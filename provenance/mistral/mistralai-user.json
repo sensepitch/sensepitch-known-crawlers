@@ -1,0 +1,14 @@
+{
+  "source_url": "https://mistral.ai/mistralai-user-ips.json",
+  "final_url": "https://mistral.ai/mistralai-user-ips.json",
+  "fetched_at": "2026-11-18T04:02:09Z",
+  "connected_peer_ip": "172.66.2.203",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=mistral.ai",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-10-09T22:08:41Z",
+    "not_after": "2027-01-07T23:08:23Z",
+    "sha256_fingerprint": "389b075a7bbae2447de4a6fce2ed0fd926a79580a445282cc097dadad24107e5"
+  }
+}

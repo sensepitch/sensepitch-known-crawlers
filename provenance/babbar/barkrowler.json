@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.babbar.tech/barkrowler-ip-ranges.json",
+  "final_url": "https://www.babbar.tech/barkrowler-ip-ranges.json",
+  "fetched_at": "2026-11-18T04:01:55Z",
+  "connected_peer_ip": "212.83.137.197",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=www.babbar.tech",
+    "issuer": "CN=YR2,O=Let's Encrypt,C=US",
+    "not_before": "2026-11-02T01:05:52Z",
+    "not_after": "2027-01-31T01:05:51Z",
+    "sha256_fingerprint": "b2ca6953aff1697fe945e88c6fbf7bcdaae9492d7df71c23e18d39af3adc9bf3"
+  }
+}

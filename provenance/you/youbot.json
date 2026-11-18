@@ -1,0 +1,14 @@
+{
+  "source_url": "https://you.com/docs/youbot",
+  "final_url": "https://you.com/docs/youbot",
+  "fetched_at": "2026-11-18T04:02:22Z",
+  "connected_peer_ip": "172.64.146.80",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=you.com",
+    "issuer": "CN=WE1,O=Google Trust Services,C=US",
+    "not_before": "2026-11-11T06:59:29Z",
+    "not_after": "2027-02-09T07:59:26Z",
+    "sha256_fingerprint": "ba3f95243f5560e0439f0e843a86d0857d717519bdc9e69467288fb1401122c1"
+  }
+}
