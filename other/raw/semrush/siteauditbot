@@ -1,0 +1,3853 @@
+<!DOCTYPE html>
+
+
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+
+            
+                <title>Troubleshooting Site Audit</title>
+            
+
+            <meta property="og:site_name" content="Semrush"><meta property="og:type" content="website"><meta property="og:url" content="https://www.semrush.com/kb/681-site-audit-troubleshooting"><meta property="og:image" content="https://www.semrush.com/__static__/semrush-logo-700.43215feb8faa.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@semrush"><meta name="twitter:site" content="@semrush"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta property="og:title" content="Troubleshooting Site Audit"><meta name="twitter:title" content="Troubleshooting Site Audit"><meta property="og:description" content="Take these steps to troubleshoot your Semrush Site Audit and allow our bot to review your website."><meta name="description" content="Take these steps to troubleshoot your Semrush Site Audit and allow our bot to review your website.">
+
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link rel="preconnect" href="https://static.semrush.com">
+            <link rel="preconnect" href="https://static.semrush.com/remote-integrations" crossorigin>
+            <link rel="preconnect" href="https://www.googletagmanager.com">
+            <link rel="preconnect" href="https://cdn.cookiehub.eu">
+            <link rel="preconnect" href="https://cookiehub.net">
+            <link rel="preconnect" href="https://cookiehub.net" crossorigin>
+
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&text=%E2%86%90%E2%86%92&display=swap">
+            <link rel="stylesheet"
+                  href="/__static__/fonts/lazzer/v2/lazzer.css">
+            <link rel="stylesheet"
+                  href="/__static__/fonts/factor_a/v2/factor_a.css">
+
+            <link rel="stylesheet" href="/__static__/webpack/base.316e54e343c32d7f.css">
+            
+                <link rel="stylesheet" href="/__static__/webpack/site_info.183215081ed969b0.css">
+            
+
+            <script>window.__sm2mfp = 'https://static.semrush.com/remote-integrations'</script>
+
+            
+
+
+
+
+            
+    <script>
+    
+    window.ANALYTICS_GTM_ID = "GTM-5K82J2";
+    
+
+    window.pendingAnalytics = window.pendingAnalytics || [];
+    window.analytics = {};
+
+    ["track", "setDefaults", "deleteDefaults"].forEach((name) => {
+        window.analytics[name] = function () {
+            pendingAnalytics.push([name, arguments]);
+        };
+    });
+
+    
+        window.analytics.setDefaults("user_type", "unlogged");
+    
+    </script>
+    <script async src="https://static.semrush.com/ajst/ajst.js"></script>
+
+
+
+            
+
+    <script>window[Symbol.for("sm2.WebVitalsReporter.config")] = {"team": "raspberry", "product": "knowledge-base", "userType": "unlogged"};</script>
+    <script src="/__static__/webpack/runtime.1d532f1b5cdbb6e3.js"></script>
+<script src="/__static__/webpack/smrwv.9c301fc15a71a4ac.js" defer></script>
+
+
+
+            
+
+    <script>window[Symbol.for("sm2.AmplitudeSessionReplay.config")] = {"api_key": "03db6de0e8473c8ee9cfa19a87990a86", "user_id": null, "sample_rate": 0.02, "product_name": "knowledge-base"};</script>
+    <script src="/__static__/webpack/amplitude_session_replay.b49b692dfcef1276.js" defer></script>
+
+
+
+            
+
+            <script>
+                window.sm2 = Object.assign(window.sm2 || {}, {"GAexperiments": [], "language": "en", "isSessionCreatedByAdmin": false, "abTestsLabels": ["sidebar.outdated_tools_cleanup", "sidebar.outdated_tools_cleanup_w2"], "ipCountryCode": "ID"});
+                
+                window.sm2.limitOptions = Object.freeze({});
+
+                window.__sm2_get_initial_state__ ??= (() => {
+                    let cache;
+                    const domReady = document.readyState === 'loading'
+                        ? new Promise((resolve) => document.addEventListener('DOMContentLoaded', resolve, { once: true }))
+                        : Promise.resolve();
+                    return () => (cache ??= domReady.then(() => {
+                        const el = document.getElementById('sm2_initial_state');
+                        if (!el) {
+                            throw new Error('sm2_initial_state element missing');
+                        }
+                        return JSON.parse(el.textContent);
+                    }));
+                })();
+
+                window.__sm2_get_initial_state__().then((state) => {
+                    if (typeof window.__sm2init_base__ !== 'function') {
+                        throw new Error(
+                            'window.__sm2init_base__ is not registered. The init_base bundle likely failed to load.',
+                        );
+                    }
+                    window.__sm2init_base__(state.base);
+                });
+            </script>
+
+            
+
+<link rel="stylesheet" href="/__static__/webpack/global_spinner.c7fe2aad87f1e52f.css">
+<script src="/__static__/webpack/global_spinner.384a9a9993cad4f4.js"></script>
+
+
+            
+
+
+    <script>window[Symbol.for("sm2.trackLimitOptionsUsage.config")] = {"sampleRate": 0.005, "team": "raspberry", "product": "knowledge-base"};</script>
+    <script src="/__static__/webpack/observer_limit_options.e1fb882f7a14f746.js"></script>
+
+
+            <script>
+  window.sm2.getComponent = function queueGetComponentRequest(...args) {
+    const queue = (window[Symbol.for("sm2.getComponent.pending")] ??= []);
+    let resolve;
+    let reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    queue.push({args, resolve, reject});
+    return promise;
+  };
+</script>
+
+            
+
+<script src="/__static__/webpack/mf_widgets.26c8102296bd5ab6.js"></script>
+
+
+            <script>
+window.__sm2_get_initial_state__().then(() => {
+  if (typeof window.__sm2init_component_provider__ !== 'function') {
+    throw new Error(
+      'window.__sm2init_component_provider__ is not registered. The init_component_provider bundle likely failed to load.',
+    );
+  }
+  window.__sm2init_component_provider__();
+});
+</script>
+
+
+            
+                <script>
+  
+  
+  
+  dataLayer = window.dataLayer || [];
+  dataLayer.push({site_is_controlling_cookie_settings_widget: true});
+</script>
+
+            
+
+            
+                <script>
+window.__sm2_get_initial_state__().then((state) => {
+  if (typeof window.__sm2init_searchbar_api__ !== 'function') {
+    throw new Error(
+      'window.__sm2init_searchbar_api__ is not registered. The init_searchbar_api bundle likely failed to load.',
+    );
+  }
+  window.__sm2init_searchbar_api__(state.searchbarApiV1Config);
+});
+
+window.sm2.getSearchbarApi = function queueSearchbarApiRequest(...args) {
+  const queue = (window[Symbol.for("sm2.getSearchbarApi.pending")] ??= []);
+  let resolve;
+  let reject;
+  const promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  queue.push({ args, resolve, reject });
+  return promise;
+};
+</script>
+
+            
+
+            
+                <script>
+window.__sm2_get_initial_state__().then((state) => {
+  if (typeof window.__sm2init_folders_api__ !== 'function') {
+    throw new Error(
+      'window.__sm2init_folders_api__ is not registered. The init_folders_api bundle likely failed to load.',
+    );
+  }
+  window.__sm2init_folders_api__(state.foldersApiV1Config);
+});
+
+window.sm2.getFoldersApi = function queueProjectsApiRequest(...args) {
+  const queue = (window[Symbol.for("sm2.getFoldersApi.pending")] ??= []);
+  let resolve;
+  let reject;
+  const promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  queue.push({ args, resolve, reject });
+  return promise;
+};
+</script>
+
+            
+
+            
+                
+            
+
+            <script>
+  (function (i) {
+    window[i] =
+      window[i] ||
+      function () {
+        (window[i].dataLayerProxyQueue = window[i].dataLayerProxyQueue || []).push(
+          arguments,
+        );
+      };
+  })('ga');
+</script>
+
+<script src="/__static__/webpack/data_layer_proxy.9ad7ca38a18485f3.js"></script>
+<script>ga("set", "dimension2", "Unlogged-User")
+ga("set", "dimension3", "not set")
+ga("set", "dimension5", "{}")
+ga("set", "dimension16", "all tools")</script>
+
+            
+            
+
+            <script src="/jsi18n/" defer></script>
+
+            
+
+
+
+
+    <script>window[Symbol.for("sm2.trackBillingInfoUsage.config")] = {"sampleRate": 0.005, "team": "raspberry", "product": "knowledge-base"};</script>
+    <script src="/__static__/webpack/track_billing_info_usage.7b6bb5ead15a2678.js"></script>
+
+
+
+            <meta name="theme-color"
+                  media="(prefers-color-scheme: light)"
+                  content="#F6F7F8">
+            <meta name="theme-color"
+                  media="(prefers-color-scheme: dark)"
+                  content="#111317">
+            <meta name="format-detection" content="telephone=no">
+
+            
+
+
+
+
+            <link rel="canonical" href="https://www.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="en" href="https://www.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="de" href="https://de.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="es" href="https://es.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="fr" href="https://fr.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="it" href="https://it.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="nl" href="https://nl.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="pl" href="https://pl.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="pt" href="https://pt.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="sv" href="https://sv.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="vi" href="https://vi.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="tr" href="https://tr.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="zh" href="https://zh.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="ja" href="https://ja.semrush.com/kb/681-site-audit-troubleshooting">
+            
+                <link rel="alternate" hreflang="ko" href="https://ko.semrush.com/kb/681-site-audit-troubleshooting">
+            
+            <link rel="describedby" href="/llms.txt">
+
+            <link rel="manifest" href="/__static__/manifest.c126ad9aade5.json">
+            <link rel="apple-touch-icon"
+                  sizes="180x180"
+                  href="/__static__/apple-touch-icon.fe16ae843d17.png">
+            <link rel="icon" href="/__static__/favicon.d8fbaa3a030a.ico" sizes="any">
+            <link rel="icon"
+                  href="/__static__/favicon.37cab19e6995.svg"
+                  type="image/svg+xml">
+
+            <link rel="search"
+                  type="application/opensearchdescription+xml"
+                  href="/__static__/semrush-opensearch.xml"
+                  title="Semrush.com">
+
+            
+        </head>
+
+        <body>
+            
+
+            <div class="srf-layout"
+                 >
+                
+
+<script src="/__static__/webpack/skip_to_content.6306af5aa9ef20f3.js" defer></script>
+
+<div class="srf-layout__skip-to-content">
+    <button id="skip-to-content">Skip to content</button>
+</div>
+
+
+                <div class="srf-layout__notification">
+                    
+
+
+                    
+    
+    <!--googleoff: all-->
+    <div role="complementary"
+         id="srf-browser-unhappy"
+         class="srf-browser-unhappy">
+        
+            <p>
+                <b>Your browser or operating system is out of date and Semrush might not be displayed correctly.</b> Please update your browser or operating system.
+            </p>
+        
+        <button id="srf-browser-unhappy-btn-close"
+                class="srf-browser-unhappy--btn-close">
+            <svg width="16"
+                 height="16"
+                 viewBox="0 0 16 16"
+                 class="srf-icon"
+                 aria-label="Close outdated browser notice">
+                <path d="M3.323 3.323c-.43.43-.43 1.128 0 1.559L6.44 8l-3.118 3.118a1.102 1.102 0 1 0 1.559 1.56L8 9.558l3.118 3.118a1.102 1.102 0 0 0 1.56-1.559L9.558 8l3.118-3.118a1.102 1.102 0 0 0-1.559-1.56L8 6.442 4.882 3.323a1.102 1.102 0 0 0-1.56 0Z" shape-rendering="geometricPrecision">
+                </path>
+            </svg>
+        </button>
+    </div>
+    <script>
+    (function () {
+      var el = document.getElementById("srf-browser-unhappy");
+      var closeBtn = document.getElementById("srf-browser-unhappy-btn-close");
+
+      function handler() {
+        var d = new Date();
+        // we don't use max-age here because it's not supported by IE < 9
+        d.setTime(d.getTime() + 2592000000); // 30 days
+        document.cookie =
+          "browser-unhappy-closed=true; expires=" +
+          d.toGMTString() +
+          "; path=/; domain=.semrush.com;";
+        el.setAttribute("class", "srf-browser-unhappy--hide");
+      }
+
+      if (closeBtn.attachEvent) {
+        closeBtn.attachEvent("onclick", handler);
+      } else {
+        closeBtn.addEventListener("click", handler);
+      }
+    })();
+    </script>
+    <!--googleon: all-->
+
+
+                    
+
+
+
+                    
+
+
+                    
+
+
+                    
+
+
+
+
+                    
+                        
+                        
+
+
+
+                    
+                </div>
+
+                <div class="srf-layout__header">
+                    
+                        <!-- #region Page Slot "page_header_slot" -->
+
+    <!-- #region BuiltIn Component "header" -->
+    
+        
+        
+<link rel="stylesheet" href="/__static__/webpack/header.0a3b97f0bc670f35.css">
+<srf-header >
+    <header id="srf-header" aria-label="Top menu">
+
+        <a href="/"
+           class="srf-header__logo"
+           tabindex="0"
+           aria-label="Semrush homepage"
+           data-ga4-click
+           data-ga4-item-location="navigation.header.logo"
+           data-test="semrush_logo"></a>
+
+        <div id="srf-header-desktop-menu-container">
+            <srf-header-menu>
+                <ul>
+                    
+                        <li>
+                            
+                                
+                                <button class="srf-header__menu-item"
+                                tabindex="0"
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                        popovertarget="srf-dropdown-items-productsdropdown"
+                                        data-ga4-click data-ga4-item-location="navigation.header.products.dropdown"
+                                        data-test="header_products_dropdown">Product</button>
+                                
+                            
+                        </li>
+                    
+                        <li>
+                            
+                                <a href="/pricing/"
+                                   class="srf-header__menu-item"
+                                   tabindex="0"
+                                   
+                                   data-ga4-click data-ga4-item-location="navigation.header.index.pricing"
+                                   data-test="header_prices">Pricing</a>
+                            
+                        </li>
+                    
+                        <li>
+                            
+                                
+                                <button class="srf-header__menu-item"
+                                tabindex="0"
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                        popovertarget="srf-dropdown-items-solutionsdropdown"
+                                        data-ga4-click data-ga4-item-location="navigation.header.solutions.dropdown"
+                                        data-test="header_solutions_dropdown">Solutions</button>
+                                
+                            
+                        </li>
+                    
+                        <li>
+                            
+                                
+                                <button class="srf-header__menu-item"
+                                tabindex="0"
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                        popovertarget="srf-dropdown-items-resourcesdropdown"
+                                        data-ga4-click data-ga4-item-location="navigation.header.resources.dropdown"
+                                        data-test="header_resources">Resources</button>
+                                
+                            
+                        </li>
+                    
+                        <li>
+                            
+                                <a href="https://enterprise.semrush.com/"
+                                   class="srf-header__menu-item"
+                                   tabindex="0"
+                                    target="_blank" aria-description="External link, opens in a new window" 
+                                   data-ga4-click data-ga4-item-location="navigation.header.enterprise"
+                                   data-test="header_enterprise">Enterprise</a>
+                            
+                        </li>
+                    
+                </ul>
+            </srf-header-menu>
+        </div>
+
+        <div id="srf-header-desktop-buttons-container">
+            <div class="srf-header__buttons">
+                
+                    <a href="/login/?src=header"
+                       class="srf-header__link-button srf-login-btn"
+                       tabindex="0"
+                       data-variant="primary-outlined"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.header.login"
+                       data-test="auth-popup__btn-login">Log In</a>
+                    <a href="/signup/?src=header"
+                       class="srf-header__link-button srf-register-btn"
+                       tabindex="0"
+                       data-variant="primary-filled"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.header.signup"
+                       data-test="auth-popup__btn-register">Start for free</a>
+                
+            </div>
+        </div>
+
+        <button class="srf-header__burger"
+                aria-label="Open menu"
+                aria-haspopup="true"
+                popovertarget="srf-header-mobile-menu-container"
+                data-ga4-click
+                data-ga4-item-location="navigation.header.menuburger"></button>
+
+        
+    </header>
+
+    <div id="srf-header-mobile-menu-container" popover="auto">
+        <div class="srf-header__mobile-menu-header">
+            <button class="srf-header__mobile-menu-back"
+                    aria-label="Back"
+                    type="button"
+                    hidden></button>
+            <div class="srf-header__mobile-menu-logo"
+                 aria-label="Semrush"></div>
+            <button class="srf-header__mobile-menu-close"
+                    aria-label="Close"
+                    type="button"></button>
+        </div>
+        <div id="srf-header-mobile-menu-content"></div>
+    </div>
+
+    
+
+    
+        
+            <srf-header-dropdown-items id="srf-dropdown-items-productsdropdown"
+                                       popover="auto"
+                                       class="srf-header-dropdown-popover">
+                <div class="srf-header__dropdown-columns">
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Get started</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/one/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.semrush_one"
+                                           data-test="header_products_get_started_semrush_one">Semrush One</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/enterprise/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.enterprise"
+                                           data-test="header_products_get_started_enterprise">Enterprise</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/mcp/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.mcp"
+                                           data-test="header_products_get_started_mcp">Semrush MCP</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://developer.semrush.com/api/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.api"
+                                           data-test="header_products_get_started_api">Semrush API</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/stats/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.our_data"
+                                           data-test="header_products_get_started_our_data">Our data</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/kb/request-demo/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.get_started.book_a_demo"
+                                           data-test="header_products_get_started_book_a_demo">Book a demo</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Discover</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/features/keyword-research/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.keyword_research"
+                                           data-test="header_products_discover_keyword_research">Keyword Research</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/competitor-analysis/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.competitor_analysis"
+                                           data-test="header_products_discover_competitor_analysis">Competitor Analysis</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/ai-visibility/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.ai_visibility"
+                                           data-test="header_products_discover_ai_visibility">AI Visibility</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/prompt-research/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.prompt_research"
+                                           data-test="header_products_discover_prompt_research">Prompt Research</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/local-seo/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.local_seo"
+                                           data-test="header_products_discover_local_seo">Local SEO</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/market-analysis/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.market_analysis"
+                                           data-test="header_products_discover_market_analysis">Market Analysis</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://enterprise.semrush.com/data-products/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.discover.data_products"
+                                           data-test="header_products_discover_data_products">Data Products</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Create and optimize</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/features/content-marketing/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.create_and_optimize.content_creation"
+                                           data-test="header_products_create_and_optimize_content_creation">Content Creation</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/site-audit/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.create_and_optimize.technical_site_health"
+                                           data-test="header_products_create_and_optimize_technical_site_health">Technical Site Health</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/digital-pr/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.create_and_optimize.digital_pr"
+                                           data-test="header_products_create_and_optimize_digital_pr">Digital PR</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Track</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/features/rank-tracking/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.track.rank_tracking"
+                                           data-test="header_products_track_rank_tracking">Rank Tracking</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/reports/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.track.marketing_reports"
+                                           data-test="header_products_track_marketing_reports">Marketing Reports</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/brand-sentiment/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.track.ai_brand_sentiment"
+                                           data-test="header_products_track_ai_brand_sentiment">AI Brand Sentiment</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/backlink-analysis/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.track.backlink_analysis"
+                                           data-test="header_products_track_backlink_analysis">Backlink Analysis</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/features/"
+                                           class="srf-header__menu-sublist-item srf-header__menu-sublist-item--emphasized"
+                                           data-ga4-click data-ga4-item-location="navigation.header.products.track.see_all_features"
+                                           data-test="header_products_track_see_all_features">See all features</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                </div>
+                
+                    <a href="/signup/?src=header_promo&redirect_to=%2Fmcp%2F&trial=force"
+                       class="srf-header__dropdown-promo"
+                       target="_blank"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.header.products.promo">
+                        <div class="srf-header__dropdown-promo-image"
+                             data-variant="mcp"
+                             role="img"
+                             aria-label="Semrush MCP"></div>
+                        <div class="srf-header__dropdown-promo-description">
+                            The world's most powerful traffic, visibility, and market dataset. Inside your AI assistants.
+                        </div>
+                        <div class="srf-header__dropdown-promo-title">Connect Semrush MCP to AI</div>
+                    </a>
+                
+            </srf-header-dropdown-items>
+        
+    
+        
+    
+        
+            <srf-header-dropdown-items id="srf-dropdown-items-solutionsdropdown"
+                                       popover="auto"
+                                       class="srf-header-dropdown-popover">
+                <div class="srf-header__dropdown-columns">
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Use cases</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/solutions/search-visibility/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.grow_search_visibility"
+                                           data-test="header_solutions_use_cases_grow_search_visibility">Grow search visibility</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/ai-visibility/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.get_recommended_by_ai"
+                                           data-test="header_solutions_use_cases_get_recommended_by_ai">Get recommended by AI</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/analyze-competitors-market/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.research_your_market"
+                                           data-test="header_solutions_use_cases_research_your_market">Research your market</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/local-search/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.connect_with_local_customers"
+                                           data-test="header_solutions_use_cases_connect_with_local_customers">Connect with local customers</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/create-content/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.create_engaging_content"
+                                           data-test="header_solutions_use_cases_create_engaging_content">Create engaging content</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/technical-seo/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.fix_technical_site_issues"
+                                           data-test="header_solutions_use_cases_fix_technical_site_issues">Fix technical site issues</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/off-site-visibility/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.grow_off_site_authority"
+                                           data-test="header_solutions_use_cases_grow_off_site_authority">Grow off-site authority</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/client-strategy/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.build_client_strategies"
+                                           data-test="header_solutions_use_cases_build_client_strategies">Build client strategies</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/use-cases/"
+                                           class="srf-header__menu-sublist-item srf-header__menu-sublist-item--emphasized"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.use_cases.see_all_use_cases"
+                                           data-test="header_solutions_use_cases_see_all_use_cases">See all use cases</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">By size</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="https://enterprise.semrush.com/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.enterprise"
+                                           data-test="header_solutions_by_size_enterprise">Enterprise</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/mid-market/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.mid_market"
+                                           data-test="header_solutions_by_size_mid_market">Mid-market</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/small-teams/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.small_teams"
+                                           data-test="header_solutions_by_size_small_teams">Small teams</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/solopreneurs/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.solopreneurs"
+                                           data-test="header_solutions_by_size_solopreneurs">Solopreneurs</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/freelancers/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.freelancers"
+                                           data-test="header_solutions_by_size_freelancers">Freelancers</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/agencies/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_size.agencies"
+                                           data-test="header_solutions_by_size_agencies">Agencies</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">By role</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/solutions/business-owners/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_role.business_owner"
+                                           data-test="header_solutions_by_role_business_owner">Business Owner</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/agencies/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_role.agency_owner"
+                                           data-test="header_solutions_by_role_agency_owner">Agency Owner</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/seo-professionals/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_role.seo_specialist"
+                                           data-test="header_solutions_by_role_seo_specialist">SEO Specialist</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/content-marketers/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_role.content_marketer"
+                                           data-test="header_solutions_by_role_content_marketer">Content Marketer</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/growth-marketers/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_role.full_stack_growth_marketers"
+                                           data-test="header_solutions_by_role_full_stack_growth_marketers">Full-Stack Growth Marketers</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">By industry</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/solutions/professional-services/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.professional_services"
+                                           data-test="header_solutions_by_industry_professional_services">Professional Services</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/ecommerce/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.retail_ecommerce"
+                                           data-test="header_solutions_by_industry_retail_ecommerce">Retail &amp; Ecommerce</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/agencies/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.agencies"
+                                           data-test="header_solutions_by_industry_agencies">Agencies</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/saas/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.saas_b2b_tech"
+                                           data-test="header_solutions_by_industry_saas_b2b_tech">SaaS &amp; B2B Tech</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/healthcare/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.healthcare"
+                                           data-test="header_solutions_by_industry_healthcare">Healthcare</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/local-business/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.local_business"
+                                           data-test="header_solutions_by_industry_local_business">Local Business</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/solutions/industry/"
+                                           class="srf-header__menu-sublist-item srf-header__menu-sublist-item--emphasized"
+                                           data-ga4-click data-ga4-item-location="navigation.header.solutions.by_industry.see_all_industries"
+                                           data-test="header_solutions_by_industry_see_all_industries">See all industries</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                </div>
+                
+                    <a href="/pricing/seo-ai-search/"
+                       class="srf-header__dropdown-promo"
+                       target="_blank"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.header.solutions.promo">
+                        <div class="srf-header__dropdown-promo-image"
+                             data-variant="seo-ai-search"
+                             role="img"
+                             aria-label="Visibility overview interface illustration"></div>
+                        <div class="srf-header__dropdown-promo-description">
+                            Explore plans that get your brand seen on ChatGPT, Gemini, and Google.
+                        </div>
+                        <div class="srf-header__dropdown-promo-title">AI visibility and SEO in one platform</div>
+                    </a>
+                
+            </srf-header-dropdown-items>
+        
+    
+        
+            <srf-header-dropdown-items id="srf-dropdown-items-resourcesdropdown"
+                                       popover="auto"
+                                       class="srf-header-dropdown-popover">
+                <div class="srf-header__dropdown-columns">
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Grow with Semrush</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/blog/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.blog"
+                                           data-test="header_blog">Blog</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/kb/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.kb"
+                                           data-test="header_knowledge">Knowledge Base</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/academy/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.academy"
+                                           data-test="header_academy">Academy</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/company/stories/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.success_stories"
+                                           data-test="header_success_stories">Success Stories</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://ai-visibility-index.semrush.com/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.ai_visibility_index"
+                                           data-test="header_ai_visibility_index">AI Visibility Index</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/academy/webinars/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.webinars"
+                                           data-test="header_webinars">Webinars</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/news/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.grow.news"
+                                           data-test="header_news">News</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Explore Free Tools</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/free-tools/ai-search-visibility-checker/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.ai_visibility_checker"
+                                           data-test="header_free_tools_ai_visibility_checker">AI Visibility Checker</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/siteaudit/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.seo_checker"
+                                           data-test="header_free_tools_seo_checker">SEO Checker</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/website/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.website_traffic_checker"
+                                           data-test="header_free_tools_website_traffic_checker">Website Traffic Checker</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/analytics/keywordmagic/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.keyword_tool"
+                                           data-test="header_free_tools_keyword_tool">Keyword Tool</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/analytics/backlinks/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.backlink_checker"
+                                           data-test="header_free_tools_backlink_checker">Backlink Checker</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/trending-websites/global/all/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.top_websites_traffic"
+                                           data-test="header_free_tools_top_websites_traffic">Top Websites by Traffic</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/free-tools/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.free_tools.explore_other"
+                                           data-test="header_free_tools_explore_other">Explore Other Free Tools</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">Platform</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/stats/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.platform.our_data"
+                                           data-test="header_resources_platform_our_data">Our Data</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/company/partner-integrations/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.platform.integrations"
+                                           data-test="header_resources_platform_integrations">Integrations</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/apps/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.platform.app_center"
+                                           data-test="header_resources_platform_app_center">App Center</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://enterprise.semrush.com/data-products/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.platform.data_products"
+                                           data-test="header_resources_platform_data_products">Data Products</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                        <div class="srf-header__menu-sublist-column">
+                            <h3 class="srf-header__menu-sublist-column-title">About Semrush</h3>
+                            <ul class="srf-header__menu-sublist-list">
+                                
+                                    <li>
+                                        <a href="/company/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.about.about_us"
+                                           data-test="header_about_us">About Us</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://careers.semrush.com/?utm_source=Main+website"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.about.careers"
+                                           data-test="header_careers">Careers</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/stats/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.about.stats_and_facts"
+                                           data-test="header_stats_and_facts">Stats and Facts</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/lp/affiliate-program/en/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.about.affiliate_program"
+                                           data-test="header_affiliate_program">Affiliate Program</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/company/contacts/"
+                                           class="srf-header__menu-sublist-item"
+                                           data-ga4-click data-ga4-item-location="navigation.header.resources.about.contact_us"
+                                           data-test="header_contacts">Contact Us</a>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    
+                </div>
+                
+                    <a href="https://ai-visibility-index.semrush.com/downloads/ai-visibility-index-2026-study-h2?utm_source=website&utm_medium=lp&utm_campaign=ai_vis_index_flagship_report&utm_term=brand"
+                       class="srf-header__dropdown-promo"
+                       target="_blank"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.header.resources.promo">
+                        <div class="srf-header__dropdown-promo-image"
+                             data-variant="ai-visibility-index"
+                             role="img"
+                             aria-label="Semrush AI Visibility Index"></div>
+                        <div class="srf-header__dropdown-promo-description">
+                            Explore our latest research into which brands are winning in AI visibility and why.
+                        </div>
+                        <div class="srf-header__dropdown-promo-title">Get the free report</div>
+                    </a>
+                
+            </srf-header-dropdown-items>
+        
+    
+        
+    
+</srf-header>
+
+<script>
+window[Symbol.for('sm2.header.config')] = {
+    redirectAfterSignup: false,
+};
+</script>
+<script type="speculationrules">
+{
+  "prefetch": [
+    {
+      "where": {
+        "selector_matches": ["srf-header-menu a", "srf-header-dropdown-items a"]
+      },
+      "eagerness": "moderate"
+    }
+  ]
+}
+</script>
+<script src="/__static__/webpack/3486.a55b3a3711dc90b3.js"></script>
+<script src="/__static__/webpack/header.35d1ac02a05013c7.js"></script>
+
+    
+    <!-- #endregion -->
+
+<!-- #endregion -->
+
+                    
+                </div>
+
+                <div class="srf-layout__sidebar">
+                    
+                        <!-- #region Page Slot "page_sidebar_slot" -->
+
+    <!-- #region Empty Component --><!-- #endregion -->
+
+<!-- #endregion -->
+
+                    
+                </div>
+
+                <div class="srf-layout-main-content-wrapper">
+                    <main class="srf-layout__body" id="root-content">
+                        
+                            
+                                
+  <link rel="stylesheet" href="https://cdn.semrush.com/kb/static/kb/prism/prism.772aecb1c5b8.css" />
+  <link href="/kb/static/kb.212c7f28cc6d8fdec20b.css" rel="stylesheet" />
+  <link href="/kb/static/kb_react.3754fc767a7df01702fc.css" rel="stylesheet" />
+
+
+  <section class="js-kb clearfix kb-page" aria-label="Knowledge Base">
+    
+
+      <script src="https://www.google.com/recaptcha/api.js?render=6LfxV9oUAAAAABRStEXp_CLoOVLW-1QkA_sVy5as"
+              defer></script>
+      <script>
+        window.__STATE__ = {
+          recaptchaKey: "6LfxV9oUAAAAABRStEXp_CLoOVLW-1QkA_sVy5as",
+          hasTOC: false,
+          feedbackPk: "681",
+          csrfmiddlewaretoken: "MOD7l9gOnQclI8IXsoSAJV3yin67Ekmvyc5U7fYrZ52kNv9DaoofkBjoDtLB1Yn8",
+          userLang: "en"
+        };
+      </script>
+
+      
+
+      <link href="/kb/static/kb_content.11f78c38091b7d2f8f13.css" rel="stylesheet" />
+
+      <div class="kb-category-grid">
+        <div class="kb-category-header">
+          <span class="kb-category-header__title">
+            <a href="/kb/">
+              Knowledge Base
+            </a>
+          </span>
+          <button class="kb-category-header__burger js-category-menu-button">
+            <img src="https://cdn.semrush.com/kb/static/kb/img/icons/menu.cfe7dbdefa43.svg" alt="menu button">
+          </button>
+        </div>
+
+        <div class="kb-header">
+          <div id="search-stub">
+            <div></div>
+            <div></div>
+          </div>
+          <div id="app-search"></div>
+        </div>
+      </div>
+    
+    <div class="kb-divider"></div>
+    
+      <div class="kb-category-grid content">
+
+      <nav class="kb-menu">
+        <div class="kb-category-header">
+          <span class="kb-category-header__title">
+            <a href="/kb/">
+              Knowledge Base
+            </a>
+          </span>
+          <button class="kb-menu__close-btn js-kb-menu-button">
+            <img src="https://cdn.semrush.com/kb/static/img/icons/cross.fb7587565274.svg" alt="close button">
+          </button>
+        </div>
+        <div class="kb-menu-header">
+          <div id="search-stub-mob"></div>
+          <div id="app-search-mob"></div>
+        </div>
+
+
+        <ul class="kb-menu-content" aria-label="Left menu navigation list">
+          
+            <li>
+              <a
+                href="/kb/995-what-is-semrush" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="what-is-semrush"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="what-is-semrush"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open What is Semrush? page"
+              >
+                
+
+                What is Semrush?
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/15-getting-started" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="getting-started"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="getting-started"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Getting Started page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Getting Started
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/837-how-to-articles" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="how-to-articles"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="how-to-articles"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open How-To Articles page"
+              >
+                
+
+                How-To Articles
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1011-subscriptions" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="subscriptions"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="subscriptions"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Subscriptions and Toolkits page"
+              >
+                
+
+                Subscriptions and Toolkits
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1608-semrush-one" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-one"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-one"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Semrush One page"
+              >
+                
+
+                Semrush One
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/248-billing-and-account" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="billing-and-account"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="billing-and-account"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Billing and Account page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Billing and Account
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/244-semrush-reports-tools" data-testid="tree_link"
+                class="kb-menu__item -open "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-reports-tools"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-reports-tools"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Semrush Toolkits page"
+              >
+                
+                  <svg class="chevron open"
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Semrush Toolkits
+                
+              </a>
+            </li>
+
+            
+              <ul class="kb-menu__sub" aria-label="Left menu navigation sublist">
+            <li>
+              <a
+                href="/kb/806-seo-toolkit" data-testid="tree_link"
+                class="kb-menu__item -open "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="seo-toolkit"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="seo-toolkit"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open SEO page"
+              >
+                
+                  <svg class="chevron open"
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                SEO
+                
+              </a>
+            </li>
+
+            
+              <ul class="kb-menu__sub" aria-label="Left menu navigation sublist">
+            <li>
+              <a
+                href="/kb/1547-seo-toolkit-pricing-and-plans" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="seo-toolkit-pricing-and-plans"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="seo-toolkit-pricing-and-plans"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open SEO Toolkit Pricing and Plans page"
+              >
+                
+
+                SEO Toolkit Pricing and Plans
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1195-seo-dashboard" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="seo-dashboard"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="seo-dashboard"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open SEO Dashboard page"
+              >
+                
+
+                SEO Dashboard
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/31-site-audit" data-testid="tree_link"
+                class="kb-menu__item -open -active"
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="site-audit"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="site-audit"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Current page Site Audit"
+              >
+                
+
+                Site Audit
+                
+              </a>
+            </li>
+
+            
+              <ul class="kb-menu__sub" aria-label="Left menu navigation sublist"></ul>
+            
+          
+            <li>
+              <a
+                href="/kb/32-position-tracking" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="position-tracking"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="position-tracking"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Position Tracking page"
+              >
+                
+
+                Position Tracking
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/254-domain-overview" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="domain-overview"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="domain-overview"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Domain Overview page"
+              >
+                
+
+                Domain Overview
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/20-organic-rankings" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="organic-rankings"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="organic-rankings"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Organic Rankings page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Organic Rankings
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1614-top-pages" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="top-pages"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="top-pages"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Top Pages page"
+              >
+                
+
+                Top Pages
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1615-compare-domains" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="compare-domains"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="compare-domains"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Compare Domains page"
+              >
+                
+
+                Compare Domains
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/28-keyword-gap" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="keyword-gap"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="keyword-gap"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Keyword Gap page"
+              >
+                
+
+                Keyword Gap
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/773-backlink-gap" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="backlink-gap"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="backlink-gap"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Backlink Gap page"
+              >
+                
+
+                Backlink Gap
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/257-keyword-overview" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="keyword-overview"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="keyword-overview"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Keyword Overview page"
+              >
+                
+
+                Keyword Overview
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/262-keyword-magic-tool" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="keyword-magic-tool"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="keyword-magic-tool"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Keyword Magic Tool page"
+              >
+                
+
+                Keyword Magic Tool
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1058-keyword-strategy-builder" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="keyword-strategy-builder"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="keyword-strategy-builder"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Keyword Strategy Builder page"
+              >
+                
+
+                Keyword Strategy Builder
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/814-seo-writing-assistant" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="seo-writing-assistant"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="seo-writing-assistant"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open SEO Writing Assistant page"
+              >
+                
+
+                SEO Writing Assistant
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/776-topic-research" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="topic-research"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="topic-research"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Topic Research page"
+              >
+                
+
+                Topic Research
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/21-backlinks" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="backlinks"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="backlinks"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Backlinks page"
+              >
+                
+
+                Backlinks
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1616-referring-domains" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="referring-domains"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="referring-domains"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Referring Domains page"
+              >
+                
+
+                Referring Domains
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/295-backlink-audit-tool" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="backlink-audit-tool"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="backlink-audit-tool"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Backlink Audit page"
+              >
+                
+
+                Backlink Audit
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/652-sensor" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="sensor"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="sensor"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Sensor page"
+              >
+                
+
+                Sensor
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/14-seoquake" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="seoquake"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="seoquake"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open SEOquake page"
+              >
+                
+
+                SEOquake
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/27-rank" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="rank"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="rank"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Semrush Rank page"
+              >
+                
+
+                Semrush Rank
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/292-on-page-seo-checker" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="on-page-seo-checker"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="on-page-seo-checker"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open On Page SEO Checker page"
+              >
+                
+
+                On Page SEO Checker
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/296-organic-traffic-insights" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="organic-traffic-insights"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="organic-traffic-insights"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Organic Traffic Insights page"
+              >
+                
+
+                Organic Traffic Insights
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1653-saved-keywords" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="saved-keywords"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="saved-keywords"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Saved Keywords page"
+              >
+                
+
+                Saved Keywords
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1660-organic-rankings-20" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="organic-rankings-20"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="organic-rankings-20"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Organic Rankings 2.0 page"
+              >
+                
+
+                Organic Rankings 2.0
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1661-keyword-magic-tool-20" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="keyword-magic-tool-20"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="keyword-magic-tool-20"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Keyword Magic Tool 2.0 page"
+              >
+                
+
+                Keyword Magic Tool 2.0
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1663-semrush-topics" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-topics"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-topics"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Semrush Topics page"
+              >
+                
+
+                Semrush Topics
+                
+              </a>
+            </li>
+
+            
+          </ul>
+            
+          
+            <li>
+              <a
+                href="/kb/1493-ai-visibility-toolkit" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="ai-visibility-toolkit"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="ai-visibility-toolkit"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open AI Visibility page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                AI Visibility
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1121-semrush-traffic-and-market" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-traffic-and-market"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-traffic-and-market"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Traffic &amp; Market page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Traffic &amp; Market
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1391-semrush-local" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-local"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-local"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Local page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Local
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/801-advertising-toolkit" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="advertising-toolkit"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="advertising-toolkit"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Advertising page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Advertising
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/812-content-toolkit" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="content-toolkit"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="content-toolkit"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Content page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Content
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/811-semrush-social" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-social"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-social"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Social page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Social
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1573-ai-pr" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="ai-pr"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="ai-pr"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open AI PR page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                AI PR
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/34-my-reports" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="my-reports"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="my-reports"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open My Reports page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                My Reports
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/243-managing-a-project" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="managing-a-project"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="managing-a-project"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Projects page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Projects
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1078-agency-partners-platform" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="agency-partners-platform"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="agency-partners-platform"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Agency Partners Platform page"
+              >
+                
+
+                Agency Partners Platform
+                
+              </a>
+            </li>
+
+            
+          </ul>
+            
+          
+            <li>
+              <a
+                href="/kb/1117-app-center" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="app-center"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="app-center"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open App Center page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                App Center
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/931-integrations" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="integrations"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="integrations"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Integrations page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Integrations
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1407-teamwork" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="teamwork"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="teamwork"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Teamwork page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Teamwork
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/997-semrush-data" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="semrush-data"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="semrush-data"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Data and Metrics page"
+              >
+                
+
+                Data and Metrics
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/925-glossary" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="glossary"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="glossary"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open The Ultimate SEO Glossary page"
+              >
+                
+
+                The Ultimate SEO Glossary
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1260-kompyte" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="kompyte"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="kompyte"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Kompyte page"
+              >
+                
+
+                Kompyte
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/5-api" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="api"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="api"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open API page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                API
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/1618-mcp" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="mcp"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="mcp"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Understanding Semrush MCP page"
+              >
+                
+                  <svg class="chevron "
+                       width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">
+                    <polygon fill-rule="evenodd" clip-rule="evenodd" id="chevron-right"
+                             points="4.5 0 3 1.499 7.001 5.5 3 9.499 4.5 10.999 10 5.5"></polygon>
+                  </svg>
+                
+
+                Understanding Semrush MCP
+                
+              </a>
+            </li>
+
+            
+          
+            <li>
+              <a
+                href="/kb/264-contact-semrush" data-testid="tree_link"
+                class="kb-menu__item  "
+                data-ga-event-onclick
+                data-ga-deprecated-category="page:kb"
+                data-ga-deprecated-action="navigation_tree:click"
+                data-ga-deprecated-label="contact-semrush"
+                data-ga-action="click"
+                data-ga-event-source="navigation_tree"
+                data-ga-item-label="contact-semrush"
+                data-ga-link-id="menu_item"
+                data-ga-location-id="article"
+                aria-label="Open Contact Us page"
+              >
+                
+
+                Contact Us
+                
+              </a>
+            </li>
+
+            
+          
+        </ul>
+      </nav>
+
+      <section class="kb-breadcrumbs-redesign" data-text="site-audit-troubleshooting" aria-label="Breadcrumbs">
+        <a href="/kb/"
+           class="kb-breadcrumbs-redesign__item"
+           data-ga-event-onclick
+           data-ga-deprecated-category="page:kb"
+           data-ga-deprecated-action="breadcrumbs:click"
+           data-ga-deprecated-label="kb_index"
+           data-ga-action="click"
+           data-ga-event-source="breadcrumbs"
+           data-ga-item-label="index"
+           data-ga-link-id="breadcrumbs"
+           data-ga-location-id="article"
+        >
+          Knowledge Base
+        </a>
+        <div class="kb-breadcrumbs-redesign__separator"></div>
+        
+          <a
+            href="/kb/244-semrush-reports-tools"
+            class="kb-breadcrumbs-redesign__item"
+            data-testid="breadcrumbs_link"
+            data-ga-event-onclick
+            data-ga-deprecated-category="page:kb"
+            data-ga-deprecated-action="breadcrumbs:click"
+            data-ga-deprecated-label="semrush-reports-tools"
+            data-ga-action="click"
+            data-ga-event-source="breadcrumbs"
+            data-ga-item-label="semrush-reports-tools"
+            data-ga-link-id="breadcrumbs"
+            data-ga-location-id="article"
+          >Semrush Toolkits</a>
+          <div class="kb-breadcrumbs-redesign__separator"></div>
+        
+          <a
+            href="/kb/806-seo-toolkit"
+            class="kb-breadcrumbs-redesign__item"
+            data-testid="breadcrumbs_link"
+            data-ga-event-onclick
+            data-ga-deprecated-category="page:kb"
+            data-ga-deprecated-action="breadcrumbs:click"
+            data-ga-deprecated-label="seo-toolkit"
+            data-ga-action="click"
+            data-ga-event-source="breadcrumbs"
+            data-ga-item-label="seo-toolkit"
+            data-ga-link-id="breadcrumbs"
+            data-ga-location-id="article"
+          >SEO</a>
+          <div class="kb-breadcrumbs-redesign__separator"></div>
+        
+          <a
+            href="/kb/31-site-audit"
+            class="kb-breadcrumbs-redesign__item"
+            data-testid="breadcrumbs_link"
+            data-ga-event-onclick
+            data-ga-deprecated-category="page:kb"
+            data-ga-deprecated-action="breadcrumbs:click"
+            data-ga-deprecated-label="site-audit"
+            data-ga-action="click"
+            data-ga-event-source="breadcrumbs"
+            data-ga-item-label="site-audit"
+            data-ga-link-id="breadcrumbs"
+            data-ga-location-id="article"
+          >Site Audit</a>
+          <div class="kb-breadcrumbs-redesign__separator"></div>
+        
+        <div class="kb-breadcrumbs-redesign__item -active">Troubleshooting Site Audit</div>
+      </section>
+
+      <section class="kb-detail" aria-label="Article text">
+        <div class="kb-detail__content">
+          
+  <article itemscope itemtype="http://schema.org/Article" class="kb-detail__content-manual">
+    
+
+
+<div class="kb-article-header with-cta">
+  <h1 data-testid="kb_title" itemprop="headline">
+    Troubleshooting Site Audit
+  </h1>
+  
+  
+    <button
+      class="kb-visitor-cta"
+      data-ga-event-onclick
+      data-ga-deprecated-category="kb"
+      data-ga-deprecated-action="visitor-cta-click"
+      data-ga-deprecated-label="site-audit"
+      data-ga-action="click"
+      data-ga-event-source="article"
+      data-ga-item-label="site-audit"
+      data-ga-item-location="cta"
+      data-href="https://www.semrush.com/siteaudit/"
+      onclick="window.open('https://www.semrush.com/siteaudit/', '_blank')"
+    >
+      
+        Try Site Audit
+      
+    </button>
+  
+</div>
+
+
+    <div class="kb-desc js-kb-content" itemprop="articleBody">
+      
+        <p>Is your <a href="https://www.semrush.com/siteaudit/" target="_blank">Site Audit</a> not running properly?</p>
+
+<p>There are a number of reasons why pages could be blocked from the Site Audit crawler based on your website&rsquo;s configuration and structure, including:&nbsp;&nbsp;</p>
+
+<ul>
+	<li>Robots.txt&nbsp;blocking crawler</li>
+	<li>Crawl scope excluding certain areas of the site</li>
+	<li>Website is not directly online due to shared hosting</li>
+	<li>Landing page size exceeding 2Mb</li>
+	<li>Pages are behind a gateway / login</li>
+	<li>Crawler blocked by noindex tag</li>
+	<li>Domain could not be resolved by DNS&mdash;the domain entered in setup is offline</li>
+	<li>Website content built on JavaScript&mdash;while Site Audit&nbsp;can render JS code, it can still be the reason for some of the issues</li>
+</ul>
+
+<h3>Troubleshooting Steps</h3>
+
+<p>Follow these troubleshooting steps to see if you can make any adjustments on your own before reaching out to our support team for help.</p>
+
+<div class="accordion js-accordion" data-hidden="true" id="robots-txt-disallow">
+<div class="accordion__title js-accordion-title"><a href="#robots-txt-disallow" rel="nofollow">Check your Robots.txt for Disallow Commands</a></div>
+
+<div class="accordion__inner">
+<p>A <a href="https://www.semrush.com/blog/beginners-guide-robots-txt/" target="_blank">Robots.txt file</a> gives instructions to bots about how to crawl (or not crawl) the pages of a website. You can allow and forbid bots such as Googlebot or SiteAuditBot from crawling all of your site or specific areas of your site using commands such as <strong>Allow</strong>, <strong>Disallow, </strong>and <strong>Crawl Delay.&nbsp;</strong></p>
+
+<p>If your robots.txt is disallowing our bot from crawling your site, our Site Audit tool will not be able to check your site.&nbsp;</p>
+
+<p>You can inspect your Robots.txt for any disallow commands that would prevent crawlers like ours from accessing your website.&nbsp;</p>
+
+<p>To allow the Semrush Site Audit bot (SiteAuditBot) to crawl your site, add the following to your robots.txt file:</p>
+
+<p>User-agent: SiteAuditBot</p>
+
+<p>Disallow:&nbsp;&nbsp;&nbsp;</p>
+
+<p>(leave a blank space after &ldquo;Disallow:&rdquo;)</p>
+
+<p>Here&rsquo;s an example of how a robots.txt file may look:</p>
+
+<p><img alt="List of allow and disallow directives in a robots.txt example file. Disallow directives are highlighted in red, allow directives - in light green. There are also additional instructions on the right side of the screenshot: Disallow = instruction for bots to NOT crawl this area of the site (in red), Allow = instruction for bots to crawl this area of the site (in green)." height="450" src="https://static.semrush.com/kb/uploads/2023/10/06/robots%20txt%20example.png" width="723" / /></p>
+
+<p>Note the various commands based on the user agent (crawler) that the file is addressing.</p>
+
+<p>These files are public and in order to be found must be hosted on the top level of a site. To find a website&rsquo;s robots.txt file, enter the root domain of a site followed by /robots.txt into your browser. For example, the robots.txt file on Semrush.com is found at <a href="https://semrush.com/robots.txt" target="_blank">https://semrush.com/robots.txt</a>.</p>
+
+<p>Some terms you may see on a robots.txt file include:</p>
+
+<ul>
+	<li style="list-style-type:disc"><strong>User-Agent</strong> = the web crawler you are giving instructions to.&nbsp;
+
+	<ul>
+		<li style="list-style-type:circle">Ex: SiteAuditBot, Googlebot</li>
+	</ul>
+	</li>
+	<li style="list-style-type:disc"><strong>Allow</strong> = a command (only for Googlebot) that tells the bot it can crawl a specific page or area of a site even if the parent page or folder is disallowed.</li>
+	<li style="list-style-type:disc"><strong>Disallow</strong> = a command that tells the bot not to crawl a specific URL or subfolder of a site.&nbsp;
+	<ul>
+		<li style="list-style-type:circle">Ex: Disallow: /admin/</li>
+	</ul>
+	</li>
+	<li style="list-style-type:disc"><strong>Crawl Delay</strong> = a command that tells bots how many seconds to wait before loading and crawling another page.&nbsp;</li>
+	<li style="list-style-type:disc"><strong>Sitemap</strong> = indicating where the sitemap.xml file for a certain URL is.</li>
+	<li style="list-style-type:disc"><strong>/</strong> = use the &ldquo;/&rdquo; symbol after a disallow command to tell the bot not to crawl the entirety of your site&nbsp;</li>
+	<li style="list-style-type:disc"><strong>*</strong> = a wildcard symbol that represents any string of possible characters in a URL, used to indicate an area of a site or all user agents.&nbsp;
+	<ul>
+		<li style="list-style-type:circle">Ex: Disallow: /blog/* would indicate all URLs in a site&rsquo;s blog subfolder</li>
+		<li style="list-style-type:circle">Ex: User-agent: * would indicate instructions for all bots</li>
+	</ul>
+	</li>
+</ul>
+
+<p>Read more about <a href="https://developers.google.com/search/reference/robots_txt" rel="nofollow" target="_blank">Robots.txt specifications</a> from Google or on the <a href="https://www.semrush.com/blog/beginners-guide-robots-txt/" target="_blank">Semrush blog</a>.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="restrictive-tags">
+<div class="accordion__title js-accordion-title"><a href="#restrictive-tags" rel="nofollow">Remove Restrictive Tags from your Site</a></div>
+
+<div class="accordion__inner">
+<p>If you see the following code on the main page of a website, it tells us that we&rsquo;re not allowed to index/follow links on it, and our access is blocked.</p>
+
+<pre>
+<code class="language-markup">meta name="robots" content="noindex, nofollow"</code></pre>
+
+<p>Or, a page containing at least one of the following: &quot;<strong>noindex</strong>&quot;, &quot;<strong>nofollow</strong>&quot;, &quot;<strong>none</strong>&quot;, will lead to the error of crawling.<br />
+<br />
+To allow our bot to crawl such a page, remove these &ldquo;noindex&rdquo; tags from your page&rsquo;s code. For more information on the noindex tag, please refer to this <a href="https://support.google.com/webmasters/answer/93710?hl=en" rel="nofollow" target="_blank">Google Support article</a>.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="allowlist-bot">
+<div class="accordion__title js-accordion-title"><a href="#allowlist-bot" rel="nofollow">Allowlist SiteAuditBot</a></div>
+
+<div class="accordion__inner">
+<p>To allowlist the bot, contact your webmaster or hosting provider and ask them to allowlist SiteAuditBot.<br />
+<br />
+The bot&#39;s IP addresses are:&nbsp;<strong>85.208.98.128/25&nbsp;</strong>(a subnet used by Site Audit only)</p>
+
+<p>The bot is using standard 80 HTTP and 443 HTTPS ports to connect.</p>
+
+<p>If you use any plugins (Wordpress, for example) or CDNs (content delivery networks) to manage your site, you will have to allowlist the bot IP within those as well.</p>
+
+<p>For allowlisting on Wordpress, contact <a href="https://en.support.wordpress.com/contact/" rel="nofollow" target="_blank">Wordpress support</a>.</p>
+
+<p>Common CDNs that block our crawler include:</p>
+
+<ul>
+	<li>Cloudflare - read how to allowlist <a href="https://support.cloudflare.com/hc/en-us/articles/217074967-How-do-I-control-IP-access-to-my-site-" rel="nofollow" target="_blank">here</a></li>
+	<li>Imperva - read how to allowlist <a href="https://docs.imperva.com/bundle/cloud-application-security/page/settings/security-settings.htm" rel="nofollow" target="_blank">here</a></li>
+	<li>ModSecurity - read how to allowlist <a href="https://www.liquidweb.com/kb/allowlisting-in-modsec/" rel="nofollow" target="_blank">here</a></li>
+	<li>Sucuri - read how to allowlist <a href="https://docs.sucuri.net/website-firewall/allowlist-and-blacklist/allowlist-an-ip-address/" rel="nofollow" target="_blank">here</a></li>
+</ul>
+
+<p><em>Please note: If you have shared hosting, it is possible that your hosting provider may not allow you to allowlist any bots or edit the Robots.txt file.</em></p>
+
+<h4>Hosting Providers</h4>
+
+<p>Below is a list of some of the most popular hosting providers on the web and how to allowlist a bot on each or reach their support team for assistance:&nbsp;</p>
+
+<ol>
+	<li>Siteground - <a href="https://www.siteground.com/kb/ip-country-traffic-block/" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>1&amp;1 IONOS - <a href="https://www.ionos.com/help/server-cloud-infrastructure/firewall-policies/edit-a-firewall-policy/" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>Bluehost* - <a href="https://my.bluehost.com/hosting/help/308" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>Hostgator* - <a href="https://www.hostgator.com/help/article/how-to-allowlist-your-ip-in-cpanel-for-remote-mysql-access" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>Hostinger - <a href="https://www.hostinger.com/how-to/how-can-i-allow-a-specific-ip-address-for-my-website" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>GoDaddy - <a href="https://www.godaddy.com/help/website-security-ip-access-control-27422" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>GreenGeeks - <a href="https://www.greengeeks.com/kb/4156/how-to-allowlist-an-ip-address-in-configserve-firewall-csf/" rel="nofollow" target="_blank">allowlisting instructions</a>&nbsp;</li>
+	<li>Big Commerce - Must contact <a href="https://support.bigcommerce.com/s/" rel="nofollow" target="_blank">support</a>&nbsp;</li>
+	<li>Liquid Web - Must contact <a href="https://www.liquidweb.com/support/" rel="nofollow" target="_blank">support</a>&nbsp;</li>
+	<li>iPage - Must contact <a href="https://www.ipage.com/help" rel="nofollow" target="_blank">support</a></li>
+	<li>InMotion - Must contact <a href="https://www.inmotionhosting.com/support/" rel="nofollow" target="_blank">support</a></li>
+	<li>Glowhost - Must contact <a href="https://glowhost.com/support/" rel="nofollow" target="_blank">support</a></li>
+	<li>Hosting - Must contact <a href="https://hosting.com/contact/" rel="nofollow" target="_blank">support</a></li>
+	<li>DreamHost - Must contact <a href="https://www.dreamhost.com/support/" rel="nofollow" target="_blank">support</a></li>
+</ol>
+
+<p><em>* Please note: these instructions work&nbsp;for HostGator and Bluehost&nbsp;if you have a website on VPS or Dedicated Hosting.</em></p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="page-size">
+<div class="accordion__title js-accordion-title"><a href="#page-size" rel="nofollow">Check your page size</a></div>
+
+<div class="accordion__inner">
+<p>If your landing page size or the total size of JavaScript/CSS files exceeds 2Mb, our crawlers will be unable to process it due to technical limitations of the tool.</p>
+
+<p>To find out more about what could be causing the size increase and how to solve this issue, you can refer to <a href="https://www.semrush.com/blog/website-performance-semrush-study/#:~:text=implementing%20%E2%80%98necessary%E2%80%99%20redirects.-,Trim%20Down%20Page%20Size,-The%20heavier%20the" target="_blank">this article</a> from our blog.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="account-limits">
+<div class="accordion__title js-accordion-title"><a href="#account-limits" rel="nofollow">Check Account Limits</a></div>
+
+<div class="accordion__inner">
+<p>To see how much of your current crawl budget has been used, go to <a href="https://www.semrush.com/billing-admin/profile/subscription" target="_blank">Profile&mdash;Subscription Info</a> and look for &ldquo;Pages to crawl&rdquo; under &ldquo;SEO Toolkit.&rdquo;<br />
+<br />
+Depending on your subscription level, you are limited to a set number of pages that you can crawl in a month (monthly crawl budget). If you go over the number of pages allowed within your subscription, you&rsquo;ll have to purchase additional limits or wait until the next month when your limits will refresh.</p>
+
+<p>Additionally, If you encounter the error message <strong>&quot;You&#39;ve reached the limit for simultaneously run campaigns&quot;</strong> during setup, it means you&#39;ve hit the maximum number of site audits allowed to run at the same time for your subscription level.</p>
+
+<p>Each subscription tier includes different limits:</p>
+
+<ul>
+	<li aria-level="1" style="list-style-type:disc"><strong>Free account</strong>: 1 site audit at a time</li>
+	<li aria-level="1" style="list-style-type:disc"><strong>Pro SEO Toolkit</strong>: Up to 2 simultaneous site audits</li>
+	<li aria-level="1" style="list-style-type:disc"><strong>Guru SEO Toolkit</strong>: Up to 2 simultaneous site audits</li>
+	<li aria-level="1" style="list-style-type:disc"><strong>Business SEO Toolkit</strong>: Up to 5 simultaneous site audits</li>
+</ul>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="redirects-for-dns">
+<div class="accordion__title js-accordion-title"><a href="#redirects-for-dns" rel="nofollow">Proper Redirects (for DNS Issues)</a></div>
+
+<div class="accordion__inner">
+<p>If the domain could not be resolved by DNS, it likely means that the domain you entered during <a href="https://www.semrush.com/kb/539-configuring-site-audit" target="_blank">configuration</a> is offline. Commonly, users have this issue when entering a root domain (example.com) without realizing that the root domain version of their site doesn&rsquo;t exist and the WWW version of their site would need to be entered instead (www.example.com). &nbsp;<br />
+<br />
+To prevent this issue, the website owner could add a redirect from the unsecured &ldquo;example.com&rdquo; to the secured &ldquo;www.example.com&rdquo; that exists on the server. This issue could also occur the other way around&nbsp;if someone&rsquo;s root domain is secured, but their WWW version is not. In such a case, you would just have to redirect the WWW version to the root domain.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="js-rendering">
+<div class="accordion__title js-accordion-title"><a href="#js-rendering" rel="nofollow">JavaScript-related issues</a></div>
+
+<div class="accordion__inner">
+<p>If your homepage has links to the rest of your site hidden in JavaScript elements, you need to enable JS-rendering, so that we are able to read them and crawl those pages. This feature is available with the Guru and Business tiers of the SEO Toolkit subscription.<br />
+<br />
+<img alt="A demonstration on where to enable JavaScript rendering in Site Audit settings. Highlights show the correct tab and settings section." src="https://static.semrush.com/kb/uploads/2025/05/16/image-20250516125407-1.jpg" / /></p>
+
+<p>In order to not miss the most important pages on your website with our crawl, you can change your <a href="https://www.semrush.com/kb/539-configuring-site-audit#crawlsource" target="_blank">crawl source</a> from website to sitemap&mdash;this way, crawlers&nbsp;won&rsquo;t miss any pages that are difficult to find on the website naturally during the audit.<br />
+<br />
+<img alt="Demonstration on where to find the Crawl Source settings in Site Audit. The dropdown menu is highlighted and features all available Crawl source options." src="https://static.semrush.com/kb/uploads/2025/05/16/image-20250516125445-2.jpg" / /></p>
+
+<p>We can also crawl the HTML of a page with&nbsp;some JS elements&nbsp;and&nbsp;review the parameters of your JS and CSS files with our <a href="https://www.semrush.com/kb/540-site-audit-overview#performance" target="_blank">Performance</a> checks.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="bypass-disallow">
+<div class="accordion__title js-accordion-title"><a href="#bypass-disallow" rel="nofollow">Bypass Disallow in Robots.txt</a></div>
+
+<div class="accordion__inner">
+<p>When this option is turned on, the crawler will bypass robots.txt disallow rules, so pages and internal resources that are normally blocked will still be crawled. Keep in mind that to use this, site ownership will have to be verified.</p>
+
+<p>This is useful for sites that are currently under maintenance. It&rsquo;s also helpful&nbsp;when the site owner does not want to modify the robots.txt file.</p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="crawl-with-credentials">
+<div class="accordion__title js-accordion-title"><a href="#crawl-with-credentials" rel="nofollow">Crawl with your Credentials</a></div>
+
+<div class="accordion__inner">
+<p>To audit private areas of your website that are password protected, enter your credentials in the &ldquo;Crawling with your credentials&rdquo; option under the settings gear.</p>
+
+<p>This is highly recommended for sites still under development or are private and fully password protected.<br />
+<br />
+<img src="https://static.semrush.com/kb/uploads/2025/11/21/Screenshot%202025-11-21%20at%206.12.10PM.png" / alt="Troubleshooting Site Audit image 4" /></p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="web-bot-auth-signature">
+<div class="accordion__title js-accordion-title"><a href="#web-bot-auth-signature">Crawl With Web Bot Auth Signature</a></div>
+
+<div class="accordion__inner">
+<p>Some websites and hosting platforms, such as Shopify, may block unknown bots by default for security or performance reasons. If your audit fails on these platforms, adding a Web Bot Auth signature allows the Semrush crawler to identify itself and prove it is authorized to access your website.</p>
+
+<p><img src="https://static.semrush.com/kb/uploads/2026/02/02/image-20260202122423-1.png" / alt="Troubleshooting Site Audit image 5" /></p>
+
+<p>If you did not provide a signature during the initial setup and your site is blocked, Semrush will detect the restriction and prompt you to fix it directly from the tool&rsquo;s interface.</p>
+
+<p><img src="https://static.semrush.com/kb/uploads/2026/02/02/image-20260202122423-2.png" / alt="Troubleshooting Site Audit image 6" /></p>
+</div>
+</div>
+
+<div class="accordion js-accordion" data-hidden="true" id="crawler-settings-changed">
+<div class="accordion__title js-accordion-title"><a href="#crawler-settings-changed" rel="nofollow">Changing Crawler Settings</a></div>
+
+<div class="accordion__inner">
+<p>&ldquo;<em>Your crawler settings have changed since your previous audit. This could affect your current audit results and the number of issues detected.</em>&rdquo;</p>
+
+<p>This notification appears in Site Audit after you update any settings and re-run the audit. This is not an indicator of an issue but rather a note that if the crawl results changed unexpectedly, this is a likely reason for it.</p>
+</div>
+</div>
+
+<p>Check out our blog post, <a href="https://www.semrush.com/blog/biggest-seo-mistakes/" target="_blank">Common SEO Issues &amp; How to Fix Them</a>.</p>
+      
+    </div>
+    
+
+<div class="kb-detail__microdata">
+    <meta itemscope itemprop="mainEntityOfPage" itemType="https://schema.org/WebPage"
+          itemid="/kb/681-site-audit-troubleshooting"/>
+    <meta itemprop="datePublished" content="2017-03-20T12:47:12.963741-04:00"/>
+    <span itemprop="author">Semrush</span>
+    <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <meta itemprop="url" content="https://cdn.semrush.com/kb/static/img/logo.b536aa5942c4.png">
+        <meta itemprop="width" content="1000">
+        <meta itemprop="height" content="437">
+    </div>
+    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="https://cdn.semrush.com/kb/static/img/logo.b536aa5942c4.png">
+            <meta itemprop="width" content="1000">
+            <meta itemprop="height" content="437">
+        </div>
+        <meta itemprop="name" content="Semrush">
+        <meta itemprop="url" content="/">
+    </div>
+</div>
+
+  </article>
+
+        </div>
+
+        
+  
+    <div class="kb-article-after">
+      
+
+
+
+
+
+
+
+    </div>
+  
+
+        
+  
+<div class="kb-detail-footer">
+  
+    <a href="/kb/244-semrush-reports-tools"
+       data-testid="root_link"
+       class="kb-admin-btn"
+    >
+    <span>
+      <img alt="Back to" src="https://cdn.semrush.com/kb/static/img/icons/arrow-left.aa31ace2c168.svg" />
+      Back to Semrush Toolkits category
+    </span>
+    </a>
+  
+</div>
+
+
+      </section>
+
+      <button class="js-button_up hidden" aria-label="Scroll to top" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" tabindex="-1" aria-hidden="true"
+             xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M10.5 1L2 9.501L4.133 11.633L9.001 6.764V21H12V6.764L16.867 11.633L19.001 9.501L10.5 1Z"></path>
+        </svg>
+      </button>
+
+      
+
+      <div class="kb-category-feedback">
+        <div class="kb-fixed">
+          <div class="kb-fixed__inner">
+            
+            <div class="kb-skeleton__feedback" id="stubFeedback">
+              <div></div>
+              <div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div id="app"></div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </section>
+
+  <script src="https://cdn.semrush.com/kb/static/kb/prism/prism.f1736de1b243.js" defer></script>
+  <script src="/kb/static/kb.23efe0655f8ac7140fcf.js" ></script>
+  <script src="/kb/static/uikit.3231534e81d2b662a603.js" ></script>
+<script src="/kb/static/react.e3e991fa42a17630787c.js" ></script>
+<script src="/kb/static/kb_react.872a099ebf6bccbde884.js" ></script>
+  <script src="/kb/static/kb_content.e48696eee590c2503e49.js" ></script>
+
+  
+  
+
+
+
+                            
+                        
+                    </main>
+
+                    <div class="srf-layout__footer">
+                        
+                            <!-- #region Page Slot "page_footer_slot" -->
+
+    <!-- #region BuiltIn Component "footer" -->
+    
+        
+        
+
+<link rel="stylesheet" href="/__static__/webpack/footer.ff972a8873bd9908.css">
+
+
+
+<footer id="srf-footer"
+        class="srf-footer">
+
+    <div class="srf-footer-content">
+
+        <div class="srf-footer__get-started">
+            <h2 class="srf-footer__get-started-title">Get started with Semrush today</h2>
+            <p class="srf-footer__get-started-subtitle">Try Semrush free for seven days. Cancel anytime.</p>
+            <a class="srf-footer__get-started-button srf-footer__button"
+               href="/signup/?src=footer"
+               data-ga4-click
+               data-ga4-item-location="navigation.footer.get_started.button.start_free_trial">Start free trial</a>
+        </div>
+
+        <div id="srf-footer__menu" class="srf-footer__menu">
+            
+                
+                    <div class="srf-footer__menu-block srf-footer__collapsable">
+                        <p class="srf-footer__menu-block-title">Semrush</p>
+                        <button class="srf-footer__menu-block-title">Semrush</button>
+                        <ul class="srf-footer__menu-list">
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/one/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush_one"
+                                       data-test="semrush_one">Semrush One</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/features/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Features"
+                                       data-test="features">Features</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/solutions/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Solutions"
+                                       data-test="solutions">Solutions</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/pricing/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Prices"
+                                       data-test="prices">Pricing</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/semrush-free-trial/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Free.trial"
+                                       data-test="free_trial">Free Trial</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/vs/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush.Versus"
+                                       data-test="semrush_versus">Compare Semrush</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/stories/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Success.stories"
+                                       data-test="success_stories">Success Stories</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/stats/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Stats.and.Facts"
+                                       data-test="stats_and_facts">Stats and Facts</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/affiliate-program/en/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Affiliate.Program"
+                                       data-test="affiliate_program">Affiliate Program</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="https://enterprise.semrush.com/data-products/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Data.Products"
+                                       data-test="data_products">Data Products</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+            
+                
+                    <div class="srf-footer__menu-block srf-footer__collapsable">
+                        <p class="srf-footer__menu-block-title">More tools</p>
+                        <button class="srf-footer__menu-block-title">More tools</button>
+                        <ul class="srf-footer__menu-list">
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/mcp/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush.MCP"
+                                       data-test="semrush_mcp">Semrush MCP</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="https://enterprise.semrush.com/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Enterprise.Seo"
+                                       data-test="enterprise_seo">Enterprise SEO</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/enterprise-aio/en/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Enterprise.Aio"
+                                       data-test="enterprise_aio">Enterprise AIO</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/site-intelligence/en/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Enterprise.Si"
+                                       data-test="enterprise_si">Enterprise SI</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/insights/en/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Insights24"
+                                       data-test="insights">Insights24</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/mfour/en/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Mfour"
+                                       data-test="mfour">Mfour</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/apps/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.app.center"
+                                       data-test="footer_app_center">App Center</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/website/top/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.free.top.websites"
+                                       data-test="top_websites">Top Websites</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/free-tools/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.free.tools"
+                                       data-test="free_tools">Free Tools</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/sensor/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Sensor"
+                                       data-test="sensor">Sensor</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+            
+                
+                    <div class="srf-footer__menu-block srf-footer__collapsable">
+                        <p class="srf-footer__menu-block-title">Company</p>
+                        <button class="srf-footer__menu-block-title">Company</button>
+                        <ul class="srf-footer__menu-list">
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.About.Us"
+                                       data-test="about_us">About Us</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/semrush-questions/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush.Questions"
+                                       data-test="semrush_questions">Semrush Questions</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/news/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.News"
+                                       data-test="footer_news">News</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="https://careers.semrush.com/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Careers"
+                                       data-test="footer_careers">Careers</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/partners/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Partners"
+                                       data-test="partners">Partners</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/semrush-select/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush.Select"
+                                       data-test="semrush_select">Semrush Select</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/global-issues/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Global.Issues.Index"
+                                       data-test="global_issues_index">Global Issues Index</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="javascript:window.showDontSellMyDataSettings();"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Personal.Info"
+                                       data-test="personal_info">Do not sell my personal info</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/company/contacts/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Contact.Us"
+                                       data-test="contact_us">Contact Us</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+            
+                <div class="srf-footer__menu-column">
+                    <div class="srf-footer__menu-block srf-footer__collapsable">
+                        <p class="srf-footer__menu-block-title">Support</p>
+                        <button class="srf-footer__menu-block-title">Support</button>
+                        <ul class="srf-footer__menu-list">
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/kb/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Knowledge.Base"
+                                       data-test="knowledge_base">Knowledge Base</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/academy/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Academy"
+                                       data-test="academy">Academy</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/api-documentation/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Semrush.API"
+                                       data-test="semrush_api">Semrush API</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+            
+                
+                    <div class="srf-footer__menu-block srf-footer__collapsable">
+                        <p class="srf-footer__menu-block-title">Community</p>
+                        <button class="srf-footer__menu-block-title">Community</button>
+                        <ul class="srf-footer__menu-list">
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/blog/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Blog"
+                                       data-test="footer_blog">Semrush Blog</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/academy/webinars/"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.Webinar"
+                                       data-test="footer_webinars">Webinars</a>
+                                </li>
+                            
+                                <li class="srf-footer__menu-block-list-item">
+                                    <a href="/lp/semrush-circle/en/?utm_source=semrush&amp;utm_medium=footer"
+                                       data-ga4-click data-ga4-item-location="navigation.footer.menu.item.AmbassadorProgram"
+                                       data-test="ambassador_program">Ambassador Program</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    </div>
+            
+        </div>
+
+        <div class="srf-footer__social">
+            
+                <ul class="srf-footer__social-list">
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--linkedin"
+                               href="https://www.linkedin.com/company/semrush"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.linkedin"
+                               data-test="linkedin"
+                               aria-label="Semrush linkedin"></a>
+                        </li>
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--instagram"
+                               href="https://instagram.com/semrush/"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.instagram"
+                               data-test="instagram"
+                               aria-label="Semrush instagram"></a>
+                        </li>
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--tiktok"
+                               href="https://www.tiktok.com/@semrush"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.tiktok"
+                               data-test="tiktok"
+                               aria-label="Semrush tiktok"></a>
+                        </li>
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--youtube"
+                               href="https://www.youtube.com/user/SemrushHQ"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.youtube"
+                               data-test="youtube"
+                               aria-label="Semrush youtube"></a>
+                        </li>
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--facebook"
+                               href="https://www.facebook.com/Semrush"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.facebook"
+                               data-test="facebook"
+                               aria-label="Semrush facebook"></a>
+                        </li>
+                    
+                        <li>
+                            <a class="srf-footer__social-link srf-footer__social-link--x"
+                               href="https://x.com/semrush"
+                               rel="nofollow"
+                               data-ga4-click
+                               data-ga4-item-location="navigation.footer.social_networks.x"
+                               data-test="x (twitter)"
+                               aria-label="Semrush x"></a>
+                        </li>
+                    
+                </ul>
+            
+            <p class="srf-footer__copyright">
+                <a href="https://business.adobe.com/"
+                   class="srf-footer__adobe-logo"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Adobe"
+                   aria-description="External link, opens in a new window"></a>
+                <span class="srf-footer__copyright-text">
+                    <span class="srf-footer__year">© 2026 Semrush Holdings. </span> All rights reserved.
+                </span>
+            </p>
+        </div>
+
+        <div class="srf-footer__legal srf-footer__collapsable">
+            <p class="srf-footer__legal-title">Legal</p>
+            <button class="srf-footer__legal-title">Legal</button>
+            <ul class="srf-footer__legal-list">
+                <li class="srf-footer__legal-list-item">
+                    <a href="/company/legal/privacy-policy/"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.footer.menu.item.Privacy.Policy">Privacy Policy</a>
+                </li>
+                <li class="srf-footer__legal-list-item">
+                    <a href="/company/legal/"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.footer.menu.item.Legal.Info">Terms of Service</a>
+                </li>
+                <li class="srf-footer__legal-list-item">
+                    <a href="javascript:window.showConsentSettings();"
+                       data-ga4-click
+                       data-ga4-item-location="navigation.footer.menu.item.Cookie.Settings"
+                       data-test="cookie_settings">Cookies Settings</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="srf-footer__lang">
+            <button class="srf-footer__button srf-footer__button--lang"
+                    data-ga4-click
+                    data-ga4-item-location="navigation.footer.lang_dropdown"
+                    data-test="footer_lang_switcher_button">English</button>
+            <ul class="srf-footer__lang-list"
+                role="menu"
+                aria-label="List of available languages"
+                onclick="sm2.switchLanguage(arguments[0].target.value)">
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button srf-footer__lang-button--active"
+                                name="language"
+                                role="menuitem"
+                                value="en"
+                                lang="en"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.en"
+                                data-test="adaptive_footer_lang_en">English</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="de"
+                                lang="de"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.de"
+                                data-test="adaptive_footer_lang_de">Deutsch</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="es"
+                                lang="es"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.es"
+                                data-test="adaptive_footer_lang_es">Español</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="fr"
+                                lang="fr"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.fr"
+                                data-test="adaptive_footer_lang_fr">Français</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="it"
+                                lang="it"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.it"
+                                data-test="adaptive_footer_lang_it">Italiano</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="nl"
+                                lang="nl"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.nl"
+                                data-test="adaptive_footer_lang_nl">Nederlands</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="pl"
+                                lang="pl"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.pl"
+                                data-test="adaptive_footer_lang_pl">Polski</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="pt"
+                                lang="pt"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.pt"
+                                data-test="adaptive_footer_lang_pt">Português (Brasil)</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="sv"
+                                lang="sv"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.sv"
+                                data-test="adaptive_footer_lang_sv">Svenska</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="vi"
+                                lang="vi"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.vi"
+                                data-test="adaptive_footer_lang_vi">Tiếng Việt</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="tr"
+                                lang="tr"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.tr"
+                                data-test="adaptive_footer_lang_tr">Türkçe</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="zh"
+                                lang="zh"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.zh"
+                                data-test="adaptive_footer_lang_zh">中文</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="ja"
+                                lang="ja"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.ja"
+                                data-test="adaptive_footer_lang_ja">日本語</button>
+                    </li>
+                
+                    <li role="none">
+                        <button class="srf-footer__lang-button"
+                                name="language"
+                                role="menuitem"
+                                value="ko"
+                                lang="ko"
+                                data-ga4-click
+                                data-ga4-item-location="navigation.footer.languages.ko"
+                                data-test="adaptive_footer_lang_ko">한국어</button>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+</footer>
+
+
+    <div class="srf-footer-reveal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1376" height="192" fill="none" viewBox="0 0 1376 192"><path fill="#181e15" d="M357.319 4.208h-159.14V187.82h160.446v-33.577H236.451v-42.755h105.837V77.913H236.451V37.784h120.868zm22.957 0V187.82h37.476V59.275l48.558 128.517h43.812l48.558-128.8v128.8h37.476V4.208h-56.485l-51.455 137.695L436.76 4.208zm242.275 0V187.82h38.272v-67.154h84.187v67.154h38.272V93.134h-23.213c16.877-4.716 27.958-15.221 27.958-38.547 0-38.293-32.447-50.097-69.668-50.351h-95.808zm359.705 104.655V4.208h-38.272v104.655c-1.051 32.786-21.906 48.515-50.148 48.515s-49.097-15.729-50.148-48.515V4.208h-38.272v104.655c1.051 51.932 36.169 83.137 88.42 83.137s87.341-31.205 88.42-83.137M1196.01 4.208V187.82h38.27v-76.332h103.45v76.332H1376V4.208h-38.27v73.705h-103.45V4.208zM660.823 87.09V37.784h57.536c18.468.255 31.14 6.806 31.14 24.653 0 17.848-12.672 24.4-31.14 24.654zm-524.129-23.1h41.425C172.835 23.608 135.898 0 92.626 0c-47.25 0-88.42 17.565-88.42 57.185 0 77.376 137.233 40.665 137.233 74.496 0 19.4-20.06 27.025-48.302 27.025-30.885 0-51.74-13.103-52.507-36.994H0C1.051 165.766 39.068 192 93.165 192c43.017 0 87.881-12.058 87.881-60.319 0-80.794-137.234-39.62-137.234-76.078 0-13.893 17.673-22.309 48.302-22.309 23.753 0 41.966 9.715 44.608 30.697zm997.826 0h41.43C1170.66 23.608 1133.72 0 1090.45 0c-47.25 0-88.42 17.565-88.42 57.185 0 77.376 137.24 40.665 137.24 74.496 0 19.4-20.06 27.025-48.31 27.025-30.88 0-51.74-13.103-52.5-36.994h-40.633C998.878 165.766 1036.89 192 1090.99 192c43.02 0 87.88-12.058 87.88-60.319 0-80.794-137.23-39.62-137.23-76.078 0-13.893 17.67-22.309 48.3-22.309 23.75 0 41.97 9.715 44.61 30.697z"/></svg>
+
+    </div>
+
+
+<script src="/__static__/webpack/footer.7ee119cd4df8450d.js" defer></script>
+
+    
+    <!-- #endregion -->
+
+<!-- #endregion -->
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div id="srf-notice-bubble-container"
+                 role="region"
+                 aria-label="Notifications"></div>
+            <div class="srf-overlay"></div>
+            <div class="srf-popup-manager"></div>
+            <div id="srf-sso-login-form"></div>
+            <div id="srf-limit-popup"></div>
+            <div id="srf-billing-popup"></div>
+            <div id="srf-sharing-popup"></div>
+            <div id="srf-multi-invite-popup"></div>
+
+            
+                
+
+
+
+                
+
+
+    <script>window.intercomSettings = {"app_id": "cs07vi2k", "GA Client ID": ""};</script>
+    <script>
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/cs07vi2k';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onDOMContentLoaded',l);}else{w.addEventListener('DOMContentLoaded',l,false);}}})();
+</script>
+
+
+
+            
+
+            
+            <script>
+            if (window.ga) {
+                if (window.sm2.GAexperiments.length) {
+                    window.ga('set', 'exp', window.sm2.GAexperiments.join('!'));
+                }
+                
+                    window.ga('send', 'pageview');
+                
+            }
+            </script>
+
+            <!--
+            Don't read and rely on this data from external integrated services or scripts,
+            as it is subject to change and not backward compatible.
+            -->
+            <script id="sm2_initial_state" type="application/json">{"base": {"cookie_domain": ".semrush.com", "csrfToken": "l0rdttZLFF2dW4B788FxH91b51wvWCNplr6BC6sN7d7Y7MPRKLdhPE9u7EpyfF7p", "language_code": "en", "PopupManager": {"popups": {"need_confirm_email": null, "disabled_user": false, "reset_password": false}}, "switchLanguageApiEndpoint": "/i18n/switch_language_api/", "sso": {"enable_preload": false, "env": "production", "root_url": "/sso", "root_semrush_url": "https://www.semrush.com"}}, "searchbarApiV1Config": {"autocompleteUrl": "https://www.semrush.com/search-bar/api/search/suggestions?type=2", "redirectToKeyword": false, "formAction": "/kb", "gaLabel": "(not-set-in-config)", "defaultQuery": "", "device": null, "date": null, "currency": null, "defaultProtocol": null, "defaultSearchType": null, "defaultVisible": true, "supportedSearchTypes": [], "spaMode": false, "updateBrowserHistory": false, "toolCode": "knowledge-base", "theme": "secondary", "tldFileName": "default"}, "foldersApiV1Config": {}}</script>
+
+            <script src="/__static__/webpack/5650.459de9636bd222b9.js" defer></script>
+<script src="/__static__/webpack/9327.330fa6303687fa68.js" defer></script>
+<script src="/__static__/webpack/8808.093acd7f9acd29e8.js" defer></script>
+<script src="/__static__/webpack/base.8ef0b40b4878b227.js" defer></script>
+            <script src="/__static__/webpack/init_component_provider.b9bc7c3800fdd9a3.js" defer></script>
+            
+                <script src="/__static__/webpack/init_searchbar_api.8cb5cfe72b146bf2.js" defer></script>
+            
+            
+                <script src="/__static__/webpack/init_folders_api.619ce99a44090ad9.js" defer></script>
+            
+
+            
+
+            
+
+            <script>
+            
+            </script>
+        </body>
+    </html>
+
+<!--sm_log_id:"flb-2ed6c2f5cb230eb2cff204d3b9d5cebd"-->
+<!--otel_trace_id:"2ed6c2f5cb230eb2cff204d3b9d5cebd"-->
+<!--template:"site_info"-->

@@ -2,7 +2,7 @@
 
 valid_source() {
   local format=$1 name=$2 url=$3
-  [[ $name =~ ^[a-z0-9-]+/[a-z0-9-]+$ && $format =~ ^(text|json|json-converted|fastly|ahrefs)$ && $url == https://* ]]
+  [[ $name =~ ^[a-z0-9-]+/[a-z0-9-]+$ && $format =~ ^(text|json|json-converted|json-array|fastly|ahrefs|amazon-html|marginalia-html|semrush-html|you-html|sail)$ && $url == https://* ]]
 }
 
 record_download_failure() {
@@ -79,12 +79,17 @@ update_main() (
   set -uo pipefail
   cd "$(dirname "${BASH_SOURCE[0]}")" || return 1
   local registry=${SOURCES_FILE:-sources.tsv} legacy_state=${STATE_DIR:-.state}
-  local tmp status=0 format name url
+  local tmp status=0 format name url publisher_page extra
   mkdir -p other/raw other/provenance json other/json || return 1
   tmp=$(mktemp -d) || return 1
   trap 'rm -rf "$tmp"' EXIT
-  while read -r format name url; do
+  while read -r format name url publisher_page extra; do
     [[ -z $format || $format == \#* ]] && continue
+    if [[ -n $extra || ( -n $publisher_page && $publisher_page != https://* ) ]]; then
+      echo "Invalid publisher page: $name" >&2
+      status=1
+      continue
+    fi
     update_source "$format" "$name" "$url" "$tmp" "$legacy_state" || status=1
   done < "$registry" || return 1
   return "$status"

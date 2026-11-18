@@ -83,8 +83,9 @@ t_sourced_entry_point() {
 t_text_download() {
   echo '# text downloads retain the original and produce Google-format JSON'
   setup_case
-  registry 'text one/good https://example.test/good'
+  registry $'text\tone/good\thttps://example.test/good\thttps://example.test/docs'
   run_update
+  assert_eq 'https://example.test/good' "$(cat "$CALLS")"
   assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   assert_eq '192.0.2.0/24' "$(cat other/raw/one/good)"
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/24"' other/json/one/good.json >/dev/null || fail 'incorrect converted list'
@@ -489,6 +490,35 @@ t_ahrefs_format() {
   printf '%s\n' '{"ips":[{"ip_address":"192.0.2.1"}]}' > input
   validate ahrefs input output -
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.1/32"' output >/dev/null || fail 'incorrect Ahrefs list'
+}
+
+t_amazon_html_format() {
+  echo '# Amazon embedded JSON accepts both publisher prefix spellings'
+  setup_case
+  printf '%s\n' '<pre><code class="container">{"prefixes":[{"ipv4Prefix":"192.0.2.1"},{"ip_prefix":"198.51.100.0/24"}]}</code></pre>' > input
+  validate amazon-html input output -
+  jq -e '.prefixes == [{"ipv4Prefix":"192.0.2.1/32"},{"ipv4Prefix":"198.51.100.0/24"}]' output >/dev/null
+  printf '%s\n' '<p>Our site moved. Contact us at 192.0.2.10.</p>' > input
+  expect_invalid amazon-html input output -
+}
+
+t_sail_format() {
+  echo '# SAIL uses only the prefix sets referenced by Claude-Agent'
+  setup_case
+  cat > input <<'TOML'
+schema = "draft-kelley-webbotauth-sail-00"
+[[prefix_sets]]
+name = "browser"
+ipv4_prefixes = ["192.0.2.1"]
+[[prefix_sets]]
+name = "other"
+ipv4_prefixes = ["198.51.100.0/24"]
+[[services]]
+name = "Claude-Agent"
+prefix_sets = ["browser"]
+TOML
+  validate sail input output -
+  jq -e '.prefixes == [{"ipv4Prefix":"192.0.2.1/32"}]' output >/dev/null
 }
 
 testsuite_main "$@"

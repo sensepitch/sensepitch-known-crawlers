@@ -12,8 +12,11 @@ downloads belong in `other/raw/`; unchanged Google-compatible lists belong in
 `json/`, and converted lists in `other/json/`. Published JSON lists use
 `<company>/<specialization>.json` names.
 
-Run `bash update.sh` to refresh the sources in `sources.tsv`. It requires Bash,
-curl with JSON write-out support, jq and Python 3. The script can also be
+Run `bash update.sh` to refresh the sources in `sources.tsv`. Each row provides
+the format, list name, download URL and authoritative publisher page. Open the
+publisher page to check for new feeds, replacement URLs or changes in scope.
+The updater fetches the download URL. It requires Bash,
+curl with JSON write-out support, jq and Python 3.11 or later. The script can also be
 sourced from Bash; call `update_main` to run an update without changing the
 caller's directory or shell settings. Run the test suite with `knockout.sh`.
 To run an individual case, use, for example,
@@ -50,7 +53,22 @@ hours. Commit these records to track failures; a successful update removes the
 active record, with its history retained in Git. Existing `.state/` records
 are moved to the new location on the next update.
 
-The source registry covers Perplexity, Google, Bing, Common Crawl, Apple,
-Telegram, UptimeRobot, Stripe, Cloudflare, Fastly, Ahrefs, RSSAPI, Better
-Stack, Mollie, Pingdom and Bunny. See `TODO.md` for sources still to be
-investigated; broad ASN routes are not treated as crawler-specific IP lists.
+## Regular checks
+
+- **Every six hours**, run `bash update.sh` from a runner with direct access to
+  the publishers. This allows several attempts within the 24-hour retrieval
+  failure window. Review the exit status and any active `.failure` records.
+- **Weekly**, review Cloudflare Radar for new or newly verified crawlers. Check
+  Known Agents and the ai.robots.txt registry for new user agents and publisher
+  documentation. [Cloudflare Radar Bots Directory](https://radar.cloudflare.com/bots/directory),
+  [Radar Bots API](https://developers.cloudflare.com/api/resources/radar/subresources/bots/methods/list/),
+  [Known Agents](https://knownagents.com/agents),
+  [ai.robots.txt registry](https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.json)
+- **Monthly**, review GoodBots for monitoring, CDN and service leads and
+  CrawlCheck for newly tracked feeds and changes in their history. Confirm
+  each candidate using its publisher page and fetch from the publisher.
+  [GoodBots](https://github.com/AnTheMaker/GoodBots),
+  [CrawlCheck IP-range history](https://crawlcheck.io/data/ip-ranges)
+
+See `TODO.md` for sources still to be investigated. Keep company-wide network
+ranges scoped to the services they describe.

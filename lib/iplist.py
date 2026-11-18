@@ -1,10 +1,56 @@
 #!/usr/bin/env python3
-"""Validate publisher lists and convert plain CIDRs to Google's JSON shape."""
+"""Validate publisher IP lists and convert them to Google's JSON shape."""
 import datetime
+import html
 import ipaddress
 import json
 import pathlib
+import re
 import sys
+import tomllib
+
+
+def match_once(pattern, data):
+    matches = re.findall(pattern, data, re.DOTALL)
+    if len(matches) != 1:
+        raise ValueError('expected exactly one publisher list')
+    return matches[0]
+
+
+def read_amazon(data):
+    block = match_once(r'<pre>\s*<code class="container">\s*(\{.*?\})\s*</code>\s*</pre>', data)
+    entries = []
+    for prefix in json.loads(html.unescape(block))['prefixes']:
+        if not isinstance(prefix, dict) or len(prefix) != 1:
+            raise ValueError('invalid Amazon prefix entry')
+        key, address = next(iter(prefix.items()))
+        family = {'ipv4Prefix': 4, 'ip_prefix': 4, 'ipv6Prefix': 6, 'ipv6_prefix': 6}.get(key)
+        if not isinstance(address, str) or ipaddress.ip_network(address, strict=False).version != family:
+            raise ValueError('invalid Amazon prefix entry')
+        entries.append(address)
+    return entries
+
+
+def read_sail(data):
+    document = tomllib.loads(data)
+    if document['schema'] != 'draft-kelley-webbotauth-sail-00':
+        raise ValueError('unsupported SAIL schema')
+    services = [service for service in document['services'] if service['name'] == 'Claude-Agent']
+    if len(services) != 1:
+        raise ValueError('expected one Claude-Agent service')
+    sets = document['prefix_sets']
+    prefixes = {item['name']: item for item in sets}
+    if len(prefixes) != len(sets):
+        raise ValueError('duplicate SAIL prefix set')
+    entries = []
+    for name in services[0]['prefix_sets']:
+        prefix_set = prefixes[name]
+        for version in (4, 6):
+            for address in prefix_set.get(f'ipv{version}_prefixes', []):
+                if not isinstance(address, str) or ipaddress.ip_network(address, strict=False).version != version:
+                    raise ValueError('invalid SAIL prefix family')
+                entries.append(address)
+    return entries
 
 
 def read(data, kind):
@@ -19,6 +65,25 @@ def read(data, kind):
         entries = obj['addresses'] + obj['ipv6_addresses']
     elif kind == 'ahrefs':
         entries = [entry['ip_address'] for entry in json.loads(data)['ips']]
+    elif kind == 'json-array':
+        entries = json.loads(data)
+        if not isinstance(entries, list) or any(not isinstance(entry, str) for entry in entries):
+            raise ValueError('expected an array of IP addresses')
+    elif kind == 'amazon-html':
+        entries = read_amazon(data)
+    elif kind == 'marginalia-html':
+        start, end = match_once(
+            r'IP Address Range\s*</h3>\s*<p\b[^>]*>\s*([\d.]+)\s*-\s*([\d.]+)\s*</p>', data)
+        entries = [str(network) for network in ipaddress.summarize_address_range(
+            ipaddress.IPv4Address(start), ipaddress.IPv4Address(end))]
+    elif kind == 'semrush-html':
+        entries = [match_once(r"The bot's IP addresses are:\s*<strong>\s*([\d.]+/\d+)\s*</strong>",
+                              html.unescape(data))]
+    elif kind == 'you-html':
+        entries = [match_once(r'Legitimate YouBot requests originate from\s*<strong\b[^>]*>\s*([\d.]+/\d+)\s*</strong>',
+                              data)]
+    elif kind == 'sail':
+        entries = read_sail(data)
     elif kind == 'text':
         entries = [s.strip() for s in data.splitlines() if s.strip() and not s.lstrip().startswith('#')]
     else:
