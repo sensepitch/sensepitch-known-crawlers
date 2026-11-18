@@ -1,0 +1,4 @@
+# Downloaded bytes must survive Git's line-ending conversion unchanged.
+other/raw/** -text whitespace=cr-at-eol
+json/** -text whitespace=cr-at-eol
+other/json/** text eol=lf

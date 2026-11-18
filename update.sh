@@ -2,7 +2,7 @@
 
 valid_source() {
   local format=$1 name=$2 url=$3
-  [[ $name =~ ^[a-z0-9-]+/[a-z0-9-]+$ && $format =~ ^(text|json|fastly|ahrefs)$ && $url == https://* ]]
+  [[ $name =~ ^[a-z0-9-]+/[a-z0-9-]+$ && $format =~ ^(text|json|json-converted|fastly|ahrefs)$ && $url == https://* ]]
 }
 
 record_download_failure() {
@@ -16,7 +16,7 @@ record_download_failure() {
 
 write_provenance() {
   local url=$1 curl_metadata=$2 output=$3
-  jq --arg source "$url" --arg fetched "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '{source_url:$source, final_url:.url_effective, fetched_at:$fetched, connected_peer_ip:.remote_ip, proxy_used:(if has("proxy_used") then .proxy_used != 0 else null end)}' "$curl_metadata" > "$output"
+  jq -e --arg source "$url" --arg fetched "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 'select((.proxy_used // 0) == 0 and (.remote_ip | type == "string" and length > 0)) | {source_url:$source, final_url:.url_effective, fetched_at:$fetched, connected_peer_ip:.remote_ip, proxy_used:false}' "$curl_metadata" > "$output"
 }
 
 copy_if_changed() {
@@ -25,13 +25,16 @@ copy_if_changed() {
 
 update_source() {
   local format=$1 name=$2 url=$3 tmp=$4 legacy_state=$5
-  local raw meta dest failure legacy_failure now data_changed=1 coverage old_ips new_ips old_size=0 new_size provenance
+  local raw meta dest previous legacy_dest failure legacy_failure now raw_changed=0 list_changed=0 coverage old_ips new_ips old_size=0 new_size provenance changes
   if ! valid_source "$format" "$name" "$url"; then
     echo "Invalid source: $name" >&2
     return 1
   fi
   raw="other/raw/$name"; meta="other/provenance/$name.json"
   if [[ $format == json ]]; then dest="json/$name.json"; else dest="other/json/$name.json"; fi
+  previous=$dest
+  legacy_dest="json/$name.json"
+  if [[ $format == json-converted && ! -f $dest && -f $legacy_dest ]]; then previous=$legacy_dest; fi
   failure="other/provenance/$name.failure"
   legacy_failure="$legacy_state/${name//\//_}.failure"
   mkdir -p "$(dirname "$raw")" "$(dirname "$meta")" "$(dirname "$dest")" || return 1
@@ -39,28 +42,34 @@ update_source() {
     mv "$legacy_failure" "$failure" || return 1
   fi
   now=$(date -u +%s)
-  if ! curl --fail --location --silent --show-error --max-time 60 --output "$tmp/body" --write-out '%{json}' "$url" > "$tmp/curl.json"; then
+  if ! curl -q --noproxy '*' --fail --location --silent --show-error --max-time 60 --output "$tmp/body" --write-out '%{json}' "$url" > "$tmp/curl.json"; then
     record_download_failure "$name" "$failure" "$now"
     return $?
   fi
-  if ! coverage=$(python3 lib/iplist.py "$format" "$tmp/body" "$tmp/result" "$dest"); then
+  if ! write_provenance "$url" "$tmp/curl.json" "$tmp/meta"; then
+    echo "Invalid connection metadata: $name" >&2
+    return 1
+  fi
+  if ! coverage=$(python3 lib/iplist.py "$format" "$tmp/body" "$tmp/result" "$previous"); then
     echo "Validation failed: $name" >&2
     return 1
   fi
   read -r old_ips new_ips <<< "$coverage"
-  if cmp -s "$tmp/body" "$raw" && cmp -s "$tmp/result" "$dest"; then
-    data_changed=0
-  else
+  cmp -s "$tmp/body" "$raw" || raw_changed=1
+  cmp -s "$tmp/result" "$dest" || list_changed=1
+  if (( raw_changed || list_changed )); then
     [[ ! -f $raw ]] || old_size=$(wc -c < "$raw") || return 1
     new_size=$(wc -c < "$tmp/body") || return 1
-    write_provenance "$url" "$tmp/curl.json" "$tmp/meta" || return 1
-    provenance=$(jq -r '"\(.fetched_at) \(.connected_peer_ip) \(if .proxy_used == true then "via proxy" elif .proxy_used == false then "direct" else "proxy unknown" end) \(.source_url) -> \(.final_url)"' "$tmp/meta") || return 1
+    provenance=$(jq -r '"\(.fetched_at) \(.connected_peer_ip) direct \(.source_url)\(if .final_url != .source_url then " -> \(.final_url)" else "" end)"' "$tmp/meta") || return 1
   fi
   copy_if_changed "$tmp/body" "$raw" && copy_if_changed "$tmp/result" "$dest" || return 1
-  if (( data_changed )); then cp "$tmp/meta" "$meta" || return 1; fi
+  if (( raw_changed || list_changed )); then cp "$tmp/meta" "$meta" || return 1; fi
+  if [[ $format == json-converted ]]; then rm -f "$legacy_dest" || return 1; fi
   rm -f "$failure" "$legacy_failure" || return 1
-  if (( data_changed )); then
-    printf '%s: updated: %s -> %s bytes / %s -> %s IPs / %s\n' "$name" "$old_size" "$new_size" "$old_ips" "$new_ips" "$provenance"
+  if (( raw_changed || list_changed )); then
+    if (( raw_changed && list_changed )); then changes='raw and list'; elif (( raw_changed )); then changes=raw; else changes=list; fi
+    coverage=$(python3 lib/iplist.py --format-coverage "$old_ips" "$new_ips") || return 1
+    printf '%s: updated (%s): %s -> %s bytes / %s IPs / %s\n' "$name" "$changes" "$old_size" "$new_size" "$coverage" "$provenance"
   else
     printf '%s: no change\n' "$name"
   fi

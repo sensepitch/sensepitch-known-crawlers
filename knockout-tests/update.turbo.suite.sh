@@ -10,7 +10,8 @@ assert_eq() { [[ $1 == "$2" ]] || fail "expected '$1', got '$2'"; }
 assert_update_log() {
   local expected=$1 meta=$2 peer=$3 proxy=$4 source=$5 final=$6 timestamp
   timestamp=$(jq -r '.fetched_at' "$meta")
-  assert_eq "$expected / $timestamp $peer $proxy $source -> $final" "$(cat "$CASE_DIR/stdout")"
+  [[ $source == "$final" ]] || source+=" -> $final"
+  assert_eq "$expected / $timestamp $peer $proxy $source" "$(cat "$CASE_DIR/stdout")"
 }
 
 setup_case() {
@@ -21,6 +22,7 @@ setup_case() {
   cp "$ROOT/lib/iplist.py" "$CASE_DIR/repo/lib/"
   cat > "$CASE_DIR/bin/curl" <<'SH'
 #!/usr/bin/env bash
+[[ ${1:-} == -q && ${2:-} == --noproxy && ${3:-} == '*' ]] || exit 90
 while (($#)); do
   case $1 in --output) out=$2; shift 2;; https://*) url=$1; shift;; *) shift;; esac
 done
@@ -29,14 +31,16 @@ case $url in
   */fail) exit 7;;
   */empty) : > "$out";;
   */json) printf '%s\n' '{"prefixes":[{"ipv4Prefix":"192.0.2.0/24"}]}' > "$out";;
+  */crlf) printf '{\r\n  "creationTime": "2024-01-01",\r\n  "prefixes": [{"ipv4Prefix":"192.0.2.0/24"}]\r\n}\r\n' > "$out";;
   */equivalent) printf '%s\n' '192.0.2.0/25' '192.0.2.128/25' > "$out";;
   */larger) printf '%s\n' '192.0.2.0/23' > "$out";;
   *) printf '%s\n' "${MOCK_BODY:-192.0.2.0/24}" > "$out";;
 esac
 case $url in
   */unknown) printf '{"url_effective":"%s/redirected","remote_ip":"192.0.2.1"}' "$url";;
-  */direct) printf '{"url_effective":"%s/redirected","remote_ip":"192.0.2.1","proxy_used":0}' "$url";;
-  *) printf '{"url_effective":"%s/redirected","remote_ip":"%s","proxy_used":1}' "$url" "${MOCK_REMOTE_IP:-192.0.2.1}";;
+  */direct) printf '{"url_effective":"%s","remote_ip":"192.0.2.1","proxy_used":0}' "$url";;
+  */proxy) printf '{"url_effective":"%s","remote_ip":"192.0.2.1","proxy_used":1}' "$url";;
+  *) printf '{"url_effective":"%s/redirected","remote_ip":"%s","proxy_used":0}' "$url" "${MOCK_REMOTE_IP:-192.0.2.1}";;
 esac
 SH
   chmod +x "$CASE_DIR/bin/curl"
@@ -81,7 +85,7 @@ t_text_download() {
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  assert_update_log 'one/good: updated: 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'via proxy' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   assert_eq '192.0.2.0/24' "$(cat other/raw/one/good)"
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/24"' other/json/one/good.json >/dev/null || fail 'incorrect converted list'
 }
@@ -143,7 +147,7 @@ t_changed_data_provenance() {
   cp other/json/one/good.json "$CASE_DIR/list"
   export MOCK_BODY=$'192.0.2.0/25\n192.0.2.128/25'
   run_update
-  assert_update_log 'one/good: updated: 13 -> 28 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'via proxy' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw): 13 -> 28 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   cmp "$CASE_DIR/list" other/json/one/good.json || fail 'equivalent list changed'
   jq -e '.fetched_at != "2000-01-01T00:00:00Z"' other/provenance/one/good.json >/dev/null || fail 'changed data not recorded'
 }
@@ -169,7 +173,7 @@ t_changed_converted_list() {
   cp other/json/one/good.json "$CASE_DIR/previous"
   registry 'text one/good https://example.test/larger'
   run_update
-  assert_update_log 'one/good: updated: 13 -> 13 bytes / 256 -> 512 IPs' other/provenance/one/good.json '192.0.2.1' 'via proxy' 'https://example.test/larger' 'https://example.test/larger/redirected'
+  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 512 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/larger' 'https://example.test/larger/redirected'
   if cmp -s "$CASE_DIR/previous" other/json/one/good.json; then fail 'changed list was retained'; fi
   jq -e '.prefixes[0].ipv4Prefix == "192.0.2.0/23"' other/json/one/good.json >/dev/null || fail 'changed network missing'
 }
@@ -180,10 +184,92 @@ t_coverage_log() {
   registry 'text one/good https://example.test/good'
   export MOCK_BODY=$'192.0.2.0/24\n192.0.2.0/25\n2001:db8::/64\n2001:db8::/65'
   run_update
-  assert_update_log 'one/good: updated: 0 -> 54 bytes / 0 -> 18446744073709551872 IPs' other/provenance/one/good.json '192.0.2.1' 'via proxy' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 54 bytes / 0 -> 18.45 quintillion IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
   export MOCK_BODY=$'192.0.2.0/23\n2001:db8::/63'
   run_update
-  assert_update_log 'one/good: updated: 54 -> 27 bytes / 18446744073709551872 -> 36893488147419103744 IPs' other/provenance/one/good.json '192.0.2.1' 'via proxy' 'https://example.test/good' 'https://example.test/good/redirected'
+  assert_update_log 'one/good: updated (raw and list): 54 -> 27 bytes / 18.45 quintillion -> 36.89 quintillion IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+}
+
+t_same_size_changes() {
+  echo '# same-size changes are distinguished even when coverage is identical'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  run_update
+  export MOCK_BODY='192.0.3.0/24'
+  run_update
+  assert_update_log 'one/good: updated (raw and list): 13 -> 13 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+  export MOCK_BODY='192.0.3.1/24'
+  run_update
+  assert_update_log 'one/good: updated (raw): 13 -> 13 bytes / 256 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/good' 'https://example.test/good/redirected'
+}
+
+t_coverage_rounding() {
+  echo '# rounded coverage changes retain their exact values'
+  setup_case
+  assert_eq '1 million (1,000,000) -> 1 million (1,000,001)' "$(python3 lib/iplist.py --format-coverage 1000000 1000001)"
+}
+
+t_json_migration() {
+  echo '# migration retains CRLF raw bytes and writes consolidated LF JSON'
+  setup_case
+  registry 'json one/good https://example.test/crlf'
+  run_update
+  cp other/raw/one/good "$CASE_DIR/original"
+  registry 'json-converted one/good https://example.test/crlf'
+  run_update
+  cmp "$CASE_DIR/original" other/raw/one/good || fail 'raw bytes changed'
+  assert_missing json/one/good.json
+  assert_file other/json/one/good.json
+  if LC_ALL=C grep -q $'\r' other/json/one/good.json; then fail 'converted JSON contains CRLF'; fi
+  jq -e '.creationTime == "2024-01-01" and .prefixes[0].ipv4Prefix == "192.0.2.0/24"' other/json/one/good.json >/dev/null || fail 'incorrect migrated list'
+  run_update
+  assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
+}
+
+t_json_migration_rejection() {
+  echo '# invalid migration retains the previous list and continues other sources'
+  setup_case
+  registry 'json one/good https://example.test/crlf'
+  run_update
+  cp json/one/good.json "$CASE_DIR/previous"
+  registry 'json-converted one/good https://example.test/empty' 'text two/good https://example.test/good'
+  expect_failure
+  cmp "$CASE_DIR/previous" json/one/good.json || fail 'old list changed'
+  assert_missing other/json/one/good.json
+  assert_file other/json/two/good.json
+}
+
+t_direct_with_proxy_environment() {
+  echo '# proxy environment variables cannot override forced direct access'
+  setup_case
+  export https_proxy=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9
+  registry 'text one/good https://example.test/unknown'
+  run_update
+  jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'connection was not direct'
+}
+
+t_unexpected_proxy() {
+  echo '# contradictory proxy metadata is rejected'
+  setup_case
+  registry 'text one/good https://example.test/proxy' 'text two/good https://example.test/good'
+  expect_failure
+  assert_missing other/raw/one/good
+  assert_file other/raw/two/good
+}
+
+t_git_raw_crlf() {
+  echo '# Git stores raw CRLF bytes without line-ending or whitespace warnings'
+  setup_case
+  cp "$ROOT/.gitattributes" .
+  mkdir -p other/raw/one
+  printf '192.0.2.0/24\r\n' > other/raw/one/good
+  git init -q
+  git config core.autocrlf input
+  git add .gitattributes other/raw/one/good 2> "$CASE_DIR/git-stderr"
+  [[ ! -s $CASE_DIR/git-stderr ]] || fail 'Git warned while adding raw bytes'
+  git show :other/raw/one/good > "$CASE_DIR/staged"
+  cmp other/raw/one/good "$CASE_DIR/staged" || fail 'Git altered raw bytes'
+  git diff --cached --check || fail 'Git reported CRLF as trailing whitespace'
 }
 
 t_invalid_previous_list() {
@@ -213,20 +299,20 @@ t_identical_invalid_json() {
 }
 
 t_provenance() {
-  echo '# provenance records source, redirect, UTC time, and the connected proxy peer'
+  echo '# provenance records source, redirect, UTC time, and the directly connected peer'
   setup_case
   registry 'text one/good https://example.test/good'
   run_update
-  jq -e '.source_url == "https://example.test/good" and .final_url == "https://example.test/good/redirected" and (.fetched_at | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")) and .connected_peer_ip == "192.0.2.1" and .proxy_used == true' other/provenance/one/good.json >/dev/null || fail 'incorrect provenance'
+  jq -e '.source_url == "https://example.test/good" and .final_url == "https://example.test/good/redirected" and (.fetched_at | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")) and .connected_peer_ip == "192.0.2.1" and .proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'incorrect provenance'
 }
 
 t_proxy_unknown() {
-  echo '# provenance marks proxy use unknown when curl does not report it'
+  echo '# forced direct access is recorded even when curl does not report proxy use'
   setup_case
   registry 'text one/good https://example.test/unknown'
   run_update
-  assert_update_log 'one/good: updated: 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'proxy unknown' 'https://example.test/unknown' 'https://example.test/unknown/redirected'
-  jq -e '.proxy_used == null' other/provenance/one/good.json >/dev/null || fail 'proxy use should be unknown'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/unknown' 'https://example.test/unknown/redirected'
+  jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'proxy use should be false'
 }
 
 t_proxy_not_used() {
@@ -234,7 +320,7 @@ t_proxy_not_used() {
   setup_case
   registry 'text one/good https://example.test/direct'
   run_update
-  assert_update_log 'one/good: updated: 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/direct' 'https://example.test/direct/redirected'
+  assert_update_log 'one/good: updated (raw and list): 0 -> 13 bytes / 0 -> 256 IPs' other/provenance/one/good.json '192.0.2.1' 'direct' 'https://example.test/direct' 'https://example.test/direct'
   jq -e '.proxy_used == false' other/provenance/one/good.json >/dev/null || fail 'proxy use should be false'
 }
 

@@ -20,20 +20,25 @@ To run an individual case, use, for example,
 `bash knockout-tests/update.turbo.suite.sh text_download`.
 
 Provenance records each source's source and final URLs, UTC download time,
-connected peer IP and proxy use in `other/provenance/`. A connected proxy is
-the peer, not necessarily the origin server. `proxy_used` is null when the
-installed curl cannot report it (curl 8.7.0 or newer can). Raw downloads and derived lists
+connected peer IP and proxy use in `other/provenance/`. Updates ignore curl
+configuration and proxy settings, resolve publisher hostnames normally, and
+connect directly, including after redirects. Historical provenance can still
+record a proxy peer or unknown proxy use. Raw downloads retain the exact
+publisher bytes, including line endings; Microsoft's processed list is
+consolidated and stored with LF endings in `other/json/`. Raw downloads and derived lists
 are committed so their changes can be inspected. IP ranges describe the
 published service and do not alone prove the identity of a request.
 For converted lists, `creationTime` is retained when the consolidated networks
 are unchanged. Provenance is updated when the downloaded data or published
 list changes; its timestamp records when that version was downloaded.
 
-Each successful source reports `no change` or an update showing the original
-download's size in bytes and the total unique IPv4 and IPv6 addresses covered
-before and after the update. Connection changes alone do not update provenance.
-Updated lines also show the UTC download time, connected peer, proxy status,
-source URL, and final URL, in that order.
+Each successful source reports `no change` or an update identifying whether
+the raw download, the published list, or both changed. Updates show download
+size and total unique IPv4 and IPv6 coverage before and after, followed by
+the UTC download time, connected peer, direct status and source URL. A final
+URL is shown when a redirect changes it. Large address counts are abbreviated;
+exact counts are included when rounding would hide a change. Connection changes
+alone do not update provenance.
 
 Updates reject malformed or empty lists, and reductions of at least 50% in
 unique IPv4 or IPv6 coverage compared with the previous valid list. Other
