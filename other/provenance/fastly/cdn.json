@@ -1,0 +1,7 @@
+{
+  "source_url": "https://api.fastly.com/public-ip-list",
+  "final_url": "https://api.fastly.com/public-ip-list",
+  "fetched_at": "2026-11-17T04:45:52Z",
+  "connected_peer_ip": "140.248.142.35",
+  "proxy_used": null
+}

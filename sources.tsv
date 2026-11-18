@@ -1,0 +1,22 @@
+# format company/specialization URL
+json perplexity/perplexitybot https://www.perplexity.ai/perplexitybot.json
+json perplexity/perplexity-user https://www.perplexity.ai/perplexity-user.json
+json google/common-crawlers https://developers.google.com/static/crawling/ipranges/common-crawlers.json
+json google/special-crawlers https://developers.google.com/static/crawling/ipranges/special-crawlers.json
+json google/user-triggered-fetchers https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json
+json microsoft/bingbot https://www.bing.com/toolbox/bingbot.json
+json commoncrawl/ccbot https://index.commoncrawl.org/ccbot.json
+json apple/applebot https://search.developer.apple.com/applebot.json
+text telegram/network https://core.telegram.org/resources/cidr.txt
+text uptimerobot/monitor https://uptimerobot.com/inc/files/ips/IPv4andIPv6.txt
+text stripe/webhooks https://stripe.com/files/ips/ips_webhooks.txt
+text cloudflare/ipv4 https://www.cloudflare.com/ips-v4
+text cloudflare/ipv6 https://www.cloudflare.com/ips-v6
+fastly fastly/cdn https://api.fastly.com/public-ip-list
+ahrefs ahrefs/crawler https://api.ahrefs.com/v3/public/crawler-ips
+text rssapi/fetcher https://rssapi.net/ips.txt
+text betterstack/monitor https://betteruptime.com/ips.txt
+text mollie/webhooks https://ip-ranges.mollie.com/ips.txt
+text pingdom/ipv4 https://my.pingdom.com/probes/ipv4
+text pingdom/ipv6 https://my.pingdom.com/probes/ipv6
+text bunny/cdn-ipv4 https://api.bunny.net/system/edgeserverlist/plain
