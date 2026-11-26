@@ -18,7 +18,7 @@ setup_case() {
   CASE_DIR=$(mktemp -d)
   trap 'rm -rf "$CASE_DIR"' EXIT
   mkdir -p "$CASE_DIR/repo/lib" "$CASE_DIR/bin"
-  cp "$ROOT/update.sh" "$ROOT/release.sh" "$CASE_DIR/repo/"
+  cp "$ROOT/update.sh" "$ROOT/release.sh" "$ROOT/commit-updates.sh" "$CASE_DIR/repo/"
   cp "$ROOT/lib/iplist.py" "$ROOT/lib/registry.py" "$ROOT/lib/release.py" "$CASE_DIR/repo/lib/"
   export MOCK_CERT="$CASE_DIR/cert.pem"
   openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -noenc \
@@ -97,6 +97,15 @@ registry() {
   done
 }
 validate() { python3 lib/iplist.py "$@" > "$CASE_DIR/validation-out" 2> "$CASE_DIR/validation-err"; }
+git_init() {
+  git init --quiet
+  git config user.name test; git config user.email test@example.test; git config commit.gpgsign false
+  git add -A; git commit --quiet -m initial
+}
+run_commit() { bash commit-updates.sh "$CASE_DIR/stdout" > "$CASE_DIR/commits" 2> "$CASE_DIR/commit-err"; }
+commit_count() { git rev-list --count HEAD; }
+assert_clean_data() { assert_eq '' "$(git status --porcelain -- raw-data lists provenance)"; }
+
 expect_invalid() { if validate "$@"; then fail 'invalid list unexpectedly accepted'; fi; }
 
 t_source_is_inert() {
@@ -851,6 +860,75 @@ t_release_missing_list() {
   registry 'text one/good https://example.test/good'
   if bash release.sh > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
   assert_missing output
+}
+
+t_commit_per_source() {
+  echo '# each changed source is committed separately with its update line'
+  setup_case
+  registry 'text one/good https://example.test/good' 'text two/good https://example.test/good'
+  git_init
+  run_update
+  run_commit
+  assert_eq 3 "$(commit_count)"
+  assert_eq "$(grep '^one/good:' "$CASE_DIR/stdout")" "$(git log -1 --format=%s HEAD~1)"
+  assert_eq "$(grep '^two/good:' "$CASE_DIR/stdout")" "$(git log -1 --format=%s HEAD)"
+  assert_eq $'lists/two/good.json\nprovenance/two/good.json\nraw-data/two/good' "$(git show --name-only --format= HEAD)"
+  assert_eq $'lists/one/good.json\nprovenance/one/good.json\nraw-data/one/good' "$(git show --name-only --format= HEAD~1)"
+  assert_clean_data
+}
+
+t_commit_failure_once() {
+  echo '# a retrieval failure is committed once while it persists'
+  setup_case
+  registry 'text one/fail https://example.test/fail'
+  git_init
+  run_update
+  run_commit
+  assert_eq 2 "$(commit_count)"
+  [[ $(git log -1 --format=%s) =~ ^one/fail:\ retrieval\ failed\ \(since\ [0-9-]+T[0-9:]+Z\)$ ]] || fail "unexpected subject: $(git log -1 --format=%s)"
+  assert_eq provenance/one/fail.failure "$(git show --name-only --format= HEAD)"
+  run_update
+  run_commit
+  assert_eq 2 "$(commit_count)"
+  assert_eq '' "$(cat "$CASE_DIR/commits")"
+}
+
+t_commit_recovery() {
+  echo '# clearing a retrieval failure is committed with the recovered source'
+  setup_case
+  mkdir -p provenance/one
+  printf '0\n' > provenance/one/good.failure
+  registry 'text one/good https://example.test/good'
+  git_init
+  run_update
+  run_commit
+  assert_eq 2 "$(commit_count)"
+  assert_eq "$(grep '^one/good:' "$CASE_DIR/stdout"); retrieval failure cleared" "$(git log -1 --format=%s)"
+  assert_missing provenance/one/good.failure
+  printf '0\n' > provenance/one/good.failure
+  git add -A; git commit --quiet -m failure
+  run_update
+  assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
+  run_commit
+  assert_eq 4 "$(commit_count)"
+  assert_eq 'one/good: retrieval recovered' "$(git log -1 --format=%s)"
+  assert_eq provenance/one/good.failure "$(git show --name-only --format= HEAD)"
+  assert_clean_data
+}
+
+t_commit_only_data() {
+  echo '# unchanged runs commit nothing and other paths are left alone'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  git_init
+  run_update
+  run_commit
+  assert_eq 2 "$(commit_count)"
+  printf '# note\n' >> registry/one/good.yaml
+  run_update
+  run_commit
+  assert_eq 2 "$(commit_count)"
+  assert_eq ' M registry/one/good.yaml' "$(git status --porcelain -- registry)"
 }
 
 testsuite_main "$@"

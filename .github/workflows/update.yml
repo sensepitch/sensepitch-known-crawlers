@@ -1,0 +1,82 @@
+# Fetch every source, commit each changed source separately and push to the
+# checked-out branch. See "Updates" in README.md.
+name: update
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      force_update_provenance:
+        description: Fetch every source in full and refresh its provenance
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          python3 -c 'import yaml' 2>/dev/null || {
+            sudo apt-get update -q
+            sudo apt-get install -y -q python3-yaml
+          }
+          curl --version | head -n 1
+          openssl version
+
+      # A non-zero exit does not stop the job here. update.sh attempts every
+      # source before it exits, so a failing run usually also holds valid
+      # updates of other sources and new failure records. Once a retrieval
+      # failure is older than 24 hours, every run exits 1 until the source
+      # recovers; aborting here would then stop committing all other lists.
+      # The changes are committed and pushed first, and the final step fails
+      # the run with this exit status.
+      - name: Update sources
+        id: update
+        env:
+          FORCE: ${{ inputs.force_update_provenance && '--force-update-provenance' || '' }}
+        run: |
+          # Stream progress to the log while keeping copies for the commit step.
+          set +e
+          bash update.sh $FORCE \
+            > >(tee "$RUNNER_TEMP/update.out") \
+            2> >(tee "$RUNNER_TEMP/update.err" >&2)
+          status=$?
+          wait
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          {
+            echo '### update.sh (exit status '"$status"')'
+            echo '```'
+            cat "$RUNNER_TEMP/update.out" "$RUNNER_TEMP/update.err"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          bash commit-updates.sh "$RUNNER_TEMP/update.out"
+
+      - name: Push
+        run: |
+          for attempt in 1 2 3; do
+            git push && exit 0
+            git pull --rebase
+          done
+          exit 1
+
+      # Fail the run only after committing; see the "Update sources" step.
+      - name: Report update status
+        run: exit ${{ steps.update.outputs.status }}

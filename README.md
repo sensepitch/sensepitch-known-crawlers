@@ -159,6 +159,26 @@ containing the Unix timestamp of the first failure. It fails the run once it
 persists for 24 hours. Commit these records to track failures; the next
 successful update removes the record.
 
+### Scheduled updates
+
+The GitHub Actions workflow `.github/workflows/update.yml` runs `update.sh`
+every six hours and can be started manually, optionally with
+`--force-update-provenance`. It then runs `commit-updates.sh`, which commits
+each changed source separately, using the source's line from the update
+output as the commit message, and pushes the commits. Only files below
+`raw-data/`, `lists/` and `provenance/` are committed.
+
+A new retrieval failure is committed as `<name>: retrieval failed (since
+<time>)`. The record stays unchanged while the failure persists, so it is not
+committed again; clearing it is part of the next update commit for that source,
+or `<name>: retrieval recovered` when the data is unchanged. The workflow
+commits and pushes before it reports the update's exit status, so validation
+errors and failures persisting for 24 hours fail the run with their records
+already committed.
+
+To commit a local run the same way, use
+`bash update.sh > update.log; bash commit-updates.sh update.log`.
+
 ## Edge proxy distribution
 
 Run `bash release.sh` to build all three tier archives from the saved lists
@@ -189,9 +209,10 @@ replacing the previous output. The `output/` directory is ignored by Git.
 
 ## Regular checks
 
-- **Every six hours**, run `bash update.sh` from a runner with direct access to
-  the publishers. This allows several attempts within the 24-hour retrieval
-  failure window. Review the exit status and any active `.failure` records.
+- **Every six hours**, the scheduled workflow runs `update.sh` from a GitHub
+  runner (see [Scheduled updates](#scheduled-updates)). This allows several
+  attempts within the 24-hour retrieval failure window. Review failed runs and
+  any active `.failure` records.
 - **Weekly**, review Cloudflare Radar for new or newly verified crawlers. Check
   Known Agents and the ai.robots.txt registry for new user agents and publisher
   documentation. [Cloudflare Radar Bots Directory](https://radar.cloudflare.com/bots/directory),
