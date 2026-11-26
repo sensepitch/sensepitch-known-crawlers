@@ -45,15 +45,132 @@ where a publisher documents it, reverse DNS verification.
   its size and coverage change, and unchanged sources produce no diff, so
   every commit reflects a real upstream change that can be reviewed or
   reverted.
-- **One format.** Lists in `lists/` use Google's crawler IP range JSON.
-  Compatible downloads are copied verbatim; other formats (plain text, HTML
-  pages, vendor JSON) are converted by dedicated parsers.
+- **One format.** Every list uses Google's crawler IP range JSON. Lists a
+  publisher already serves in that format are kept byte-for-byte; other
+  formats are converted (see [Data format](#data-format)).
 - **Typed and tiered.** Each feed carries types from `registry/types.yaml`,
   such as `search-engine-crawler`, `ai-search-crawler`, `ai-training-crawler`,
   `seo-tool`, `monitor`, `webhook` or `cdn`, plus a tier from 1 to 3, so
-  consumers can decide how permissive to be (see [Source registry](#source-registry)).
-- **Ready to deploy.** `release.sh` packages each tier as a reproducible ZIP
-  for edge proxies (see [Edge proxy distribution](#edge-proxy-distribution)).
+  consumers can decide how permissive to be (see [Tier levels](#tier-levels)).
+- **Ready to deploy.** Each tier is released as a reproducible ZIP for edge
+  proxies (see [Release format](#release-format)).
+
+## Data format
+
+Every list in `lists/` uses the IP range JSON format that Google publishes
+for its crawlers. Google, OpenAI, Anthropic and other publishers already
+serve their lists in this format, and infrastructure tooling understands it.
+
+```json
+{
+  "creationTime": "2026-11-26T09:24:54.129593+00:00",
+  "prefixes": [
+    { "ipv4Prefix": "34.31.25.14/32" },
+    { "ipv6Prefix": "2001:4860:4801:10::/64" }
+  ]
+}
+```
+
+- **Original lists are kept.** A list that its publisher already serves in
+  this format (`format: json`) is published byte-for-byte as downloaded, so
+  it is identical to its file in `raw-data/` and can be checked against the
+  publisher. This applies to about half of the feeds.
+- **Sanitised lists.** Feeds with `format: json-sanitised`, currently
+  Microsoft's Bingbot, have their prefixes consolidated and are written with
+  LF line endings.
+- **Converted lists.** Other formats, such as plain text, HTML pages and
+  vendor JSON, are converted by named parsers (see
+  [Source registry](#source-registry)). A converted list keeps its
+  `creationTime` while its networks are unchanged.
+
+## Release format
+
+Releases are published on
+[GitHub Releases](https://github.com/sensepitch/sensepitch-known-crawlers/releases)
+with tags such as `2026.11.26.19` (date and hour of the commit). Each release
+contains three ZIP archives, one per tier:
+
+- `sensepitch-known-crawlers-tier1.zip`
+- `sensepitch-known-crawlers-tier2.zip`
+- `sensepitch-known-crawlers-tier3.zip`
+
+Each archive contains only the feeds of its tier, so a consumer loads the
+tiers it wants to allow or label. Feeds keep their own prefixes, so an IP can
+match several feeds in one or more tiers.
+
+```
+meta.json
+lists/<vendor>/<listname>.json   # the list, same bytes as in lists/
+info/<vendor>/<listname>.json    # metadata for the list
+```
+
+`meta.json` identifies the snapshot: the archive format `version`
+(currently 1), the `tier`, the full `git-sha` of the commit and
+`last-modified`, that commit's time in UTC.
+
+```json
+{
+  "version": 1,
+  "tier": 1,
+  "git-sha": "6f47877768dd8c20565703bb583c348b3bedc8e4",
+  "last-modified": "2026-11-26T11:46:48Z"
+}
+```
+
+Each `info` file describes one list:
+
+- `vendor` and `listname`: the feed's name, as in
+  `registry/<vendor>/<listname>.yaml`
+- `tier`: the feed's tier, 1 to 3
+- `tags`: the feed's types from the registry, in registry order
+
+```json
+{
+  "vendor": "google",
+  "listname": "common-crawlers",
+  "tier": 1,
+  "tags": [
+    "search-engine-crawler",
+    "mixed-pool",
+    "seo-tool"
+  ]
+}
+```
+
+### Tier levels
+
+The tier applies to the entire feed and indicates how readily it can be
+allowed.
+
+1. Default public website allow tier for mainstream web search, AI search, and
+   public user-facing fetches. It includes Google's common crawlers and
+   Anthropic's shared crawler pool.
+2. Specialist search, SEO tools, site auditing, and advertising crawlers.
+3. Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks,
+   and broad service pools.
+
+### Common types
+
+The most common `tags` values are listed below. All types and their
+descriptions are defined in `registry/types.yaml`.
+
+- `user-triggered-fetcher`: fetches a page in direct response to a user
+  action, such as a chat prompt or an agent task; may not follow robots.txt.
+- `ai-search-crawler`: indexes pages for answers and citations in an AI
+  assistant or AI search product.
+- `search-engine-crawler`: crawls the public web for a search engine index.
+- `ai-training-crawler`: collects public web content that may be used to
+  train generative AI models.
+- `seo-tool`: crawls for an SEO or site auditing product.
+- `cdn`: edge network of a CDN or reverse proxy; identifies the network, not
+  the client.
+- `webhook`: sends event notifications to an endpoint the site operator has
+  configured.
+- `monitor`: uptime and performance checks.
+- `mixed-pool`: the addresses are shared by several services, and a request
+  may belong to any of the feed's other types.
+
+See [Building releases](#building-releases) to build the archives locally.
 
 ## Security and data handling
 
@@ -74,7 +191,7 @@ update and release process addresses the following risks.
   with their `body_sha256`, and each changed source gets its own commit.
 - **Over-broad ranges.** Shared feeds are typed `mixed-pool`, company-wide
   ranges are scoped to the services they describe, and tiers separate
-  permissive from specialist feeds (see [Tiers](#tiers)).
+  permissive from specialist feeds (see [Tier levels](#tier-levels)).
 - **Tampered or inconsistent release.** Tier ZIPs are reproducible and record
   the full `git-sha` in `meta.json`, and release assets are checked against
   local digests before publishing (see `RELEASE.md`).
@@ -137,14 +254,8 @@ For a shared feed, include `mixed-pool` and each documented use.
 
 ### Tiers
 
-The integer `tier` applies to the entire feed.
-
-1. Default public website allow tier for mainstream web search, AI search, and
-   public user-facing fetches. It includes Google's common crawlers and
-   Anthropic's shared crawler pool.
-2. Specialist search, SEO tools, site auditing, and advertising crawlers.
-3. Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks,
-   and broad service pools.
+The integer `tier`, from 1 to 3, applies to the entire feed. Follow the
+definitions in [Tier levels](#tier-levels).
 
 Set `volatile_raw: true` on a source whose page embeds per-request values such
 as CSRF tokens or trace IDs. Its saved raw download and provenance are then
@@ -241,25 +352,16 @@ already committed.
 To commit a local run the same way, use
 `bash update.sh > update.log; bash commit-updates.sh update.log`.
 
-## Edge proxy distribution
+## Building releases
 
 Run `bash release.sh` to build all three tier archives from the saved lists
-and registry.
+and registry, in the format described in [Release format](#release-format).
 
 - `output/sensepitch-known-crawlers-tier1.zip`
 - `output/sensepitch-known-crawlers-tier2.zip`
 - `output/sensepitch-known-crawlers-tier3.zip`
 
-Each archive includes the feeds assigned to that tier. For each feed it
-contains the original published bytes at `lists/<vendor>/<listname>.json`
-and proxy metadata at `info/<vendor>/<listname>.json`. The metadata contains
-`vendor`, `listname`, the integer `tier`, and `tags` copied from the registry's
-`types` array. Feeds keep their own prefixes, so an IP can match multiple
-feeds across one or more tiers.
-
-Every ZIP includes a root `meta.json` with `version` (currently 1), the integer
-`tier`, the full `git-sha` of HEAD, and `last-modified` (that commit's committer
-time in UTC). The build packages the saved files in the working tree. Builds
+The build packages the saved files in the working tree. Builds
 with the same HEAD, saved inputs, and compression toolchain produce
 byte-identical ZIPs.
 
@@ -366,14 +468,14 @@ project (see [Credits](#credits)).
   [Security and data handling](#security-and-data-handling)).
 - **Policy-oriented classification.** Types and tiers separate AI training
   crawlers, search crawlers, user-triggered fetchers and other services (see
-  [Tiers](#tiers)).
+  [Tier levels](#tier-levels)).
 - **Matches keep their source.** Each publisher feed stays a separate list,
   and the tier ZIPs carry each feed's vendor, list name, tier and types. An IP
   that appears in several feeds matches all of them, so a proxy can tell, for
   example, Google's crawlers from its user-triggered fetchers instead of
   checking one merged allowlist.
 - **Self-contained distribution.** Consumers need no external API at runtime
-  (see [Edge proxy distribution](#edge-proxy-distribution)).
+  (see [Release format](#release-format)).
 - **Familiar format.** Every list uses Google's crawler IP range JSON.
 
 ## License
