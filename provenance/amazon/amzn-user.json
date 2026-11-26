@@ -1,8 +1,8 @@
 {
   "source_url": "https://developer.amazon.com/amazonbot/live-ip-addresses/",
   "final_url": "https://developer.amazon.com/amazonbot/live-ip-addresses/",
-  "fetched_at": "2026-11-26T10:34:48Z",
-  "connected_peer_ip": "44.215.141.168",
+  "fetched_at": "2026-11-26T11:36:47Z",
+  "connected_peer_ip": "44.215.133.6",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=developer.amazon.com",
@@ -16,7 +16,7 @@
       "Server"
     ],
     "date": [
-      "Thu, 26 Nov 2026 10:34:51 GMT"
+      "Thu, 26 Nov 2026 11:36:47 GMT"
     ],
     "content-type": [
       "text/html;charset=utf-8"
@@ -56,9 +56,9 @@
       "en-US"
     ],
     "x-amz-rid": [
-      "HWBCPGZDMRDWZC49JMXN"
+      "V280DP2BWQ10SGMMG12X"
     ]
   },
-  "size_bytes": 138561,
-  "body_sha256": "28bc2c38505e5f98572a112a772b5e0a8fead5b061405374c2f8c1626ab3352b"
+  "size_bytes": 138559,
+  "body_sha256": "03d75be9b11dfaa8018c68d14b65cdcca85da25f9b7342bbdbfbde7291b500ce"
 }
