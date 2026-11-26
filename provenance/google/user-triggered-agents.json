@@ -1,8 +1,8 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json",
-  "fetched_at": "2026-11-18T04:02:02Z",
-  "connected_peer_ip": "142.250.4.102",
+  "fetched_at": "2026-11-26T09:25:04Z",
+  "connected_peer_ip": "74.125.200.100",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.google.com",

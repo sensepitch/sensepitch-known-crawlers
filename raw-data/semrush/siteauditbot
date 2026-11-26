@@ -66,22 +66,22 @@
             
 
     <script>window[Symbol.for("sm2.WebVitalsReporter.config")] = {"team": "raspberry", "product": "knowledge-base", "userType": "unlogged"};</script>
-    <script src="/__static__/webpack/runtime.1d532f1b5cdbb6e3.js"></script>
-<script src="/__static__/webpack/smrwv.9c301fc15a71a4ac.js" defer></script>
+    <script src="/__static__/webpack/runtime.a77473ef8e35cb04.js"></script>
+<script src="/__static__/webpack/smrwv.ae99ae9f0ddceb83.js" defer></script>
 
 
 
             
 
     <script>window[Symbol.for("sm2.AmplitudeSessionReplay.config")] = {"api_key": "03db6de0e8473c8ee9cfa19a87990a86", "user_id": null, "sample_rate": 0.02, "product_name": "knowledge-base"};</script>
-    <script src="/__static__/webpack/amplitude_session_replay.b49b692dfcef1276.js" defer></script>
+    <script src="/__static__/webpack/amplitude_session_replay.7d4c5416bebaf60d.js" defer></script>
 
 
 
             
 
             <script>
-                window.sm2 = Object.assign(window.sm2 || {}, {"GAexperiments": [], "language": "en", "isSessionCreatedByAdmin": false, "abTestsLabels": ["sidebar.outdated_tools_cleanup", "sidebar.outdated_tools_cleanup_w2"], "ipCountryCode": "ID"});
+                window.sm2 = Object.assign(window.sm2 || {}, {"GAexperiments": [], "language": "en", "isSessionCreatedByAdmin": false, "abTestsLabels": ["sidebar.outdated_tools_cleanup_w2", "sidebar.outdated_tools_cleanup"], "ipCountryCode": "SG"});
                 
                 window.sm2.limitOptions = Object.freeze({});
 
@@ -112,14 +112,14 @@
             
 
 <link rel="stylesheet" href="/__static__/webpack/global_spinner.c7fe2aad87f1e52f.css">
-<script src="/__static__/webpack/global_spinner.384a9a9993cad4f4.js"></script>
+<script src="/__static__/webpack/global_spinner.183403feee7ed5d1.js"></script>
 
 
             
 
 
     <script>window[Symbol.for("sm2.trackLimitOptionsUsage.config")] = {"sampleRate": 0.005, "team": "raspberry", "product": "knowledge-base"};</script>
-    <script src="/__static__/webpack/observer_limit_options.e1fb882f7a14f746.js"></script>
+    <script src="/__static__/webpack/observer_limit_options.4a2d06f294a14157.js"></script>
 
 
             <script>
@@ -138,7 +138,7 @@
 
             
 
-<script src="/__static__/webpack/mf_widgets.26c8102296bd5ab6.js"></script>
+<script src="/__static__/webpack/mf_widgets.9abb22f85da6c0ff.js"></script>
 
 
             <script>
@@ -232,7 +232,7 @@ window.sm2.getFoldersApi = function queueProjectsApiRequest(...args) {
   })('ga');
 </script>
 
-<script src="/__static__/webpack/data_layer_proxy.9ad7ca38a18485f3.js"></script>
+<script src="/__static__/webpack/data_layer_proxy.f1304b5fd6d936ff.js"></script>
 <script>ga("set", "dimension2", "Unlogged-User")
 ga("set", "dimension3", "not set")
 ga("set", "dimension5", "{}")
@@ -249,7 +249,7 @@ ga("set", "dimension16", "all tools")</script>
 
 
     <script>window[Symbol.for("sm2.trackBillingInfoUsage.config")] = {"sampleRate": 0.005, "team": "raspberry", "product": "knowledge-base"};</script>
-    <script src="/__static__/webpack/track_billing_info_usage.7b6bb5ead15a2678.js"></script>
+    <script src="/__static__/webpack/track_billing_info_usage.ae7ec2655dae5732.js"></script>
 
 
 
@@ -322,7 +322,7 @@ ga("set", "dimension16", "all tools")</script>
                  >
                 
 
-<script src="/__static__/webpack/skip_to_content.6306af5aa9ef20f3.js" defer></script>
+<script src="/__static__/webpack/skip_to_content.928b2922184c7553.js" defer></script>
 
 <div class="srf-layout__skip-to-content">
     <button id="skip-to-content">Skip to content</button>
@@ -1229,8 +1229,8 @@ window[Symbol.for('sm2.header.config')] = {
   ]
 }
 </script>
-<script src="/__static__/webpack/3486.a55b3a3711dc90b3.js"></script>
-<script src="/__static__/webpack/header.35d1ac02a05013c7.js"></script>
+<script src="/__static__/webpack/3486.75b41feb04d43cc7.js"></script>
+<script src="/__static__/webpack/header.4350c8824e142798.js"></script>
 
     
     <!-- #endregion -->
@@ -1271,7 +1271,7 @@ window[Symbol.for('sm2.header.config')] = {
           recaptchaKey: "6LfxV9oUAAAAABRStEXp_CLoOVLW-1QkA_sVy5as",
           hasTOC: false,
           feedbackPk: "681",
-          csrfmiddlewaretoken: "pVh3xdYMWiSsaINMP4zllyo8IKCFrfIxPJXaV6NEP9Mb6fyHC2Iph3jDZJ7fkS75",
+          csrfmiddlewaretoken: "DF0ky17j6n4aY7QYPBWMnNhHEBQN07j0rKwxm8vCmrF6muUq1cJE15TWJcdVgED2",
           userLang: "en"
         };
       </script>
@@ -1878,30 +1878,6 @@ window[Symbol.for('sm2.header.config')] = {
                 
 
                 SEO Writing Assistant
-                
-              </a>
-            </li>
-
-            
-          
-            <li>
-              <a
-                href="/kb/776-topic-research" data-testid="tree_link"
-                class="kb-menu__item  "
-                data-ga-event-onclick
-                data-ga-deprecated-category="page:kb"
-                data-ga-deprecated-action="navigation_tree:click"
-                data-ga-deprecated-label="topic-research"
-                data-ga-action="click"
-                data-ga-event-source="navigation_tree"
-                data-ga-item-label="topic-research"
-                data-ga-link-id="menu_item"
-                data-ga-location-id="article"
-                aria-label="Open Topic Research page"
-              >
-                
-
-                Topic Research
                 
               </a>
             </li>
@@ -2669,7 +2645,7 @@ window[Symbol.for('sm2.header.config')] = {
                 data-ga-item-label="api"
                 data-ga-link-id="menu_item"
                 data-ga-location-id="article"
-                aria-label="Open API page"
+                aria-label="Open Semrush API page"
               >
                 
                   <svg class="chevron "
@@ -2679,7 +2655,7 @@ window[Symbol.for('sm2.header.config')] = {
                   </svg>
                 
 
-                API
+                Semrush API
                 
               </a>
             </li>
@@ -3768,7 +3744,7 @@ To prevent this issue, the website owner could add a redirect from the unsecured
     </div>
 
 
-<script src="/__static__/webpack/footer.7ee119cd4df8450d.js" defer></script>
+<script src="/__static__/webpack/footer.9d0206dc4e2efb89.js" defer></script>
 
     
     <!-- #endregion -->
@@ -3824,18 +3800,18 @@ To prevent this issue, the website owner could add a redirect from the unsecured
             Don't read and rely on this data from external integrated services or scripts,
             as it is subject to change and not backward compatible.
             -->
-            <script id="sm2_initial_state" type="application/json">{"base": {"cookie_domain": ".semrush.com", "csrfToken": "i6F4vKGMqEPavtsZpxPaKtwob2hnnCGXYWAAQpAsP3XlNc1tYgKrBy2MYInyxMbf", "language_code": "en", "PopupManager": {"popups": {"need_confirm_email": null, "disabled_user": false, "reset_password": false}}, "switchLanguageApiEndpoint": "/i18n/switch_language_api/", "sso": {"enable_preload": false, "env": "production", "root_url": "/sso", "root_semrush_url": "https://www.semrush.com"}}, "searchbarApiV1Config": {"autocompleteUrl": "https://www.semrush.com/search-bar/api/search/suggestions?type=2", "redirectToKeyword": false, "formAction": "/kb", "gaLabel": "(not-set-in-config)", "defaultQuery": "", "device": null, "date": null, "currency": null, "defaultProtocol": null, "defaultSearchType": null, "defaultVisible": true, "supportedSearchTypes": [], "spaMode": false, "updateBrowserHistory": false, "toolCode": "knowledge-base", "theme": "secondary", "tldFileName": "default"}, "foldersApiV1Config": {}}</script>
+            <script id="sm2_initial_state" type="application/json">{"base": {"cookie_domain": ".semrush.com", "csrfToken": "6kL7T96RP42XCTnYD6ggg4VowKoyKVZIvVcF2938w54q1RzWyleo53NdQmJnV1xR", "language_code": "en", "PopupManager": {"popups": {"need_confirm_email": null, "disabled_user": false, "reset_password": false}}, "switchLanguageApiEndpoint": "/i18n/switch_language_api/", "sso": {"enable_preload": false, "env": "production", "root_url": "/sso", "root_semrush_url": "https://www.semrush.com"}}, "searchbarApiV1Config": {"autocompleteUrl": "https://www.semrush.com/search-bar/api/search/suggestions?type=2", "redirectToKeyword": false, "formAction": "/kb", "gaLabel": "(not-set-in-config)", "defaultQuery": "", "device": null, "date": null, "currency": null, "defaultProtocol": null, "defaultSearchType": null, "defaultVisible": true, "supportedSearchTypes": [], "spaMode": false, "updateBrowserHistory": false, "toolCode": "knowledge-base", "theme": "secondary", "tldFileName": "default"}, "foldersApiV1Config": {}}</script>
 
-            <script src="/__static__/webpack/5650.459de9636bd222b9.js" defer></script>
-<script src="/__static__/webpack/9327.330fa6303687fa68.js" defer></script>
-<script src="/__static__/webpack/8808.093acd7f9acd29e8.js" defer></script>
-<script src="/__static__/webpack/base.8ef0b40b4878b227.js" defer></script>
-            <script src="/__static__/webpack/init_component_provider.b9bc7c3800fdd9a3.js" defer></script>
+            <script src="/__static__/webpack/5650.a322c9c779e9b0db.js" defer></script>
+<script src="/__static__/webpack/9327.95597c589ea90a10.js" defer></script>
+<script src="/__static__/webpack/8808.98bdad79f4aecad5.js" defer></script>
+<script src="/__static__/webpack/base.b79a472828ce05bf.js" defer></script>
+            <script src="/__static__/webpack/init_component_provider.db1d30e8d3b111fa.js" defer></script>
             
-                <script src="/__static__/webpack/init_searchbar_api.8cb5cfe72b146bf2.js" defer></script>
+                <script src="/__static__/webpack/init_searchbar_api.a2ef1f9b2a0e785d.js" defer></script>
             
             
-                <script src="/__static__/webpack/init_folders_api.619ce99a44090ad9.js" defer></script>
+                <script src="/__static__/webpack/init_folders_api.a44ca81863b50e62.js" defer></script>
             
 
             
@@ -3848,6 +3824,6 @@ To prevent this issue, the website owner could add a redirect from the unsecured
         </body>
     </html>
 
-<!--sm_log_id:"flb-d139e393ee1be840ff37fea14dd4d23e"-->
-<!--otel_trace_id:"d139e393ee1be840ff37fea14dd4d23e"-->
+<!--sm_log_id:"flb-2e297f3bacdfae2d129119d131b63371"-->
+<!--otel_trace_id:"2e297f3bacdfae2d129119d131b63371"-->
 <!--template:"site_info"-->

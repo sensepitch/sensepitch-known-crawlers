@@ -1,14 +1,14 @@
 {
   "source_url": "https://claude.com/.well-known/sail",
   "final_url": "https://claude.com/.well-known/sail",
-  "fetched_at": "2026-11-18T04:01:53Z",
+  "fetched_at": "2026-11-26T09:24:54Z",
   "connected_peer_ip": "160.79.104.10",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=claude.com",
     "issuer": "CN=WE1,O=Google Trust Services,C=US",
-    "not_before": "2026-09-22T18:22:39Z",
-    "not_after": "2026-12-21T19:22:36Z",
-    "sha256_fingerprint": "0592277b473acc9559f3bc1dca3c63387661a2d0b04fe5a1cdcc767ccf2d298e"
+    "not_before": "2026-11-20T19:02:04Z",
+    "not_after": "2027-02-18T20:01:20Z",
+    "sha256_fingerprint": "5553b45787a299f9cd7429c7afe6737ca211a171ecda26480de2b15cb84fb0c1"
   }
 }

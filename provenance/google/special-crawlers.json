@@ -1,8 +1,8 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/special-crawlers.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/special-crawlers.json",
-  "fetched_at": "2026-11-18T04:02:01Z",
-  "connected_peer_ip": "142.250.4.138",
+  "fetched_at": "2026-11-26T09:25:03Z",
+  "connected_peer_ip": "74.125.200.101",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.google.com",

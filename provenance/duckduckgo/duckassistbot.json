@@ -1,0 +1,14 @@
+{
+  "source_url": "https://duckduckgo.com/duckassistbot.json",
+  "final_url": "https://duckduckgo.com/duckassistbot.json",
+  "fetched_at": "2026-11-26T09:25:00Z",
+  "connected_peer_ip": "20.43.161.105",
+  "proxy_used": false,
+  "tls_certificate": {
+    "subject": "CN=*.duckduckgo.com,O=Duck Duck Go\\, Inc.,L=Paoli,ST=Pennsylvania,C=US",
+    "issuer": "CN=DigiCert Global G2 TLS RSA SHA256 2020 CA1,O=DigiCert Inc,C=US",
+    "not_before": "2026-11-02T00:00:00Z",
+    "not_after": "2027-05-19T23:59:59Z",
+    "sha256_fingerprint": "8866b5763406daf3ea35b69212ae3d048fcbd168d393550593c1b04039260388"
+  }
+}

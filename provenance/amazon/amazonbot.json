@@ -1,8 +1,8 @@
 {
   "source_url": "https://developer.amazon.com/amazonbot/ip-addresses/",
   "final_url": "https://developer.amazon.com/amazonbot/ip-addresses/",
-  "fetched_at": "2026-11-18T04:01:45Z",
-  "connected_peer_ip": "44.215.133.6",
+  "fetched_at": "2026-11-26T09:24:45Z",
+  "connected_peer_ip": "44.215.141.168",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=developer.amazon.com",

@@ -1,8 +1,8 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json",
-  "fetched_at": "2026-11-18T04:02:03Z",
-  "connected_peer_ip": "142.250.4.101",
+  "fetched_at": "2026-11-26T09:25:05Z",
+  "connected_peer_ip": "74.125.200.101",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.google.com",
