@@ -16,8 +16,14 @@ with what kind of traffic it describes and a tier that indicates how readily
 it can be allowed.
 
 The project aims to be an auditable, continuously maintained IP database for
-edge gateways, reverse proxies and web application firewalls, and treats
-crawler data as a security-sensitive software supply chain.
+edge gateways, reverse proxies and web application firewalls. Allow and
+rate-limit decisions at the edge trust these ranges, so a wrong, truncated or
+tampered list either lets unwanted traffic through or blocks legitimate
+crawlers and webhooks. The lists are therefore handled as a security-sensitive
+supply chain dependency: fetched only from their publishers, kept with their
+original bytes and retrieval provenance, validated before they replace earlier
+data, and changed only through reviewable commits (see
+[Security and data handling](#security-and-data-handling)).
 
 The IP ranges describe the service a publisher has declared. They do not
 alone prove the identity of a request; combine them with the user agent and,
@@ -28,6 +34,17 @@ where a publisher documents it, reverse DNS verification.
 - **Direct from the publisher.** Every list is downloaded from the
   publisher's own URL. Aggregators such as GoodBots are used only to discover
   new sources.
+- **Traceable.** The original download bytes are kept in `raw-data/`, and
+  `provenance/` records where, when and from which server and TLS certificate
+  each list was retrieved. Everything is committed, so every change shows up
+  in the Git history.
+- **Safe updates.** Empty or malformed lists and sudden drops in coverage are
+  rejected, the last valid data is kept, and persistent download failures
+  fail the run (see [Updates](#updates)).
+- **Reviewable changes.** Each changed source is committed separately with
+  its size and coverage change, and unchanged sources produce no diff, so
+  every commit reflects a real upstream change that can be reviewed or
+  reverted.
 - **One format.** Lists in `lists/` use Google's crawler IP range JSON.
   Compatible downloads are copied verbatim; other formats (plain text, HTML
   pages, vendor JSON) are converted by dedicated parsers.
@@ -35,15 +52,51 @@ where a publisher documents it, reverse DNS verification.
   such as `search-engine-crawler`, `ai-search-crawler`, `ai-training-crawler`,
   `seo-tool`, `monitor`, `webhook` or `cdn`, plus a tier from 1 to 3, so
   consumers can decide how permissive to be (see [Source registry](#source-registry)).
-- **Traceable.** The original download bytes are kept in `raw-data/`, and
-  `provenance/` records where, when and from which server and TLS certificate
-  each list was retrieved. Everything is committed, so every change shows up
-  in the Git history.
-- **Safe updates.** Empty or malformed lists and sudden drops in coverage are
-  rejected, the last valid data is kept, and persistent download failures
-  fail the run (see [Updates](#updates)). Unchanged sources produce no diff.
 - **Ready to deploy.** `release.sh` packages each tier as a reproducible ZIP
   for edge proxies (see [Edge proxy distribution](#edge-proxy-distribution)).
+
+## Security and data handling
+
+An IP list used in an allow path is security-relevant configuration. The
+update and release process addresses the following risks.
+
+- **Spoofed or intercepted download.** Registry URLs must use HTTPS, updates
+  connect directly without a proxy, and the leaf certificate's subject,
+  issuer, validity and SHA-256 fingerprint are recorded (see
+  [Provenance](#provenance)).
+- **Publisher error, truncated or broken feed.** Malformed and empty lists and
+  drops of 50% or more in IPv4 or IPv6 coverage are rejected, and the last
+  valid data is kept (see [Failures](#failures)).
+- **Silent outage and stale data.** Failed downloads are recorded in
+  `.failure` files and fail the run once they persist for 24 hours (see
+  [Scheduled updates](#scheduled-updates)).
+- **Unnoticed upstream change.** The original bytes are kept in `raw-data/`
+  with their `body_sha256`, and each changed source gets its own commit.
+- **Over-broad ranges.** Shared feeds are typed `mixed-pool`, company-wide
+  ranges are scoped to the services they describe, and tiers separate
+  permissive from specialist feeds (see [Tiers](#tiers)).
+- **Tampered or inconsistent release.** Tier ZIPs are reproducible and record
+  the full `git-sha` in `meta.json`, and release assets are checked against
+  local digests before publishing (see `RELEASE.md`).
+
+**Data minimisation.** Provenance keeps the publisher's response headers but
+omits cookie-setting headers. The project fetches publisher lists only and
+collects nothing about website visitors.
+
+**Limits.** The controls show where data came from and stop obviously broken
+updates. They cannot detect a publisher that serves wrong but plausible
+ranges over valid TLS. The ranges describe services a publisher has declared,
+not the identity of a request; combine them with the user agent and, where
+documented, reverse DNS verification.
+
+**Using the data safely.**
+
+- Deploy a specific release or commit rather than following the branch
+  blindly, and review the per-source commits when updating.
+- Check `last-modified` in each ZIP's `meta.json` to detect stale data.
+- Keep the previously loaded lists when a new archive fails to load or
+  validate.
+- Choose tiers deliberately; tier 3 includes broad service pools and CDNs.
 
 ## Repository layout
 
@@ -253,7 +306,7 @@ and updates are welcome.
 
 | Project | Coverage (as stated) | Access and formats | Updates | License |
 |---|---|---|---|---|
-| This project | ~50 feeds, 30 publishers | Git repo, tier ZIPs; Google JSON | Every 6 hours | Apache-2.0 code, CC0 data |
+| Sensepitch Known Crawlers | ~50 feeds, 30 publishers | Git repo, tier ZIPs; Google JSON | Every 6 hours | Apache-2.0 code, CC0 data |
 | [Verified Bots](https://verifiedbots.dev/) | 223 bots, 120 verifiable (August 2026) | Files and GitHub repo; JSON, `.ips`, RSS | Daily | MIT code, CC BY 4.0 data |
 | [ipverse bot-ip-blocks](https://github.com/ipverse/bot-ip-blocks) | Crawlers and uptime monitors | Git repo; own normalized JSON | — | CC0-1.0 |
 | [Trusted IPs whitelist](https://github.com/sefinek/trusted-ips-whitelist) | 39 services | Git repo; TXT, CSV, JSON | Every 6 hours | MIT |
@@ -268,7 +321,7 @@ and updates are welcome.
 
 | Project | Fetched from publishers | Original responses kept | Classification | Granularity |
 |---|---|---|---|---|
-| This project | Yes | Yes | Types and policy tiers 1–3 | Per publisher feed, e.g. `google/common-crawlers`; no merged list |
+| Sensepitch Known Crawlers | Yes | Yes | Types and policy tiers 1–3 | Per publisher feed, e.g. `google/common-crawlers`; no merged list |
 | Verified Bots | Yes | — | 10 categories; verifiability tiers 1–3 | Per bot; also `all.json`, per category and per tier |
 | ipverse bot-ip-blocks | Yes | — | Crawlers vs monitoring; `ip_list_authoritative` flag | Per service within two dataset files |
 | Trusted IPs whitelist | Mostly; some via RIPEstat/RADB or custom lists | — | 5 categories (crawlers, AI, monitoring, infrastructure, payments) | Per service; also merged overall and per category |
@@ -283,7 +336,7 @@ and updates are welcome.
 
 | Project | Provenance | Faulty-data safeguards |
 |---|---|---|
-| This project | Source and final URL, time, peer IP, TLS leaf certificate, headers | Rejects empty, malformed and ≥50% coverage drops; keeps last valid data |
+| Sensepitch Known Crawlers | Source and final URL, time, peer IP, TLS leaf certificate, headers | Rejects empty, malformed and ≥50% coverage drops; keeps last valid data |
 | Verified Bots | — | Sanity checks, diff alarm, last-known-good fallback |
 | ipverse bot-ip-blocks | Source URL, last change, generation time | Failed fetches emit empty arrays |
 | Trusted IPs whitelist | — | — |
@@ -307,10 +360,10 @@ project (see [Credits](#credits)).
 
 - **Auditable supply chain.** Original publisher responses, retrieval
   provenance and TLS certificate fingerprints are kept and committed (see
-  [Provenance](#provenance)).
+  [Security and data handling](#security-and-data-handling)).
 - **Defensive data ingestion.** Malformed or empty feeds and unexpected drops
   in IP coverage are rejected and the last valid data is kept (see
-  [Failures](#failures)).
+  [Security and data handling](#security-and-data-handling)).
 - **Policy-oriented classification.** Types and tiers separate AI training
   crawlers, search crawlers, user-triggered fetchers and other services (see
   [Tiers](#tiers)).
