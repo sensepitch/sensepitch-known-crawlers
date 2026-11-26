@@ -1,7 +1,7 @@
 {
   "source_url": "https://about.marginalia-search.com/article/crawler/",
   "final_url": "https://about.marginalia-search.com/article/crawler/",
-  "fetched_at": "2026-11-18T04:02:08Z",
+  "fetched_at": "2026-11-26T10:35:01Z",
   "connected_peer_ip": "193.183.0.162",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,33 @@
     "not_before": "2026-10-01T19:59:55Z",
     "not_after": "2026-12-30T19:59:54Z",
     "sha256_fingerprint": "a3d008611f8493a6cbbd271dcb457e4c96e6d52787a8807f8d0df1cb21ce82f6"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx/1.26.3"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:04 GMT"
+    ],
+    "content-type": [
+      "text/html"
+    ],
+    "content-length": [
+      "4846"
+    ],
+    "last-modified": [
+      "Tue, 02 Jun 2026 11:11:44 GMT"
+    ],
+    "connection": [
+      "close"
+    ],
+    "etag": [
+      "\"6a1eba70-12ee\""
+    ],
+    "accept-ranges": [
+      "bytes"
+    ]
+  },
+  "size_bytes": 4846,
+  "body_sha256": "553bc2f6176a281f772d872a795564a67a41bb8682a63e870b03bf1fb7fec623"
 }

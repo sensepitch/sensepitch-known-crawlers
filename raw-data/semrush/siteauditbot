@@ -1271,7 +1271,7 @@ window[Symbol.for('sm2.header.config')] = {
           recaptchaKey: "6LfxV9oUAAAAABRStEXp_CLoOVLW-1QkA_sVy5as",
           hasTOC: false,
           feedbackPk: "681",
-          csrfmiddlewaretoken: "DF0ky17j6n4aY7QYPBWMnNhHEBQN07j0rKwxm8vCmrF6muUq1cJE15TWJcdVgED2",
+          csrfmiddlewaretoken: "asHcAUYLozlYSFkHOJ6B1Lby5XG1eziO4dIe3rTiPpMqmWKXERbE8eB6X4yWczNG",
           userLang: "en"
         };
       </script>
@@ -3800,7 +3800,7 @@ To prevent this issue, the website owner could add a redirect from the unsecured
             Don't read and rely on this data from external integrated services or scripts,
             as it is subject to change and not backward compatible.
             -->
-            <script id="sm2_initial_state" type="application/json">{"base": {"cookie_domain": ".semrush.com", "csrfToken": "6kL7T96RP42XCTnYD6ggg4VowKoyKVZIvVcF2938w54q1RzWyleo53NdQmJnV1xR", "language_code": "en", "PopupManager": {"popups": {"need_confirm_email": null, "disabled_user": false, "reset_password": false}}, "switchLanguageApiEndpoint": "/i18n/switch_language_api/", "sso": {"enable_preload": false, "env": "production", "root_url": "/sso", "root_semrush_url": "https://www.semrush.com"}}, "searchbarApiV1Config": {"autocompleteUrl": "https://www.semrush.com/search-bar/api/search/suggestions?type=2", "redirectToKeyword": false, "formAction": "/kb", "gaLabel": "(not-set-in-config)", "defaultQuery": "", "device": null, "date": null, "currency": null, "defaultProtocol": null, "defaultSearchType": null, "defaultVisible": true, "supportedSearchTypes": [], "spaMode": false, "updateBrowserHistory": false, "toolCode": "knowledge-base", "theme": "secondary", "tldFileName": "default"}, "foldersApiV1Config": {}}</script>
+            <script id="sm2_initial_state" type="application/json">{"base": {"cookie_domain": ".semrush.com", "csrfToken": "To6icbjegsOYCBPvCJBS8BEwXXFU7LLsDpiwlNeaeJjMRyKHkjQXCaLEdP3d9Pyt", "language_code": "en", "PopupManager": {"popups": {"need_confirm_email": null, "disabled_user": false, "reset_password": false}}, "switchLanguageApiEndpoint": "/i18n/switch_language_api/", "sso": {"enable_preload": false, "env": "production", "root_url": "/sso", "root_semrush_url": "https://www.semrush.com"}}, "searchbarApiV1Config": {"autocompleteUrl": "https://www.semrush.com/search-bar/api/search/suggestions?type=2", "redirectToKeyword": false, "formAction": "/kb", "gaLabel": "(not-set-in-config)", "defaultQuery": "", "device": null, "date": null, "currency": null, "defaultProtocol": null, "defaultSearchType": null, "defaultVisible": true, "supportedSearchTypes": [], "spaMode": false, "updateBrowserHistory": false, "toolCode": "knowledge-base", "theme": "secondary", "tldFileName": "default"}, "foldersApiV1Config": {}}</script>
 
             <script src="/__static__/webpack/5650.a322c9c779e9b0db.js" defer></script>
 <script src="/__static__/webpack/9327.95597c589ea90a10.js" defer></script>
@@ -3824,6 +3824,6 @@ To prevent this issue, the website owner could add a redirect from the unsecured
         </body>
     </html>
 
-<!--sm_log_id:"flb-2e297f3bacdfae2d129119d131b63371"-->
-<!--otel_trace_id:"2e297f3bacdfae2d129119d131b63371"-->
+<!--sm_log_id:"flb-b33e4fe0bc419cfbfea22d8aa2fc1bd1"-->
+<!--otel_trace_id:"b33e4fe0bc419cfbfea22d8aa2fc1bd1"-->
 <!--template:"site_info"-->

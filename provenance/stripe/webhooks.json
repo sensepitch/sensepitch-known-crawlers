@@ -1,8 +1,8 @@
 {
   "source_url": "https://stripe.com/files/ips/ips_webhooks.txt",
   "final_url": "https://stripe.com/files/ips/ips_webhooks.txt",
-  "fetched_at": "2026-11-18T04:02:20Z",
-  "connected_peer_ip": "198.137.150.161",
+  "fetched_at": "2026-11-26T10:35:12Z",
+  "connected_peer_ip": "198.137.150.41",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=stripe.com,O=Stripe\\, LLC,L=South San Francisco,ST=California,C=US,serialNumber=4675506,businessCategory=Private Organization,jurisdictionST=Delaware,jurisdictionC=US",
@@ -10,5 +10,54 @@
     "not_before": "2026-10-23T00:00:00Z",
     "not_after": "2027-05-09T23:59:59Z",
     "sha256_fingerprint": "15948f33112bd06ef06861e03f0bf255b839a0063497bf6fcd027bc95abdbf4f"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:15 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "content-length": [
+      "207"
+    ],
+    "connection": [
+      "close"
+    ],
+    "content-security-policy": [
+      "base-uri 'none'; connect-src https://c.increment.com https://c.stripe.dev https://c.stripe.global https://c.stripe.partners blob: https://b.stripecdn.com https://climate.stripe.com https://errors.stripe.com https://ext.stripe.com https://r.stripe.com https://stripe-images.s3.us-west-1.amazonaws.com https://stripe.com https://y4pfttj91h-1.algolianet.com/1/indexes/mkt_partners/query https://y4pfttj91h-2.algolianet.com/1/indexes/mkt_partners/query https://y4pfttj91h-3.algolianet.com/1/indexes/mkt_partners/query https://y4pfttj91h-dsn.algolia.net/1/indexes/mkt_partners/query https://tax-connectors.stripe.com 'self'; default-src 'none'; font-src https://b.stripecdn.com 'self'; form-action https://climate.stripe.com https://stripe.com 'self'; frame-ancestors https://app.contentful.com 'self'; frame-src https://checkout.stripe.dev https://support-conversations.stripe.com https://b.stripecdn.com https://checkout.stripe.com https://crypto-js.stripe.com https://js.stripe.com 'self'; img-src data: https://assets.ctfassets.net https://assets.stripeassets.com https://b.stripecdn.com https://images.ctfassets.net https://images.stripeassets.com https://q.stripe.com https://stripe-camo.global.ssl.fastly.net 'self'; media-src https://assets.ctfassets.net https://assets.stripeassets.com https://b.stripecdn.com https://videos.ctfassets.net https://videos.stripeassets.com 'self'; script-src https://b.stripecdn.com https://crypto-js.stripe.com https://js.stripe.com 'self' 'sha256-3aWvb9tRBjmz1OjR3n7mwiTm94+s4iki4mMZF82asmc=' 'sha256-5LtzXhT7UFn+GqP5pKEMGL08UNZsrzANHFEBW/mQHGw=' 'sha256-beLzNcen8LrazzSCRjAapoIMTgJI0osPWGNSX7aK6lc=' 'sha256-cCM0Z4lzGkzQnmbdVw+ouz0JRawyaKcZ4yiqzqYS7ek=' 'sha256-vTifGUJH6hJYTvstw4xJ4xfr/vE0ELkOV4GpCumyqfg=' 'sha256-KxhSaxKB5RFTQsqfRwp+zG7iLjvMrTAySqnSvWlqct0=' 'sha256-tMuJ8c00j54yuxogrdIJeGhNVB350dc56i969XRz/Mc=' 'sha256-aEFSvCaVnb2wNwuO3IzA8J44RdTKt6vms9beA7BcCYg=' 'sha256-0SWEc2BfR2o77i2vUiNNIrFKQkjc2Ujsr2hlfZ6oUek=' 'sha256-++XO0UzhS9XkPcAXD939+/NfpH8YUO8EoIgEQerdgxY=' 'report-sample'; style-src https://b.stripecdn.com 'self' 'unsafe-inline'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU%3D; report-to csp"
+    ],
+    "cross-origin-opener-policy": [
+      "same-origin-allow-popups; report-to=\"wsp_coop\""
+    ],
+    "cross-origin-opener-policy-report-only": [
+      "same-origin-allow-popups; report-to=\"wsp_coop\""
+    ],
+    "report-to": [
+      "{\"group\":\"coop\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/coop-report\"}],\"include_subdomains\":true}, {\"group\":\"wsp_coop\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/coop-report?s=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU=\"}],\"include_subdomains\":true}, {\"group\":\"wsp_coep\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/coep-report?s=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU=\"}],\"include_subdomains\":true}, {\"group\":\"csp\",\"max_age\":8640,\"endpoints\":[{\"url\":\"https://q.stripe.com/csp-report-v2?q=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU%3D&t=1\"}],\"include_subdomains\":true}"
+    ],
+    "reporting-endpoints": [
+      "coop=\"https://q.stripe.com/coop-report\", wsp_coop=\"https://q.stripe.com/coop-report?s=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU=\", wsp_coep=\"https://q.stripe.com/coep-report?s=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU=\", csp=\"https://q.stripe.com/csp-report-v2?q=lTbse3fr7RPY4ddJOlt8byNY4HKK8Z1N9JIwb-_yFbJqIf2FhnM-v7U3SOCKucU%3D&t=1\""
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-stripe-proxy-response": [
+      "upstream"
+    ],
+    "x-stripe-server-rpc-duration-micros": [
+      "29158"
+    ],
+    "x-wc": [
+      "3ff"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000; includeSubDomains; preload"
+    ]
+  },
+  "size_bytes": 207,
+  "body_sha256": "2822617ec7c4bdf4435eb77b24a103df07eb3422701477246e13692a9366d8b8"
 }

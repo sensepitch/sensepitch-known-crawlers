@@ -1,8 +1,8 @@
 {
   "source_url": "https://imagekit.io/public-ip-list",
   "final_url": "https://imagekit.io/public-ip-list",
-  "fetched_at": "2026-11-18T04:02:07Z",
-  "connected_peer_ip": "3.168.203.124",
+  "fetched_at": "2026-11-26T10:35:00Z",
+  "connected_peer_ip": "13.35.163.86",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.imagekit.io",
@@ -10,5 +10,63 @@
     "not_before": "2026-10-22T00:00:00Z",
     "not_after": "2027-05-07T23:59:59Z",
     "sha256_fingerprint": "762058303abff62e453295fae547cc3a604e1c9a81cdba35ad6260a161e658fb"
-  }
+  },
+  "headers": {
+    "content-type": [
+      "application/json; charset=utf-8"
+    ],
+    "content-length": [
+      "1822"
+    ],
+    "connection": [
+      "close"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000"
+    ],
+    "x-download-options": [
+      "noopen"
+    ],
+    "x-dns-prefetch-control": [
+      "off"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-frame-options": [
+      "DENY"
+    ],
+    "access-control-allow-credentials": [
+      "true"
+    ],
+    "x-request-id": [
+      "cb693c7f-00d5-4224-a78f-657be99f6b5c"
+    ],
+    "cache-control": [
+      "public, max-age=300"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:03 GMT"
+    ],
+    "etag": [
+      "W/\"71e-nIjZs8+iXCSsnp9sqnTb2BezDes\""
+    ],
+    "x-cache": [
+      "RefreshHit from cloudfront"
+    ],
+    "via": [
+      "1.1 805e10eadf95869331d2403edeb6ec80.cloudfront.net (CloudFront)"
+    ],
+    "x-amz-cf-pop": [
+      "SIN3-P3"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ],
+    "x-amz-cf-id": [
+      "CULLT6V2V7OH-FgK4kyFgHo1kjzyaZpmHyLYwy3vQsuEcfqvKw15bw=="
+    ]
+  },
+  "size_bytes": 1822,
+  "body_sha256": "e6cba0b71b80115543e6c92ea576893d0b2e9c192d6b0f10c2ad43cfb6399a33"
 }

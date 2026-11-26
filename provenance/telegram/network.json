@@ -1,7 +1,7 @@
 {
   "source_url": "https://core.telegram.org/resources/cidr.txt",
   "final_url": "https://core.telegram.org/resources/cidr.txt",
-  "fetched_at": "2026-11-18T04:02:21Z",
+  "fetched_at": "2026-11-26T10:35:12Z",
   "connected_peer_ip": "149.154.167.99",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,42 @@
     "not_before": "2026-08-25T15:23:05Z",
     "not_after": "2027-03-11T15:23:05Z",
     "sha256_fingerprint": "77937839a340cca03d7c079131555fc196a6727b23eea54039cd8193817a21f6"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx/1.30.7"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:15 GMT"
+    ],
+    "content-type": [
+      "text/plain"
+    ],
+    "content-length": [
+      "227"
+    ],
+    "last-modified": [
+      "Fri, 01 Oct 2021 16:51:55 GMT"
+    ],
+    "connection": [
+      "close"
+    ],
+    "etag": [
+      "\"61573cab-e3\""
+    ],
+    "expires": [
+      "Mon, 30 Nov 2026 10:35:15 GMT"
+    ],
+    "cache-control": [
+      "max-age=345600"
+    ],
+    "strict-transport-security": [
+      "max-age=35768000"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ]
+  },
+  "size_bytes": 227,
+  "body_sha256": "3ecd072cedf72eceee6961b18a51e37f905d5ce4a656a5d24cf5fea63e6ec651"
 }

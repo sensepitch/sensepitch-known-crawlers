@@ -1,7 +1,7 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json",
-  "fetched_at": "2026-11-26T09:25:06Z",
+  "fetched_at": "2026-11-26T10:34:58Z",
   "connected_peer_ip": "74.125.200.138",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,57 @@
     "not_before": "2026-11-03T08:26:50Z",
     "not_after": "2027-01-26T08:26:49Z",
     "sha256_fingerprint": "2b1e9fec6eadf7a870af643f924fbb952f8cc675a93f33926c5e9b392ec574f2"
-  }
+  },
+  "headers": {
+    "content-type": [
+      "application/json"
+    ],
+    "last-modified": [
+      "Wed, 25 Nov 2026 15:46:32 GMT"
+    ],
+    "vary": [
+      "Cookie"
+    ],
+    "content-security-policy": [
+      "base-uri 'self'; object-src 'none'; script-src 'strict-dynamic' 'unsafe-inline' https: http: 'nonce-h+16MJEB7GFQ13E8Vcz1DZx13vUzy/' 'unsafe-eval'; frame-ancestors 'self' https://codeassist.google.com https://code-assist-free-tier.corp.google.com https://pay.google.com https://pay-merchant-console-autopush-qual.corp.google.com https://pay-merchant-console-dev.corp.google.com https://pay-merchant-console-preprod-qual.corp.google.com; report-uri https://csp.withgoogle.com/csp/devsite/v2"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000; includeSubdomains; preload"
+    ],
+    "x-xss-protection": [
+      "0"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "cache-control": [
+      "no-cache, must-revalidate"
+    ],
+    "expires": [
+      "0"
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "x-cloud-trace-context": [
+      "641eda7ab60b14a9463f126ef2390012"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:01 GMT"
+    ],
+    "server": [
+      "Google Frontend"
+    ],
+    "content-length": [
+      "74418"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+    ],
+    "connection": [
+      "close"
+    ]
+  },
+  "size_bytes": 74418,
+  "body_sha256": "3a387c26545163d035a9a3e92e3858f34a8cdef8ba5c9a15dada654d1e740854"
 }

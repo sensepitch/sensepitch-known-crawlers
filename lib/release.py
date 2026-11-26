@@ -1,66 +1,95 @@
 #!/usr/bin/env python3
-"""Build release zips, one per tier and one with every tier, each with the published
-lists and an index.json describing them."""
+"""Package saved lists and their registry metadata for the edge proxy."""
 import datetime
 import ipaddress
 import json
-import re
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import yaml
 
 from registry import TYPES_FILE, entry_paths, load_entry, load_types
 
-SCHEMA = 1
-NAME = "sensepitch-verified-ips"
-PUBLISHER_JSON_FORMATS = {"json", "json-sanitised"}
-TIERS = {
-    "1": "Default public website allow tier for mainstream web search, AI search, "
-         "and public user-facing fetches.",
-    "2": "Specialist search, SEO tools, site auditing, and advertising crawlers.",
-    "3": "Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks, "
-         "and broad service pools.",
-}
+TIERS = (1, 2, 3)
+PREFIX_FAMILIES = {"ipv4Prefix": 4, "ipv6Prefix": 6}
 
 
-def describe(name, entry):
-    path = f"lists/{name}.json"
-    data = Path(path).read_bytes()
-    counts = {4: 0, 6: 0}
-    for prefix in json.loads(data)["prefixes"]:
-        for version in (4, 6):
-            if f"ipv{version}Prefix" in prefix:
-                ipaddress.ip_network(prefix[f"ipv{version}Prefix"], strict=False)
-                counts[version] += 1
-    if not sum(counts.values()):
-        raise ValueError(f"{path}: empty list")
-    fetched_at = json.loads(Path(f"provenance/{name}.json").read_text())["fetched_at"]
-    original_update = None
-    if entry["format"] in PUBLISHER_JSON_FORMATS:
-        original_update = json.loads(Path(f"raw-data/{name}").read_bytes()).get("creationTime")
-    vendor, specialisation = name.split("/")
-    return data, {
-        "id": name,
-        "path": path,
-        "vendor": vendor,
-        "specialisation": specialisation,
-        "types": entry["types"],
-        "tier": entry["tier"],
-        "info_url": entry["info_url"],
-        "download_url": entry["download_url"],
-        "fetched_at": fetched_at,
-        "originalCreationTime": original_update,
-        "ipv4_prefixes": counts[4],
-        "ipv6_prefixes": counts[6],
-    }
+def read_list(path):
+    data = path.read_bytes()
+    prefixes = json.loads(data)["prefixes"]
+    if not isinstance(prefixes, list) or not prefixes:
+        raise ValueError(f"{path}: expected a nonempty prefixes array")
+    for prefix in prefixes:
+        keys = PREFIX_FAMILIES.keys() & prefix.keys() if isinstance(prefix, dict) else set()
+        if len(keys) != 1:
+            raise ValueError(f"{path}: expected one IP prefix per entry")
+        key, = keys
+        value = prefix[key]
+        if not isinstance(value, str) or ipaddress.ip_network(value, strict=False).version != PREFIX_FAMILIES[key]:
+            raise ValueError(f"{path}: invalid {key}: {value!r}")
+    return data
 
 
-def main(registry, version, output):
-    if not re.fullmatch(r"\d{4}\.\d{2}\.\d{2}(\.\d+)?", version):
-        print(f"Invalid version {version!r}, expected YYYY.MM.DD[.N]", file=sys.stderr)
-        return 2
+def collect_lists(registry, paths, known_types):
+    tiers = {tier: [] for tier in TIERS}
+    invalid = False
+    for path in paths:
+        try:
+            name, entry = load_entry(path, registry, known_types)
+            list_path = Path(f"lists/{name}.json")
+            failure = Path(f"provenance/{name}.failure")
+            if failure.exists():
+                if not list_path.exists():
+                    print(f"Warning: {name} has never been retrieved, skipped", file=sys.stderr)
+                    continue
+                since = datetime.datetime.fromtimestamp(int(failure.read_text().strip()), datetime.timezone.utc)
+                print(f"Warning: {name} retrieval failing since {since:%Y-%m-%dT%H:%M:%SZ}, "
+                      "including the saved list", file=sys.stderr)
+            data = read_list(list_path)
+        except (OSError, KeyError, TypeError, ValueError, OverflowError, yaml.YAMLError) as exc:
+            print(f"{path}: {exc}", file=sys.stderr)
+            invalid = True
+            continue
+        vendor, listname = name.split("/")
+        info = {"vendor": vendor, "listname": listname, "tier": entry["tier"], "tags": entry["types"]}
+        tiers[entry["tier"]].append((name, data, info))
+    return None if invalid else tiers
+
+
+def commit_metadata():
+    git = subprocess.run(
+        ["git", "show", "-s", "--no-show-signature", "--no-notes", "--format=%H %ct", "HEAD"],
+        capture_output=True, text=True, check=True,
+    )
+    sha, timestamp = git.stdout.split()
+    modified = datetime.datetime.fromtimestamp(int(timestamp), datetime.timezone.utc)
+    return {"git-sha": sha, "last-modified": modified.strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+
+def write_member(archive, name, data):
+    # A fixed timestamp and platform make the ZIP independent of file metadata.
+    member = zipfile.ZipInfo(name)
+    member.create_system = 3
+    member.external_attr = 0o644 << 16
+    archive.writestr(member, data, compress_type=zipfile.ZIP_DEFLATED)
+
+
+def json_bytes(data):
+    return (json.dumps(data, indent=2) + "\n").encode("utf-8")
+
+
+def write_archive(path, feeds, metadata):
+    with zipfile.ZipFile(path, "x") as archive:
+        write_member(archive, "meta.json", json_bytes(metadata))
+        for name, data, info in feeds:
+            write_member(archive, f"lists/{name}.json", data)
+            write_member(archive, f"info/{name}.json", json_bytes(info))
+
+
+def main(registry, output):
     paths = entry_paths(registry)
     if not paths:
         print(f"{registry}: no YAML registry entries found", file=sys.stderr)
@@ -70,69 +99,33 @@ def main(registry, version, output):
     except (OSError, ValueError, yaml.YAMLError) as exc:
         print(f"{registry / TYPES_FILE}: {exc}", file=sys.stderr)
         return 1
-    now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0)
-    lists, files, status = [], {}, 0
-    for path in paths:
-        try:
-            name, entry = load_entry(path, registry, known_types)
-            if not Path(f"lists/{name}.json").exists() and Path(f"provenance/{name}.failure").exists():
-                print(f"Warning: {name} has never been retrieved, skipped", file=sys.stderr)
-                continue
-            data, meta = describe(name, entry)
-        except (OSError, KeyError, TypeError, ValueError, yaml.YAMLError) as exc:
-            print(f"{path}: {exc}", file=sys.stderr)
-            status = 1
-            continue
-        lists.append(meta)
-        files[meta["path"]] = data
-        failure = Path(f"provenance/{name}.failure")
-        if failure.exists():
-            since = datetime.datetime.fromtimestamp(int(failure.read_text().split()[0]), datetime.timezone.utc)
-            print(f"Warning: {name} retrieval failing since {since:%Y-%m-%dT%H:%M:%SZ}, "
-                  f"releasing data fetched at {meta['fetched_at']}", file=sys.stderr)
-    if status:
-        return status
-    releases = {f"{NAME}-tier{tier}": [tier] for tier in sorted(TIERS)}
-    releases[f"{NAME}-all-tiers"] = sorted(TIERS)
-    outputs = {name: output / f"{name}-{version}.zip" for name in releases}
-    if existing := [str(path) for path in outputs.values() if path.exists()]:
-        print(f"{', '.join(existing)}: already exists", file=sys.stderr)
+    tiers = collect_lists(registry, paths, known_types)
+    if tiers is None:
         return 1
+    commit = commit_metadata()
+
     output.mkdir(parents=True, exist_ok=True)
-    for name, tiers in releases.items():
-        included = [meta for meta in lists if str(meta["tier"]) in tiers]
-        write_release(outputs[name], name, version, now, tiers, included, known_types, files)
-        print(f"{outputs[name]}: {len(included)} lists")
+    destinations = {tier: output / f"sensepitch-known-crawlers-tier{tier}.zip" for tier in TIERS}
+    for destination in destinations.values():
+        if destination.is_dir():
+            raise IsADirectoryError(f"{destination}: expected a ZIP file")
+    with TemporaryDirectory(dir=output) as staging:
+        staged = {tier: Path(staging) / destination.name for tier, destination in destinations.items()}
+        for tier in TIERS:
+            write_archive(staged[tier], tiers[tier], {"version": 1, "tier": tier, **commit})
+        for tier in TIERS:
+            staged[tier].replace(destinations[tier])
+            print(f"{destinations[tier]}: {len(tiers[tier])} lists")
     return 0
 
 
-def write_release(output, name, version, now, tiers, lists, known_types, files):
-    used = {label for meta in lists for label in meta["types"]}
-    used_types = {label: " ".join(text.split()) for label, text in known_types.items() if label in used}
-    index = {
-        "schema": SCHEMA,
-        "name": name,
-        "version": version,
-        "generated": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "tiers": {tier: TIERS[tier] for tier in tiers},
-        "types": used_types,
-        "lists": lists,
-    }
-    contents = {"index.json": (json.dumps(index, indent=2) + "\n").encode(),
-                **{meta["path"]: files[meta["path"]] for meta in lists}}
-    stamp = now.timetuple()[:6]
-    with zipfile.ZipFile(output, "x", zipfile.ZIP_DEFLATED) as archive:
-        for path, data in contents.items():
-            info = zipfile.ZipInfo(path, stamp)
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = 0o644 << 16
-            archive.writestr(info, data)
-
-
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        sys.exit("Usage: release.py <registry> <version> <output-dir>")
+    if len(sys.argv) != 3:
+        print("Usage: release.py <registry> <output-dir>", file=sys.stderr)
+        sys.exit(2)
     try:
-        sys.exit(main(Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3])))
-    except FileExistsError as exc:
-        sys.exit(f"{exc.filename}: already exists")
+        sys.exit(main(Path(sys.argv[1]), Path(sys.argv[2])))
+    except subprocess.CalledProcessError as exc:
+        sys.exit(f"Cannot read Git HEAD for release metadata: {exc.stderr.strip()}")
+    except OSError as exc:
+        sys.exit(str(exc))

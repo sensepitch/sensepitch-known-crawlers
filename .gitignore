@@ -1,3 +1,4 @@
 .state/
 dist/
+/output/
 __pycache__/

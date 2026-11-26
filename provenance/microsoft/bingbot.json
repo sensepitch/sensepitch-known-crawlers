@@ -1,8 +1,8 @@
 {
   "source_url": "https://www.bing.com/toolbox/bingbot.json",
   "final_url": "https://www.bing.com/toolbox/bingbot.json",
-  "fetched_at": "2026-11-18T04:02:09Z",
-  "connected_peer_ip": "23.43.241.209",
+  "fetched_at": "2026-11-26T10:35:02Z",
+  "connected_peer_ip": "23.75.23.86",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=r.bing.com,O=Microsoft Corporation,L=Redmond,ST=WA,C=US",
@@ -10,5 +10,51 @@
     "not_before": "2026-11-05T02:05:19Z",
     "not_after": "2027-05-22T02:05:19Z",
     "sha256_fingerprint": "f8ba727ec7af619094ffd48e4dcabc39ef662fa6d1d2ea48602d676e607c2800"
-  }
+  },
+  "headers": {
+    "content-length": [
+      "1636"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "last-modified": [
+      "Mon, 09 Nov 2026 08:37:29 GMT"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "etag": [
+      "\"1dd70258e086ce4\""
+    ],
+    "x-falcon-service-version": [
+      "76155149"
+    ],
+    "x-request-id": [
+      "0HNQ36KQ9R068:00000001"
+    ],
+    "strict-transport-security": [
+      "max-age=2592000"
+    ],
+    "accept-ch": [
+      "Sec-CH-UA-Arch, Sec-CH-UA-Bitness, Sec-CH-UA-Full-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform, Sec-CH-UA-Platform-Version"
+    ],
+    "x-msedge-ref": [
+      "Ref A: 678F29B6C29C450E9998E132BF9F165C Ref B: TYO201151001031 Ref C: 2026-11-26T10:35:05Z"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:05 GMT"
+    ],
+    "connection": [
+      "close"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=93600"
+    ],
+    "x-cdn-traceid": [
+      "0.86174b17.1795689305.2aec6dfc"
+    ]
+  },
+  "size_bytes": 1636,
+  "body_sha256": "14a769e25c9cc745889fb985850415eb901d519404c66206b796e93978eacab5"
 }

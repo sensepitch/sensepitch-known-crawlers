@@ -1,7 +1,7 @@
 {
   "source_url": "https://www.perplexity.ai/perplexitybot.json",
   "final_url": "https://www.perplexity.ai/perplexitybot.json",
-  "fetched_at": "2026-11-26T09:25:29Z",
+  "fetched_at": "2026-11-26T10:35:08Z",
   "connected_peer_ip": "104.18.27.48",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,63 @@
     "not_before": "2026-11-25T16:30:21Z",
     "not_after": "2027-02-23T17:29:47Z",
     "sha256_fingerprint": "0f8c2c118c14672f870e6b5e8c9cd48276ff74c097d59481585b6357f6fbdd33"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:11 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "content-length": [
+      "741"
+    ],
+    "connection": [
+      "close"
+    ],
+    "cf-ray": [
+      "a6083eb64f7751cc-SIN"
+    ],
+    "cf-cache-status": [
+      "HIT"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "age": [
+      "47"
+    ],
+    "cache-control": [
+      "public, max-age=300"
+    ],
+    "etag": [
+      "\"d44330fd405cc88fa095f84e4aec0849\""
+    ],
+    "expires": [
+      "Thu, 26 Nov 2026 10:40:11 GMT"
+    ],
+    "last-modified": [
+      "Wed, 18 Nov 2026 16:30:34 GMT"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "x-amz-id-2": [
+      "bxxCjMXUfMut/WhYY1pvqquiBLINGS//Waorz7nxnpHoChy0Okw+e7RiVg3cbhLhbQv2e+tlXyA="
+    ],
+    "x-amz-request-id": [
+      "YEQECSN5HNPJ7N4A"
+    ],
+    "x-amz-server-side-encryption": [
+      "AES256"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains; preload"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 741,
+  "body_sha256": "1836aa33ff932634ba0f7e4617c81b9fb298d248e903e60eaa92988843211a63"
 }

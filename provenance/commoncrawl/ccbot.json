@@ -1,7 +1,7 @@
 {
   "source_url": "https://index.commoncrawl.org/ccbot.json",
   "final_url": "https://index.commoncrawl.org/ccbot.json",
-  "fetched_at": "2026-11-18T04:01:58Z",
+  "fetched_at": "2026-11-26T10:34:54Z",
   "connected_peer_ip": "54.237.141.66",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,33 @@
     "not_before": "2026-10-29T18:06:39Z",
     "not_after": "2027-01-27T18:06:38Z",
     "sha256_fingerprint": "a46db4a055c59cb5f5b6ab5449d03ae42255e53309b2223d0d7ed3682282b120"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx/1.31.10"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:34:57 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "content-length": [
+      "540"
+    ],
+    "last-modified": [
+      "Mon, 24 Aug 2026 17:04:32 GMT"
+    ],
+    "connection": [
+      "close"
+    ],
+    "etag": [
+      "\"6a8c79a0-21c\""
+    ],
+    "accept-ranges": [
+      "bytes"
+    ]
+  },
+  "size_bytes": 540,
+  "body_sha256": "0a4c3b6707326d7f083139a979062604a57edfbb251bd29f23f5a86c5107ea30"
 }

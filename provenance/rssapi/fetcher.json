@@ -1,8 +1,8 @@
 {
   "source_url": "https://rssapi.net/ips.txt",
   "final_url": "https://rssapi.net/ips.txt",
-  "fetched_at": "2026-11-18T04:02:18Z",
-  "connected_peer_ip": "172.67.173.74",
+  "fetched_at": "2026-11-26T10:35:10Z",
+  "connected_peer_ip": "104.21.96.55",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=rssapi.net",
@@ -10,5 +10,63 @@
     "not_before": "2026-10-13T11:26:20Z",
     "not_after": "2027-01-11T12:26:18Z",
     "sha256_fingerprint": "683dab04a7f6b4c23c679788b0abd668e7630c9d3269eecaee871a7d1b6fd8fa"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:13 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "content-length": [
+      "39"
+    ],
+    "connection": [
+      "close"
+    ],
+    "x-xss-protection": [
+      "1; mode=block"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=S4ah5tSGCm99DuhfI37eKvY%2BSffsL%2FCxuUG7SZNZXhtTngfB8NXY0uKdhHOdQMQ9b1bMTJHvnF2AKwHxNZtkk6gysuuzIXQ%2Bjdv8NNML3rIoX3dLBUaYkryEtFUQ\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "cache-control": [
+      "public, max-age=0, must-revalidate"
+    ],
+    "etag": [
+      "\"7c92446ab62fe1708e90def569ed063e\""
+    ],
+    "content-security-policy": [
+      "script-src 'self'; frame-ancestors 'none'; object-src 'none';"
+    ],
+    "referrer-policy": [
+      "strict-origin-when-cross-origin"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-frame-options": [
+      "DENY"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "cf-cache-status": [
+      "DYNAMIC"
+    ],
+    "cf-ray": [
+      "a6083ec1bd7bd25b-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 39,
+  "body_sha256": "2e73dcb763186bdd8a79ed4a131a4b089fa652c9c0bb24f815ab8c2bb79ac1fc"
 }

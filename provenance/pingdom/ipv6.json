@@ -1,7 +1,7 @@
 {
   "source_url": "https://my.pingdom.com/probes/ipv6",
   "final_url": "https://my.pingdom.com/probes/ipv6",
-  "fetched_at": "2026-11-18T04:02:17Z",
+  "fetched_at": "2026-11-26T10:35:10Z",
   "connected_peer_ip": "172.66.138.195",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,54 @@
     "not_before": "2026-10-10T05:20:09Z",
     "not_after": "2027-01-08T05:20:08Z",
     "sha256_fingerprint": "4d75c21d859ec01147d8beea8782a23c5ccf3720a59ca819491b4f70907e86f4"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:13 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ],
+    "connection": [
+      "close"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "x-trace": [
+      "00-395618491966443ce274be3ba27d4a5e-d264595246c833fc-01"
+    ],
+    "x-app-name": [
+      "mp2"
+    ],
+    "expires": [
+      "Thu, 19 Nov 1981 08:52:00 GMT"
+    ],
+    "cache-control": [
+      "no-store, no-cache, must-revalidate"
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "referrer-policy": [
+      "same-origin"
+    ],
+    "last-modified": [
+      "Thu, 26 Nov 2026 10:35:13 GMT"
+    ],
+    "cf-cache-status": [
+      "EXPIRED"
+    ],
+    "cf-ray": [
+      "a6083eba6e3f0425-HKG"
+    ]
+  },
+  "size_bytes": 1318,
+  "body_sha256": "4bbd0511a03a8af98e593c87a273545fbd6fdac0ad60af8c1d259a7d11aca612"
 }

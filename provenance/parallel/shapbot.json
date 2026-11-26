@@ -1,8 +1,8 @@
 {
   "source_url": "https://docs.parallel.ai/resources/shapbot.json",
   "final_url": "https://docs.parallel.ai/resources/shapbot.json",
-  "fetched_at": "2026-11-18T04:02:16Z",
-  "connected_peer_ip": "76.76.21.164",
+  "fetched_at": "2026-11-26T10:35:08Z",
+  "connected_peer_ip": "76.76.21.61",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=docs.parallel.ai",
@@ -10,5 +10,93 @@
     "not_before": "2026-11-10T10:41:01Z",
     "not_after": "2027-02-08T10:41:00Z",
     "sha256_fingerprint": "ac8b0a33716c6a20aa0b8a1fc940afd02f7d30c7d1c63026834acd25e1f3f3f1"
-  }
+  },
+  "headers": {
+    "access-control-allow-headers": [
+      "if-none-match"
+    ],
+    "access-control-allow-methods": [
+      "GET, OPTIONS"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "access-control-expose-headers": [
+      "etag"
+    ],
+    "access-control-max-age": [
+      "7200"
+    ],
+    "cache-control": [
+      "public, max-age=1800, must-revalidate"
+    ],
+    "cdn-cache-control": [
+      "no-store"
+    ],
+    "cf-cache-status": [
+      "BYPASS"
+    ],
+    "cf-ray": [
+      "a6083eb10821b841-SIN"
+    ],
+    "content-disposition": [
+      "inline"
+    ],
+    "content-security-policy": [
+      "default-src 'none'; media-src 'self'"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:10 GMT"
+    ],
+    "etag": [
+      "W/\"kt1yRc7my-fS3Dk7\""
+    ],
+    "last-modified": [
+      "Mon, 13 Jul 2026 21:05:45 GMT"
+    ],
+    "server": [
+      "Vercel"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000"
+    ],
+    "vary": [
+      "Accept, accept-encoding"
+    ],
+    "x-cache-key": [
+      "parallel-6fabab31-mtje7p526we/kt1yRc7my-fS3Dk7/resources/shapbot.json?via=s"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-frame-options": [
+      "DENY"
+    ],
+    "x-mintlify-client-version": [
+      "0.0.4336"
+    ],
+    "x-vercel-cache": [
+      "MISS"
+    ],
+    "x-vercel-id": [
+      "sin1:sin1:iad1::iad1::jxhzd-1795689310863-f6c4137475ec"
+    ],
+    "x-vercel-project-id": [
+      "prj_yXOeaGKuDidfrNqkveqTlVxPRlX9"
+    ],
+    "x-version": [
+      "dpl_9bQLTw9nc2h9csDGYcKwWenPcQWn"
+    ],
+    "connection": [
+      "close"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ]
+  },
+  "size_bytes": 587,
+  "body_sha256": "93ee5f1904987470c4cd7de66c7411760b89afc017a40d5e64729065645c41fb"
 }

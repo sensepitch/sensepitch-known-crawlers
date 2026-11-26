@@ -1,7 +1,7 @@
 {
   "source_url": "https://claude.com/.well-known/sail",
   "final_url": "https://claude.com/.well-known/sail",
-  "fetched_at": "2026-11-26T09:24:54Z",
+  "fetched_at": "2026-11-26T10:34:49Z",
   "connected_peer_ip": "160.79.104.10",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,39 @@
     "not_before": "2026-11-20T19:02:04Z",
     "not_after": "2027-02-18T20:01:20Z",
     "sha256_fingerprint": "5553b45787a299f9cd7429c7afe6737ca211a171ecda26480de2b15cb84fb0c1"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:34:52 GMT"
+    ],
+    "content-type": [
+      "application/sail+toml"
+    ],
+    "content-length": [
+      "738"
+    ],
+    "connection": [
+      "close"
+    ],
+    "cache-control": [
+      "public, max-age=3600"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains; preload"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "cf-ray": [
+      "a6083e3e0dae90b2-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 738,
+  "body_sha256": "32ccc50152b96f7e31ed606774e46026da0d7db831cc02e37c644bf2e4b031f1"
 }

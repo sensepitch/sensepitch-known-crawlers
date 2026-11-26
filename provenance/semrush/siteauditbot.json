@@ -1,7 +1,7 @@
 {
   "source_url": "https://www.semrush.com/kb/681-site-audit-troubleshooting",
   "final_url": "https://www.semrush.com/kb/681-site-audit-troubleshooting",
-  "fetched_at": "2026-11-26T09:25:33Z",
+  "fetched_at": "2026-11-26T10:36:58Z",
   "connected_peer_ip": "34.120.45.191",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,72 @@
     "not_before": "2026-11-07T16:31:44Z",
     "not_after": "2027-02-05T17:27:38Z",
     "sha256_fingerprint": "12caf8894db7882e35b577897820ea19dacc9b80d7b3a0dceb758de90a8e546d"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:37:00 GMT"
+    ],
+    "content-type": [
+      "text/html; charset=utf-8"
+    ],
+    "content-length": [
+      "181368"
+    ],
+    "vary": [
+      "Accept-Encoding"
+    ],
+    "expires": [
+      "Thu, 26 Nov 2026 10:50:10 GMT"
+    ],
+    "referrer-policy": [
+      "same-origin"
+    ],
+    "cross-origin-opener-policy": [
+      "same-origin"
+    ],
+    "x-service-response-time": [
+      "0.03082"
+    ],
+    "content-language": [
+      "en"
+    ],
+    "x-service": [
+      "kb"
+    ],
+    "server-timing": [
+      "service;dur=32.10901, remote-components;dur=0.04982, backend;dur=71.42652"
+    ],
+    "sm-log-id": [
+      "flb-b33e4fe0bc419cfbfea22d8aa2fc1bd1"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-xss-protection": [
+      "1; mode=block"
+    ],
+    "cache-control": [
+      "no-cache"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubdomains; preload"
+    ],
+    "via": [
+      "1.1 google"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=2592000"
+    ],
+    "connection": [
+      "close"
+    ]
+  },
+  "size_bytes": 181368,
+  "body_sha256": "74e166514c2b8e8e4d7c25a729191330341abb709972027cc87fd08db6532034"
 }

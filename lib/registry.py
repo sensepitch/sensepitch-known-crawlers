@@ -14,6 +14,7 @@ except ImportError:
 TYPES_FILE = "types.yaml"
 LABEL = r"[a-z0-9]+(?:-[a-z0-9]+)*"
 FIELDS = {"download_url", "info_url", "format", "types", "tier"}
+OPTIONAL_FIELDS = {"volatile_raw"}
 FORMATS = {
     "json", "json-sanitised", "text", "json-array", "fastly", "ahrefs",
     "amazon-html", "marginalia-html", "semrush-html", "you-html", "sail",
@@ -50,8 +51,9 @@ def load_entry(path, root, known_types=None):
         raise ValueError("expected <vendor>/<specialisation>.yaml with kebab-case names")
 
     entry = yaml.load(path.read_text(encoding="utf-8"), Loader=RegistryLoader)
-    if not isinstance(entry, dict) or entry.keys() != FIELDS:
-        raise ValueError("expected download_url, info_url, format, types and tier")
+    if (not isinstance(entry, dict) or not FIELDS <= entry.keys()
+            or not entry.keys() <= FIELDS | OPTIONAL_FIELDS):
+        raise ValueError("expected download_url, info_url, format, types, tier and optionally volatile_raw")
     for field in ("download_url", "info_url"):
         url = entry[field]
         if not isinstance(url, str) or re.search(r"[\s\x00-\x1f\x7f]", url):
@@ -73,12 +75,15 @@ def load_entry(path, root, known_types=None):
     tier = entry["tier"]
     if type(tier) is not int or tier not in (1, 2, 3):
         raise ValueError("tier must be an integer from 1 to 3")
+    if type(entry.get("volatile_raw", False)) is not bool:
+        raise ValueError("volatile_raw must be true or false")
     return name, entry
 
 
 def read_entry(path, root, known_types):
     name, entry = load_entry(path, root, known_types)
-    return entry["format"], name, entry["download_url"]
+    volatile = "1" if entry.get("volatile_raw", False) else "0"
+    return entry["format"], name, entry["download_url"], volatile
 
 
 def main(root):

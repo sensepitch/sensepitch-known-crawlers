@@ -1,8 +1,8 @@
 {
   "source_url": "https://api.fastly.com/public-ip-list",
   "final_url": "https://api.fastly.com/public-ip-list",
-  "fetched_at": "2026-11-18T04:02:00Z",
-  "connected_peer_ip": "146.75.46.35",
+  "fetched_at": "2026-11-26T10:34:55Z",
+  "connected_peer_ip": "151.101.194.35",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=api.fastly.com",
@@ -10,5 +10,57 @@
     "not_before": "2026-11-12T08:52:01Z",
     "not_after": "2026-12-12T08:52:00Z",
     "sha256_fingerprint": "0abe55c96a13b403a5d8e683e40319271d3c5fe0749a74b98dcf2eafed468226"
-  }
+  },
+  "headers": {
+    "connection": [
+      "close"
+    ],
+    "content-length": [
+      "451"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "x-envoy-upstream-service-time": [
+      "15"
+    ],
+    "via": [
+      "1.1 varnish, 1.1 varnish"
+    ],
+    "server": [
+      "fastly istio-envoy"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "age": [
+      "2"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:34:58 GMT"
+    ],
+    "x-served-by": [
+      "cache-chi-kigq8000068-CHI, cache-sin-wsat1880061-SIN"
+    ],
+    "x-cache": [
+      "HIT, MISS"
+    ],
+    "x-cache-hits": [
+      "17, 0"
+    ],
+    "x-timer": [
+      "S1795689298.336791,VS0,VE216"
+    ],
+    "cache-control": [
+      "no-store"
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000"
+    ]
+  },
+  "size_bytes": 451,
+  "body_sha256": "b5e8800ff76c2a8fdcedb7d9b27f23b6cb3158034b157540e594651d42b60bc6"
 }

@@ -1,8 +1,8 @@
 {
   "source_url": "https://duckduckgo.com/duckduckbot.json",
   "final_url": "https://duckduckgo.com/duckduckbot.json",
-  "fetched_at": "2026-11-26T09:25:01Z",
-  "connected_peer_ip": "20.43.161.105",
+  "fetched_at": "2026-11-26T10:36:46Z",
+  "connected_peer_ip": "20.204.244.192",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.duckduckgo.com,O=Duck Duck Go\\, Inc.,L=Paoli,ST=Pennsylvania,C=US",
@@ -10,5 +10,75 @@
     "not_before": "2026-11-02T00:00:00Z",
     "not_after": "2027-05-19T23:59:59Z",
     "sha256_fingerprint": "8866b5763406daf3ea35b69212ae3d048fcbd168d393550593c1b04039260388"
-  }
+  },
+  "headers": {
+    "server": [
+      "nginx"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:36:49 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "content-length": [
+      "32101"
+    ],
+    "last-modified": [
+      "Tue, 01 Sep 2026 15:18:06 GMT"
+    ],
+    "connection": [
+      "close"
+    ],
+    "vary": [
+      "Accept-Encoding"
+    ],
+    "etag": [
+      "\"6a96ecae-7d65\""
+    ],
+    "strict-transport-security": [
+      "max-age=31536000"
+    ],
+    "permissions-policy": [
+      "interest-cohort=()"
+    ],
+    "content-security-policy": [
+      "default-src 'none' ; connect-src  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; manifest-src  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; media-src  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; script-src blob:  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com 'unsafe-inline' 'unsafe-eval' ; font-src data:  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; img-src blob: data:  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; style-src  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com 'unsafe-inline' ; object-src 'none' ; worker-src blob: ; child-src blob:  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; frame-src blob:  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; form-action  https://duck.ai https://*.duck.ai https://duckduckgo.com https://*.duckduckgo.com https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/ https://spreadprivacy.com ; frame-ancestors 'self' https://html.duckduckgo.com; base-uri 'self' ; block-all-mixed-content ;"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "x-xss-protection": [
+      "1;mode=block"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "referrer-policy": [
+      "origin"
+    ],
+    "expect-ct": [
+      "max-age=0"
+    ],
+    "nel": [
+      "{\"report_to\":\"nel\",\"max_age\":86400,\"failure_fraction\":0.01}"
+    ],
+    "report-to": [
+      "{\"group\":\"nel\",\"max_age\":86400,\"endpoints\":[{\"url\":\"https://use.nel.duckduckgo.com/v1/report?region=inc\",\"priority\":1,\"weight\":50},{\"url\":\"https://euw.nel.duckduckgo.com/v1/report?region=inc\",\"priority\":1,\"weight\":50},{\"url\":\"https://ase.nel.duckduckgo.com/v1/report?region=inc\",\"priority\":2}]}"
+    ],
+    "expires": [
+      "Fri, 26 Nov 2027 10:36:49 GMT"
+    ],
+    "cache-control": [
+      "max-age=31536000"
+    ],
+    "x-duckduckgo-locale": [
+      "en_US"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ]
+  },
+  "size_bytes": 32101,
+  "body_sha256": "fd9039362dfaaad236d50c07ddd12bf0cc7f0d530fbff59b8feb1b22e0db2459"
 }

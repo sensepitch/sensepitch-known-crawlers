@@ -26,11 +26,31 @@ setup_case() {
   cat > "$CASE_DIR/bin/curl" <<'SH'
 #!/usr/bin/env bash
 [[ ${1:-} == -q && ${2:-} == --noproxy && ${3:-} == '*' ]] || exit 90
+validator=
 while (($#)); do
-  case $1 in --output) out=$2; shift 2;; https://*) url=$1; shift;; *) shift;; esac
+  case $1 in
+    --output) out=$2; shift 2;;
+    --header) [[ $2 != If-* ]] || validator=$2; shift 2;;
+    https://*) url=$1; shift;;
+    *) shift;;
+  esac
 done
 printf '%s\n' "$url" >> "$CALLS"
+printf '%s\t%s\n' "$url" "$validator" >> "$CALLS.headers"
+final_url="$url/redirected" redirects=1 connections=2 proxy_used=0 status=200 redirect=
+headers=${MOCK_HEADERS:-'{}'}
 case $url in
+  */redirect)
+    status=302 final_url=$url redirects=0 connections=1
+    redirect=${MOCK_REDIRECT:-https://cdn.example.test/direct}
+    headers='{"etag":["\"redirect\""]}' ;;
+esac
+if [[ -n $validator && $validator == "$MOCK_304_FOR" ]] || [[ ${MOCK_UNSOLICITED_304:-} == "$url" ]]; then
+  status=304
+  if [[ -n ${MOCK_DELETE_ON_304:-} ]]; then rm "$MOCK_DELETE_ON_304"; fi
+fi
+if [[ $status == 200 ]]; then
+  case $url in
   */fail) exit 7;;
   */empty) : > "$out";;
   */json) printf '%s\n' '{"prefixes":[{"ipv4Prefix":"192.0.2.0/24"}]}' > "$out";;
@@ -38,8 +58,8 @@ case $url in
   */equivalent) printf '%s\n' '192.0.2.0/25' '192.0.2.128/25' > "$out";;
   */larger) printf '%s\n' '192.0.2.0/23' > "$out";;
   *) printf '%s\n' "${MOCK_BODY:-192.0.2.0/24}" > "$out";;
-esac
-final_url="$url/redirected" redirects=1 connections=2 proxy_used=0
+  esac
+fi
 case $url in
   */unknown) proxy_used=null;;
   */direct) final_url=$url redirects=0 connections=1;;
@@ -49,11 +69,13 @@ case $url in
 esac
 jq -n --arg url "$final_url" --arg peer "${MOCK_REMOTE_IP:-192.0.2.1}" \
   --argjson proxy "$proxy_used" --argjson redirects "$redirects" --argjson connections "$connections" \
-  --rawfile pem "$MOCK_CERT" '
-  {url_effective:$url, remote_ip:$peer, num_redirects:$redirects, num_connects:$connections,
+  --argjson status "$status" --arg redirect "$redirect" --argjson headers "$headers" --rawfile pem "$MOCK_CERT" '
+  ({url_effective:$url, remote_ip:$peer, num_redirects:$redirects, num_connects:$connections,
+   response_code:$status, redirect_url:$redirect,
    certs:("Subject:CN=example.test\n" + (if $redirects == 0 then "Cert:" else "" end) + $pem)}
   + (if $proxy == null then {} else {proxy_used:$proxy} end)
-  | if $url | endswith("/missing-cert/redirected") then del(.certs) else . end
+  | if $url | endswith("/missing-cert/redirected") then del(.certs) else . end)
+  | {transfer:., headers:$headers}
 '
 SH
   chmod +x "$CASE_DIR/bin/curl"
@@ -337,6 +359,128 @@ t_provenance() {
   ' provenance/one/good.json >/dev/null || fail 'incorrect certificate metadata'
 }
 
+t_http_provenance_backfill() {
+  echo '# a full response backfills headers and refreshes provenance only for content changes'
+  setup_case
+  registry 'text one/good https://example.test/direct'
+  run_update
+  jq 'del(.headers, .size_bytes, .body_sha256)' provenance/one/good.json > "$CASE_DIR/old"
+  cp "$CASE_DIR/old" provenance/one/good.json
+  export MOCK_HEADERS='{"etag":["\"v1\""],"last-modified":["Wed, 18 Nov 2026 10:00:00 GMT"],"content-length":["13"],"x-cdn-sha256":["publisher-digest"],"x-cache":["a","b"],"set-cookie":["token=secret"],"set-cookie2":["token=secret"]}'
+  run_update
+  local hash
+  hash=$(openssl dgst -sha256 -r < raw-data/one/good)
+  jq -e --arg hash "${hash%% *}" '
+    .size_bytes == 13 and .body_sha256 == $hash and .headers.etag == ["\"v1\""]
+    and .headers["last-modified"] == ["Wed, 18 Nov 2026 10:00:00 GMT"]
+    and .headers["x-cdn-sha256"] == ["publisher-digest"] and .headers["x-cache"] == ["a","b"]
+    and (.headers | (has("set-cookie") or has("set-cookie2")) | not)
+  ' provenance/one/good.json >/dev/null
+  grep -Fq 'updated (provenance)' "$CASE_DIR/stdout"
+  cp provenance/one/good.json "$CASE_DIR/current"
+  # Rotating validators and digests for identical bytes do not refresh provenance.
+  MOCK_HEADERS=$(jq -c '.date = ["new response time"] | .etag = ["\"v2\""]
+    | ."last-modified" = ["Thu, 19 Nov 2026 10:00:00 GMT"] | ."x-cdn-sha256" = ["new digest"]' <<< "$MOCK_HEADERS")
+  run_update
+  assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
+  cmp "$CASE_DIR/current" provenance/one/good.json
+  MOCK_BODY=$'192.0.2.0/25\n192.0.2.128/25' run_update
+  jq -e '.headers.etag == ["\"v2\""] and .headers["x-cdn-sha256"] == ["new digest"]' provenance/one/good.json >/dev/null
+}
+
+t_volatile_raw() {
+  echo '# volatile raw pages keep saved bytes and provenance until the list changes'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  printf 'volatile_raw: true\n' >> registry/one/good.yaml
+  export MOCK_BODY=$'# token 1\n192.0.2.0/24'
+  run_update
+  cp raw-data/one/good "$CASE_DIR/raw"
+  cp provenance/one/good.json "$CASE_DIR/meta"
+  export MOCK_BODY=$'# token 2\n192.0.2.0/24'
+  run_update
+  assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
+  cmp "$CASE_DIR/raw" raw-data/one/good
+  cmp "$CASE_DIR/meta" provenance/one/good.json
+  run_update --force-update-provenance
+  assert_eq "$MOCK_BODY" "$(cat raw-data/one/good)"
+  export MOCK_BODY=$'# token 3\n192.0.3.0/24'
+  run_update
+  grep -Fq 'one/good: updated (raw and list)' "$CASE_DIR/stdout"
+  assert_eq "$MOCK_BODY" "$(cat raw-data/one/good)"
+}
+
+t_conditional_redirect() {
+  echo '# ETag revalidation sends the validator only to the matching final URL'
+  setup_case
+  registry 'text one/good https://example.test/redirect'
+  export MOCK_HEADERS='{"etag":["W/\"v1\""],"last-modified":["Wed, 18 Nov 2026 10:00:00 GMT"]}'
+  export MOCK_304_FOR='If-None-Match: W/"v1"'
+  run_update
+  cp provenance/one/good.json "$CASE_DIR/current"
+  cp lists/one/good.json "$CASE_DIR/list"
+  printf '0\n' > provenance/one/good.failure
+  : > "$CALLS.headers"
+  run_update
+  assert_eq $'https://example.test/redirect\t\nhttps://cdn.example.test/direct\tIf-None-Match: W/"v1"' "$(cat "$CALLS.headers")"
+  assert_eq 'one/good: no change' "$(cat "$CASE_DIR/stdout")"
+  cmp "$CASE_DIR/current" provenance/one/good.json
+  cmp "$CASE_DIR/list" lists/one/good.json
+  assert_eq '192.0.2.0/24' "$(cat raw-data/one/good)"
+  assert_missing provenance/one/good.failure
+
+  : > "$CALLS.headers"
+  run_update --force-update-provenance
+  assert_eq $'https://example.test/redirect\t\nhttps://cdn.example.test/direct\t' "$(cat "$CALLS.headers")"
+  : > "$CALLS.headers"
+  MOCK_REDIRECT=https://new-cdn.example.test/direct run_update
+  assert_eq $'https://example.test/redirect\t\nhttps://new-cdn.example.test/direct\t' "$(cat "$CALLS.headers")"
+}
+
+t_conditional_last_modified() {
+  echo '# Last-Modified revalidation reparses cached data and falls back when cached bytes are unavailable'
+  setup_case
+  registry 'json one/good https://example.test/direct'
+  export MOCK_HEADERS='{"etag":["*"],"last-modified":["Wed, 18 Nov 2026 10:00:00 GMT"]}'
+  export MOCK_BODY='{"prefixes": [{"ipv4Prefix":"192.0.2.0/24"}]}'
+  export MOCK_304_FOR='If-Modified-Since: Wed, 18 Nov 2026 10:00:00 GMT'
+  run_update
+  cp provenance/one/good.json "$CASE_DIR/current"
+  registry 'json-sanitised one/good https://example.test/direct'
+  run_update
+  assert_eq $'https://example.test/direct\tIf-Modified-Since: Wed, 18 Nov 2026 10:00:00 GMT' "$(tail -n 1 "$CALLS.headers")"
+  jq -e 'has("creationTime")' lists/one/good.json >/dev/null
+  cmp "$CASE_DIR/current" provenance/one/good.json
+
+  sed -i 's/192.0.2.0/192.0.3.0/' raw-data/one/good
+  run_update
+  assert_eq $'https://example.test/direct\t' "$(tail -n 1 "$CALLS.headers")"
+  assert_eq "$MOCK_BODY" "$(cat raw-data/one/good)"
+
+  : > "$CALLS.headers"
+  MOCK_DELETE_ON_304=raw-data/one/good run_update
+  assert_eq $'https://example.test/direct\tIf-Modified-Since: Wed, 18 Nov 2026 10:00:00 GMT\nhttps://example.test/direct\t' "$(cat "$CALLS.headers")"
+  assert_eq "$MOCK_BODY" "$(cat raw-data/one/good)"
+
+  rm lists/one/good.json
+  run_update
+  assert_eq $'https://example.test/direct\t' "$(tail -n 1 "$CALLS.headers")"
+  assert_file lists/one/good.json
+}
+
+t_unsolicited_304() {
+  echo '# unsolicited 304 responses follow retrieval failure rules'
+  setup_case
+  registry 'text one/good https://example.test/direct' 'text two/good https://example.test/good'
+  export MOCK_UNSOLICITED_304=https://example.test/direct
+  run_update
+  assert_file provenance/one/good.failure
+  assert_missing raw-data/one/good
+  assert_file lists/two/good.json
+  printf '0\n' > provenance/one/good.failure
+  expect_failure
+}
+
 t_non_https_final_url() {
   echo '# a plaintext final connection has null certificate provenance'
   setup_case
@@ -465,10 +609,12 @@ t_invalid_source() {
   printf 'tier: 3\n' >> registry/one/duplicate.yaml
   registry 'text one/wrong-tier https://example.test/wrong-tier'
   sed -i 's/tier: 1/tier: true/' registry/one/wrong-tier.yaml
+  registry 'text one/wrong-volatile https://example.test/wrong-volatile'
+  printf 'volatile_raw: yes please\n' >> registry/one/wrong-volatile.yaml
   sed -i 's/tier: 1/tier: 3/' registry/two/good.yaml
   expect_failure
   assert_eq 'https://example.test/good' "$(cat "$CALLS")"
-  for name in bad malformed duplicate wrong-tier; do
+  for name in bad malformed duplicate wrong-tier wrong-volatile; do
     grep -Fq "registry/one/$name.yaml:" "$CASE_DIR/stderr" || fail "missing diagnostic for $name"
   done
   assert_file lists/two/good.json
@@ -600,40 +746,82 @@ TOML
   jq -e '.prefixes == [{"ipv4Prefix":"192.0.2.1/32"}]' output >/dev/null
 }
 
+init_release_head() {
+  git init -q
+  GIT_AUTHOR_DATE='2001-01-01T00:00:00Z' GIT_COMMITTER_DATE='2002-03-04T15:06:07+08:00' \
+    git -c user.name=Fixture -c user.email=fixture@example.test commit -q --allow-empty --no-gpg-sign -m fixture
+}
+
 t_release() {
-  echo '# a release builds a zip per tier and a full zip, each with its lists and an index'
+  echo '# release ZIPs pair byte-identical lists with proxy metadata in their assigned tier'
   setup_case
   registry 'text one/good https://example.test/good' 'text two/fail https://example.test/fail' \
     'json three/hook https://example.test/crlf'
-  sed -i 's/search-engine-crawler/webhook/; s/tier: 1/tier: 3/' registry/three/hook.yaml
+  sed -i 's/\[search-engine-crawler\]/[webhook, search-engine-crawler]/; s/tier: 1/tier: 3/' registry/three/hook.yaml
   run_update
-  bash release.sh 2024.01.02 > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
-  assert_eq $'dist/sensepitch-verified-ips-tier1-2024.01.02.zip: 1 lists\ndist/sensepitch-verified-ips-tier2-2024.01.02.zip: 0 lists\ndist/sensepitch-verified-ips-tier3-2024.01.02.zip: 1 lists\ndist/sensepitch-verified-ips-all-tiers-2024.01.02.zip: 2 lists' "$(cat "$CASE_DIR/stdout")"
-  assert_eq 'Warning: two/fail has never been retrieved, skipped' "$(cat "$CASE_DIR/stderr")"
-  members() { python3 -c 'import sys, zipfile; print(*zipfile.ZipFile(sys.argv[1]).namelist(), sep="\n")' "dist/sensepitch-verified-ips-$1.zip"; }
-  assert_eq $'index.json\nlists/one/good.json' "$(members tier1-2024.01.02)"
-  assert_eq 'index.json' "$(members tier2-2024.01.02)"
-  assert_eq $'index.json\nlists/three/hook.json' "$(members tier3-2024.01.02)"
-  assert_eq $'index.json\nlists/one/good.json\nlists/three/hook.json' "$(members all-tiers-2024.01.02)"
-  unzip -p dist/sensepitch-verified-ips-all-tiers-2024.01.02.zip lists/one/good.json | cmp - lists/one/good.json || fail 'list changed in release'
-  unzip -p dist/sensepitch-verified-ips-tier1-2024.01.02.zip index.json | jq -e --slurpfile meta provenance/one/good.json '
-    .schema == 1 and .name == "sensepitch-verified-ips-tier1" and .version == "2024.01.02"
-    and (.tiers | keys) == ["1"] and .types == {"search-engine-crawler": "Crawls for a search engine."}
-    and .lists == [{id:"one/good", path:"lists/one/good.json", vendor:"one", specialisation:"good",
-      types:["search-engine-crawler"], tier:1, info_url:"https://example.test/info",
-      download_url:"https://example.test/good", fetched_at:$meta[0].fetched_at,
-      originalCreationTime:null, ipv4_prefixes:1, ipv6_prefixes:0}]' >/dev/null || fail 'incorrect tier 1 index'
-  unzip -p dist/sensepitch-verified-ips-tier2-2024.01.02.zip index.json | jq -e '
-    .name == "sensepitch-verified-ips-tier2" and (.tiers | keys) == ["2"] and .types == {} and .lists == []' \
-    >/dev/null || fail 'incorrect tier 2 index'
-  unzip -p dist/sensepitch-verified-ips-all-tiers-2024.01.02.zip index.json | jq -e '
-    .name == "sensepitch-verified-ips-all-tiers" and (.tiers | keys) == ["1", "2", "3"]
-    and (.types | keys) == ["search-engine-crawler", "webhook"] and ([.lists[].id] == ["one/good", "three/hook"])
-    and .lists[1].originalCreationTime == "2024-01-01"' \
-    >/dev/null || fail 'incorrect full index'
-  rm dist/sensepitch-verified-ips-tier1-2024.01.02.zip dist/sensepitch-verified-ips-tier2-2024.01.02.zip
-  if bash release.sh 2024.01.02 2>/dev/null; then fail 'existing release overwritten'; fi
-  assert_missing dist/sensepitch-verified-ips-tier1-2024.01.02.zip
+  init_release_head
+  printf '0\n' > provenance/one/good.failure
+  bash release.sh > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
+  assert_eq $'output/sensepitch-known-crawlers-tier1.zip: 1 lists\noutput/sensepitch-known-crawlers-tier2.zip: 0 lists\noutput/sensepitch-known-crawlers-tier3.zip: 1 lists' "$(cat "$CASE_DIR/stdout")"
+  grep -Fq 'Warning: two/fail has never been retrieved, skipped' "$CASE_DIR/stderr"
+  grep -Fq 'Warning: one/good retrieval failing since 1970-01-01T00:00:00Z, including the saved list' "$CASE_DIR/stderr"
+  python3 - "$(git rev-parse HEAD)" <<'CHECK'
+import json
+import sys
+from pathlib import Path
+from zipfile import ZipFile
+
+expected = {1: ("one", "good", ["search-engine-crawler"]), 2: None,
+            3: ("three", "hook", ["webhook", "search-engine-crawler"])}
+output = Path("output")
+assert {path.name for path in output.iterdir()} == {
+    f"sensepitch-known-crawlers-tier{tier}.zip" for tier in expected
+}
+for tier, feed in expected.items():
+    with ZipFile(output / f"sensepitch-known-crawlers-tier{tier}.zip") as archive:
+        assert archive.testzip() is None
+        assert json.loads(archive.read("meta.json")) == {
+            "version": 1, "tier": tier, "git-sha": sys.argv[1],
+            "last-modified": "2002-03-04T07:06:07Z",
+        }
+        if feed is None:
+            assert archive.namelist() == ["meta.json"]
+            continue
+        vendor, listname, tags = feed
+        list_path = f"lists/{vendor}/{listname}.json"
+        info_path = f"info/{vendor}/{listname}.json"
+        assert sorted(archive.namelist()) == [info_path, list_path, "meta.json"]
+        assert archive.read(list_path) == Path(list_path).read_bytes()
+        assert json.loads(archive.read(info_path)) == dict(
+            vendor=vendor, listname=listname, tier=tier, tags=tags
+        )
+CHECK
+  cp -r output "$CASE_DIR/first-build"
+  touch -t 199901010101 lists/one/good.json registry/one/good.yaml
+  TZ=UTC+11 bash release.sh > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"
+  diff -r "$CASE_DIR/first-build" output
+}
+
+t_release_rebuild() {
+  echo '# successful rebuilds replace the ZIPs and invalid inputs preserve the previous output'
+  setup_case
+  registry 'text one/good https://example.test/good'
+  run_update
+  init_release_head
+  bash release.sh
+  local tier1=output/sensepitch-known-crawlers-tier1.zip
+  local tier2=output/sensepitch-known-crawlers-tier2.zip
+  sed -i 's/tier: 1/tier: 2/' registry/one/good.yaml
+  bash release.sh
+  unzip -p "$tier2" lists/one/good.json | cmp - lists/one/good.json
+  python3 -c 'import sys, zipfile; assert zipfile.ZipFile(sys.argv[1]).namelist() == ["meta.json"]' "$tier1"
+  cp -r output "$CASE_DIR/previous"
+  printf '%s\n' '{"prefixes":[{"ipv6Prefix":"192.0.2.0/24"}]}' > lists/one/good.json
+  if bash release.sh > "$CASE_DIR/stdout" 2> "$CASE_DIR/stderr"; then
+    fail 'invalid list unexpectedly released'
+  fi
+  grep -Fq 'lists/one/good.json: invalid ipv6Prefix' "$CASE_DIR/stderr"
+  diff -r "$CASE_DIR/previous" output
 }
 
 t_undefined_type() {
@@ -654,15 +842,15 @@ t_invalid_types_file() {
   expect_failure
   grep -Fq 'registry/types.yaml: expected a mapping' "$CASE_DIR/stderr" || fail 'missing diagnostic'
   assert_file lists/one/good.json
-  if bash release.sh 2024.01.02 > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
+  if bash release.sh > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
 }
 
 t_release_missing_list() {
   echo '# a release fails when a registered list is missing without a failure record'
   setup_case
   registry 'text one/good https://example.test/good'
-  if bash release.sh 2024.01.02 > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
-  assert_missing dist
+  if bash release.sh > /dev/null 2>&1; then fail 'release unexpectedly succeeded'; fi
+  assert_missing output
 }
 
 testsuite_main "$@"

@@ -1,8 +1,8 @@
 {
   "source_url": "https://www.kimi.ai/policies/kimibot.json",
   "final_url": "https://www.kimi.ai/policies/kimibot.json",
-  "fetched_at": "2026-11-18T04:02:13Z",
-  "connected_peer_ip": "104.18.16.93",
+  "fetched_at": "2026-11-26T10:35:06Z",
+  "connected_peer_ip": "104.18.17.93",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=www.kimi.ai",
@@ -10,5 +10,43 @@
     "not_before": "2026-10-09T15:17:37Z",
     "not_after": "2027-01-07T16:17:34Z",
     "sha256_fingerprint": "0dcc068822b42e57cc5f66153978b923d04465e8ec26f274b231c7911900359e"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:09 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ],
+    "connection": [
+      "close"
+    ],
+    "vary": [
+      "Accept-Encoding",
+      "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    ],
+    "x-internal-adhoc-canary": [
+      "2864213411"
+    ],
+    "cache-control": [
+      "public, max-age=3600, stale-while-revalidate=86400"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains"
+    ],
+    "cf-cache-status": [
+      "DYNAMIC"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "cf-ray": [
+      "a6083ea8784fc6f3-SIN"
+    ]
+  },
+  "size_bytes": 186,
+  "body_sha256": "cc2df677a3164de0b0eaa5c6fad21cac1ecb03a905743b3bf23db347f0b058c4"
 }

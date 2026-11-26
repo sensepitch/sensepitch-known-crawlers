@@ -1,8 +1,8 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/common-crawlers.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/common-crawlers.json",
-  "fetched_at": "2026-11-26T09:25:02Z",
-  "connected_peer_ip": "172.253.118.113",
+  "fetched_at": "2026-11-26T10:34:55Z",
+  "connected_peer_ip": "142.251.12.100",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.google.com",
@@ -10,5 +10,57 @@
     "not_before": "2026-11-03T08:26:50Z",
     "not_after": "2027-01-26T08:26:49Z",
     "sha256_fingerprint": "2b1e9fec6eadf7a870af643f924fbb952f8cc675a93f33926c5e9b392ec574f2"
-  }
+  },
+  "headers": {
+    "content-type": [
+      "application/json"
+    ],
+    "last-modified": [
+      "Wed, 25 Nov 2026 15:46:32 GMT"
+    ],
+    "vary": [
+      "Cookie"
+    ],
+    "content-security-policy": [
+      "base-uri 'self'; object-src 'none'; script-src 'strict-dynamic' 'unsafe-inline' https: http: 'nonce-Nn1ZKlUdDayfElwZmsdstOM2Fj+esC' 'unsafe-eval'; frame-ancestors 'self' https://codeassist.google.com https://code-assist-free-tier.corp.google.com https://pay.google.com https://pay-merchant-console-autopush-qual.corp.google.com https://pay-merchant-console-dev.corp.google.com https://pay-merchant-console-preprod-qual.corp.google.com; report-uri https://csp.withgoogle.com/csp/devsite/v2"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000; includeSubdomains; preload"
+    ],
+    "x-xss-protection": [
+      "0"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "cache-control": [
+      "no-cache, must-revalidate"
+    ],
+    "expires": [
+      "0"
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "x-cloud-trace-context": [
+      "0923165b4c3828d21776e4e84c437200"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:34:59 GMT"
+    ],
+    "server": [
+      "Google Frontend"
+    ],
+    "content-length": [
+      "21768"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+    ],
+    "connection": [
+      "close"
+    ]
+  },
+  "size_bytes": 21768,
+  "body_sha256": "4362a42f3bd19ecd6b55a941fed08dce4ed448465995beb82708aeb387392bfc"
 }

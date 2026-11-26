@@ -1,7 +1,7 @@
 {
   "source_url": "https://openai.com/adsbot.json",
   "final_url": "https://openai.com/adsbot.json",
-  "fetched_at": "2026-11-18T04:02:15Z",
+  "fetched_at": "2026-11-26T10:35:07Z",
   "connected_peer_ip": "172.64.154.211",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,78 @@
     "not_before": "2026-11-14T05:25:41Z",
     "not_after": "2027-02-12T06:25:38Z",
     "sha256_fingerprint": "aa4f78a457de767031bacf63e5d4b9adef654a0c3282e179a7d77d5abab07d24"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:10 GMT"
+    ],
+    "content-type": [
+      "application/json; charset=utf-8"
+    ],
+    "content-length": [
+      "177"
+    ],
+    "connection": [
+      "close"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "age": [
+      "19679"
+    ],
+    "cache-control": [
+      "public, max-age=0, must-revalidate"
+    ],
+    "content-disposition": [
+      "inline; filename=\"adsbot.json\""
+    ],
+    "etag": [
+      "\"c30fac8517f3d067821b04891316d2a9\""
+    ],
+    "last-modified": [
+      "Thu, 26 Nov 2026 05:07:10 GMT"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains; preload"
+    ],
+    "x-matched-path": [
+      "/adsbot.json"
+    ],
+    "x-vercel-cache": [
+      "HIT"
+    ],
+    "x-vercel-id": [
+      "sin1::qfrjz-1795689310423-e9ff22fa1604"
+    ],
+    "cf-cache-status": [
+      "DYNAMIC"
+    ],
+    "oai-host": [
+      "openai.com"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=C1iDxc7GYp9%2BPTcC08rf1WL%2FQseluW4rmNp1bfFWraRu32wh93R%2BibHJ1EwsRQAuQqVQcZBt19JrvUC6Pttwd%2FcOLgnLnnOMfD57Fh%2BXhHW5BBp%2FKXRgRS7mPzk%3D\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.01,\"max_age\":604800}"
+    ],
+    "cf-ray": [
+      "a6083eade912f924-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 177,
+  "body_sha256": "460b800ffb026c5ec1b9540d285f2ade8e1c4a654e65dae315e2bae650b5d74d"
 }

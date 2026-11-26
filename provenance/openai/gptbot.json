@@ -1,7 +1,7 @@
 {
   "source_url": "https://openai.com/gptbot.json",
   "final_url": "https://openai.com/gptbot.json",
-  "fetched_at": "2026-11-18T04:02:14Z",
+  "fetched_at": "2026-11-26T10:35:06Z",
   "connected_peer_ip": "104.18.33.45",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,78 @@
     "not_before": "2026-11-14T05:25:41Z",
     "not_after": "2027-02-12T06:25:38Z",
     "sha256_fingerprint": "aa4f78a457de767031bacf63e5d4b9adef654a0c3282e179a7d77d5abab07d24"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:10 GMT"
+    ],
+    "content-type": [
+      "application/json; charset=utf-8"
+    ],
+    "content-length": [
+      "977"
+    ],
+    "connection": [
+      "close"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "age": [
+      "2823"
+    ],
+    "cache-control": [
+      "public, max-age=0, must-revalidate"
+    ],
+    "content-disposition": [
+      "inline; filename=\"gptbot.json\""
+    ],
+    "etag": [
+      "\"4c4f5439a5de299b831d64fbdae91310\""
+    ],
+    "last-modified": [
+      "Wed, 25 Nov 2026 00:45:37 GMT"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains; preload"
+    ],
+    "x-matched-path": [
+      "/gptbot.json"
+    ],
+    "x-vercel-cache": [
+      "MISS"
+    ],
+    "x-vercel-id": [
+      "sin1::42qt7-1795567537146-259c46be63f4"
+    ],
+    "cf-cache-status": [
+      "HIT"
+    ],
+    "oai-host": [
+      "openai.com"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=eMtGcaJB8xYCM6RqfDwpUI18Tbo7DgGPF76XNrqCDeInblMTdDbWc5y0RmIKN9Z3s28XjIzz8ImZQoJOB6nLdljBrytCNszaIcdPutlvk1ikTup8OovH7bW6W2w%3D\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.01,\"max_age\":604800}"
+    ],
+    "cf-ray": [
+      "a6083eac5fcdfcf7-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 977,
+  "body_sha256": "a24d1fa34f094d303400bdf13c45c5e9726e0b553780d16a52f9ba1b790acc72"
 }

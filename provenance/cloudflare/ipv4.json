@@ -1,7 +1,7 @@
 {
   "source_url": "https://www.cloudflare.com/ips-v4",
   "final_url": "https://www.cloudflare.com/ips-v4",
-  "fetched_at": "2026-11-18T04:01:57Z",
+  "fetched_at": "2026-11-26T10:34:53Z",
   "connected_peer_ip": "104.16.124.96",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,54 @@
     "not_before": "2026-11-16T17:06:07Z",
     "not_after": "2027-02-14T18:06:04Z",
     "sha256_fingerprint": "2d9beac2bedd71968e698ec04cb0385b298f33b4eb13015205eb4df0394d560c"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:34:56 GMT"
+    ],
+    "content-type": [
+      "text/plain;charset=UTF-8"
+    ],
+    "content-length": [
+      "230"
+    ],
+    "connection": [
+      "close"
+    ],
+    "cf-ray": [
+      "a6083e55f8d5c07a-SIN"
+    ],
+    "cf-cache-status": [
+      "HIT"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "age": [
+      "71384"
+    ],
+    "cache-control": [
+      "s-maxage=86400"
+    ],
+    "last-modified": [
+      "Wed, 25 Nov 2026 14:45:12 GMT"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "vary": [
+      "accept-encoding"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=cIFT518D1VDYNkuxJSIdEHna166XX%2FePdRtPFIQeZJKGMnOiCqrx5AG0p5oL%2BSkQQJpPfghGTBEeh8pNLH%2FWsd6CqKtv85FeCf%2FfhndpMmUYokBjiqiSg6ziX6bHnltuD0RqRA%3D%3D\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 230,
+  "body_sha256": "f02c6d83bc01ab0ae8577160e036d700c7455359bce054df884e5d7d9e4e9e7b"
 }

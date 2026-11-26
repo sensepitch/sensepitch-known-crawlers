@@ -1,7 +1,7 @@
 {
   "source_url": "https://betteruptime.com/ips.txt",
   "final_url": "https://betteruptime.com/ips.txt",
-  "fetched_at": "2026-11-18T04:01:55Z",
+  "fetched_at": "2026-11-26T10:34:51Z",
   "connected_peer_ip": "172.66.41.22",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,84 @@
     "not_before": "2026-11-03T02:56:04Z",
     "not_after": "2027-02-01T03:55:43Z",
     "sha256_fingerprint": "402baf2e6afce12c0cd44c0c43acc938ba7d50f28d56759454728fb36a317ddd"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:34:55 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "content-length": [
+      "957"
+    ],
+    "connection": [
+      "close"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "x-xss-protection": [
+      "0"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-permitted-cross-domain-policies": [
+      "none"
+    ],
+    "referrer-policy": [
+      "strict-origin-when-cross-origin"
+    ],
+    "permissions-policy": [
+      "accelerometer=(), autoplay=(self \"https://www.youtube.com\"), camera=(), encrypted-media=(), fullscreen=(self \"https://www.youtube.com\"), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube.com\"), usb=()"
+    ],
+    "vary": [
+      "Accept, X-Requested-With, accept-encoding"
+    ],
+    "cache-control": [
+      "public, max-age=31536000"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "feature-policy": [
+      "accelerometer 'none'; autoplay 'self' https://www.youtube.com; camera 'none'; encrypted-media 'none'; fullscreen 'self' https://www.youtube.com; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'self' https://www.youtube.com; usb 'none'"
+    ],
+    "x-request-id": [
+      "e2179da8-4606-4c77-9a88-ed6df457831a"
+    ],
+    "x-runtime": [
+      "0.005039"
+    ],
+    "strict-transport-security": [
+      "max-age=63113904; includeSubDomains; preload"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    "last-modified": [
+      "Thu, 26 Nov 2026 09:24:59 GMT"
+    ],
+    "age": [
+      "4195"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "cf-cache-status": [
+      "HIT"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=FI5aG%2BOWiWjwy0J8VaxN3kq0QWyAbyFZBEWqUmmkS5H6YAAhqIQ%2FUhaZQwhB%2F2lukOr57i1Z6vkpbYVMCWcgI4otSGFSqWH6wIrBVGUisAPFRbVlHz7MMxdx4ucuLQacOdo%3D\"}]}"
+    ],
+    "cf-ray": [
+      "a6083e4e1e645cb5-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 957,
+  "body_sha256": "530e49ce3df8a197b3cce392f8bed0d22a7cf8d1093c93e002fdf11d0863925f"
 }

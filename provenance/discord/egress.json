@@ -1,8 +1,8 @@
 {
   "source_url": "https://cdn.discordapp.com/ipranges/discord.json",
   "final_url": "https://cdn.discordapp.com/ipranges/discord.json",
-  "fetched_at": "2026-11-18T04:01:59Z",
-  "connected_peer_ip": "162.159.130.233",
+  "fetched_at": "2026-11-26T10:34:54Z",
+  "connected_peer_ip": "162.159.129.233",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=discordapp.com",
@@ -10,5 +10,51 @@
     "not_before": "2026-10-26T23:33:04Z",
     "not_after": "2027-01-25T00:32:59Z",
     "sha256_fingerprint": "5aaefca6e5fe5410d5ae4bef90a658e71f551e83297911663fd20af67081315d"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:34:57 GMT"
+    ],
+    "content-type": [
+      "application/json; charset=UTF-8"
+    ],
+    "content-length": [
+      "1366"
+    ],
+    "connection": [
+      "close"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "cache-control": [
+      "public, max-age=300"
+    ],
+    "etag": [
+      "\"2bd1a83a\""
+    ],
+    "last-modified": [
+      "Tue, 04 Aug 2026 18:01:19 GMT"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=OC0Sn0Ka4%2BcR1zp7kRfEjapA5E0QKhyLOwJSNOKdg6mQlhS%2FFp42rL0mCwpyhrzZbnR7%2B%2F1OqGglDpfp%2FWzY%2BlNei5fPTSn1WOAOYn%2B2w%2B5SwIY%2FSwWE%2BA1Th%2Bu8Ve7nYowVJQ%3D%3D\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    "x-robots-tag": [
+      "noindex, nofollow, noarchive, nocache, noimageindex, noodp"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "cf-ray": [
+      "a6083e5e28889010-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 1366,
+  "body_sha256": "f5ec1a10d6073eb30aa0b9992cbbcb9a9b457fbe684474adaf1fefe152f9864a"
 }

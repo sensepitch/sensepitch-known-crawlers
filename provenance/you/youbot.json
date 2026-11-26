@@ -1,7 +1,7 @@
 {
   "source_url": "https://you.com/docs/youbot",
   "final_url": "https://you.com/docs/youbot",
-  "fetched_at": "2026-11-26T09:25:36Z",
+  "fetched_at": "2026-11-26T10:35:13Z",
   "connected_peer_ip": "104.18.41.176",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,82 @@
     "not_before": "2026-11-11T06:59:29Z",
     "not_after": "2027-02-09T07:59:26Z",
     "sha256_fingerprint": "ba3f95243f5560e0439f0e843a86d0857d717519bdc9e69467288fb1401122c1"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:16 GMT"
+    ],
+    "content-type": [
+      "text/html; charset=utf-8"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ],
+    "connection": [
+      "close"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "cf-cache-status": [
+      "DYNAMIC"
+    ],
+    "age": [
+      "38067"
+    ],
+    "cache-control": [
+      "public, max-age=0, must-revalidate, s-maxage=300"
+    ],
+    "last-modified": [
+      "Wed, 25 Nov 2026 22:15:49 GMT"
+    ],
+    "link": [
+      "</docs/youbot.md>; rel=\"alternate\"; type=\"text/markdown\", </docs/llms.txt>; rel=\"describedby\", </docs/_astro/inline.rxfqpOU2hSdtZvi5.css>; rel=\"preload\"; as=\"style\", </docs/_astro/inline.MP8NhjIJEBMcHU6O.css>; rel=\"preload\"; as=\"style\", </docs/_astro/inline.SWIXErqwrC2-MfGs.css>; rel=\"preload\"; as=\"style\", </docs/_astro/inline.f_t4Dy-xMsO2h3p6.css>; rel=\"preload\"; as=\"style\", </docs/_astro/build-version.uAEqEpCr.css>; rel=\"preload\"; as=\"style\", </.well-known/api-catalog>; rel=\"api-catalog\""
+    ],
+    "strict-transport-security": [
+      "max-age=63072000; includeSubDomains; preload"
+    ],
+    "vary": [
+      "Accept",
+      "accept-encoding"
+    ],
+    "cf-placement": [
+      "local-PDX"
+    ],
+    "content-security-policy": [
+      "default-src 'self'; script-src 'self' 'strict-dynamic' 'unsafe-eval' 'sha256-lHT4DAx2WlKOUoz8Pnsv4hBB6WQQWpSMnN7i1SYcCTQ=' 'sha256-KqgPT74bgsP6tFi9sHXQsAritKqssh5ynObvG9w8yj4=' 'sha256-a8vOuzm8ssBPapR8SMU4W7axwgi0WUYZ3Tu4Skq8Jzg=' 'sha256-6/m5shMVKVxVk4qkoqtz5UrKhZvdWIflC/zfU1hKHMg=' 'sha256-yPw5wPQkejJJ8owozmkqrhQ/E33R+fuN0gmcjwalrjM=' 'sha256-BhOH4JYGbqMwyJUjQ+YtFP1woqWD5SmDlYGLY7ohj+Q=' 'sha256-ReCqNSQD9ecY86RsEPwfuEjgsD5GLeYVAEDE0hZGme0=' 'sha256-6I6GONbRuC68NHvseg/qBpObhQuWIBSmA9Ed8yvia1I=' 'sha256-oTD7RVNcsu+KEX0dMyirP5hXAZXHS4g2hJjOjwnUlFQ=' 'sha256-v8kAuYE1BqImi3yG1THK0Ofj9i9MsA7m0VVl9ZbJeGE=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8=' 'sha256-OUQRxSLiAdojnatL1JBUyjRPihkavzuRhf4ZQIJ/XvU=' 'sha256-BEYJ6q5nVBkf3NAODH4PJcZM8txLQc+qUE1Qduzi6/o=' 'sha256-LfHuA3jcK+pohDVdahiCYv0T6EAfCGshcETBCyjz6QA=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-gb6dNSVZKu5ARVoUjTW1x8JnToWeIcP2K0lB6J49wPA=' 'sha256-xmq6Do90QW431/ikiN9/DrK/FLtyoVvHl/BelyMm7uI=' 'sha256-YhtBJMvq3uw/TCvBwMALaGn+2eGYiWvN54ohqAJpntI=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-H7wv8QNwNKVnzjrw9qBetlt5e06skkB52q18BJXmpg4=' 'sha256-Uq8FyP9qOF+gDNl9a/4GbEYyMqAXh8Wno07kUl3jZGw=' 'sha256-0LxLpnrY0bYhJMKlJOdImwLAOkF53LoClxHg28uSREU='; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' data: blob: https: wss:; media-src 'self' data: blob: https:; frame-src 'self' data: https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'self' https://*.buildwithfern.com"
+    ],
+    "content-security-policy-report-only": [
+      "style-src 'self' https:"
+    ],
+    "permissions-policy": [
+      "camera=(self), microphone=(self), geolocation=()"
+    ],
+    "referrer-policy": [
+      "strict-origin-when-cross-origin"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-fern-renderer": [
+      "static"
+    ],
+    "report-to": [
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=VWPWDZknEviSJFf8HNLtiyqP3jUTFgJQHHBh4rXKCQ8UskA2XZoI1N%2BDn6tZ%2FUOJ6MsOczH2zKalwvbDMT5FyJtCFGhFY%2FYRfJoCfmC5QlyD2B6trxRIHt3FKsbJLZPGkI%2BgZL0yJQ%3D%3D\"}]}"
+    ],
+    "nel": [
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ],
+    "cf-ray": [
+      "a6083ed46fb4479b-SIN"
+    ]
+  },
+  "size_bytes": 200175,
+  "body_sha256": "7390eaaa396e664a085e6767d8642e443fad32b107f15911ba7ff05184e03699"
 }

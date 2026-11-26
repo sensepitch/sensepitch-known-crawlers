@@ -1,7 +1,7 @@
 {
   "source_url": "https://www.mojeek.com/mojeekbot.json",
   "final_url": "https://www.mojeek.com/mojeekbot.json",
-  "fetched_at": "2026-11-18T04:02:11Z",
+  "fetched_at": "2026-11-26T10:35:03Z",
   "connected_peer_ip": "5.102.173.68",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,48 @@
     "not_before": "2026-02-13T00:00:00Z",
     "not_after": "2027-03-16T23:59:59Z",
     "sha256_fingerprint": "b49b677d01338f5634cb079568f82690e48de3b56552af2d10cc54dc49163b7f"
-  }
+  },
+  "headers": {
+    "content-type": [
+      "application/json"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "etag": [
+      "\"1397527578\""
+    ],
+    "last-modified": [
+      "Thu, 22 May 2025 08:46:27 GMT"
+    ],
+    "x-xss-protection": [
+      "1; mode=block"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "referrer-policy": [
+      "origin"
+    ],
+    "access-control-allow-origin": [
+      "*"
+    ],
+    "content-security-policy": [
+      "frame-ancestors 'none'; default-src * 'unsafe-inline' 'unsafe-eval' blob: *.mojeek.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://js.stripe.com/v3/; img-src 'self' data: *.mojeek.com; object-src 'none'; base-uri 'self'; form-action 'self' https://checkout.stripe.com"
+    ],
+    "content-length": [
+      "113"
+    ],
+    "connection": [
+      "close"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:07 GMT"
+    ],
+    "server": [
+      "lighttpd/1.4.53"
+    ]
+  },
+  "size_bytes": 113,
+  "body_sha256": "83924323f9b6573e82aea635d34dc6bb5c8e591177f7d1415eec0762fbd0e138"
 }

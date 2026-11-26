@@ -1,8 +1,8 @@
 {
   "source_url": "https://my.pingdom.com/probes/ipv4",
   "final_url": "https://my.pingdom.com/probes/ipv4",
-  "fetched_at": "2026-11-18T04:02:17Z",
-  "connected_peer_ip": "172.66.135.106",
+  "fetched_at": "2026-11-26T10:35:08Z",
+  "connected_peer_ip": "172.66.138.195",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=pingdom.com",
@@ -10,5 +10,57 @@
     "not_before": "2026-10-10T05:20:09Z",
     "not_after": "2027-01-08T05:20:08Z",
     "sha256_fingerprint": "4d75c21d859ec01147d8beea8782a23c5ccf3720a59ca819491b4f70907e86f4"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:35:12 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ],
+    "connection": [
+      "close"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "x-trace": [
+      "00-a911238915b5640baa69d1db5aa3d518-fdb092546e721dab-01"
+    ],
+    "x-app-name": [
+      "mp2"
+    ],
+    "expires": [
+      "Thu, 19 Nov 1981 08:52:00 GMT"
+    ],
+    "cache-control": [
+      "no-store, no-cache, must-revalidate"
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "x-frame-options": [
+      "SAMEORIGIN"
+    ],
+    "referrer-policy": [
+      "same-origin"
+    ],
+    "age": [
+      "985"
+    ],
+    "last-modified": [
+      "Thu, 26 Nov 2026 10:18:47 GMT"
+    ],
+    "cf-cache-status": [
+      "HIT"
+    ],
+    "cf-ray": [
+      "a6083eb84e8108e5-HKG"
+    ]
+  },
+  "size_bytes": 2118,
+  "body_sha256": "4c8bebb03d999bed2335a8881ff421520ad60b3e6b4d6688e8f20d249fe5720e"
 }

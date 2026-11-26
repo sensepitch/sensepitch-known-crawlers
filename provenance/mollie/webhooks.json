@@ -1,7 +1,7 @@
 {
   "source_url": "https://ip-ranges.mollie.com/ips.txt",
   "final_url": "https://ip-ranges.mollie.com/ips.txt",
-  "fetched_at": "2026-11-18T04:02:11Z",
+  "fetched_at": "2026-11-26T10:35:05Z",
   "connected_peer_ip": "35.227.211.46",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,91 @@
     "not_before": "2026-10-26T17:56:24Z",
     "not_after": "2027-01-24T18:50:57Z",
     "sha256_fingerprint": "4f66567dbabca2457bf746196bad8c0d44f460a94f80196da6b784989c67d3cb"
-  }
+  },
+  "headers": {
+    "x-guploader-uploadid": [
+      "AFy3sg1b_4MD6OkxWJTPrCBNfmUSS2DTwzMjg0XbhkyTB5lU8k1EjRRrLgz8qQrsJJ7XTMWI8GFfjnY"
+    ],
+    "x-goog-generation": [
+      "1794220154354925"
+    ],
+    "x-goog-metageneration": [
+      "1"
+    ],
+    "x-goog-stored-content-encoding": [
+      "identity"
+    ],
+    "x-goog-stored-content-length": [
+      "231"
+    ],
+    "x-goog-hash": [
+      "crc32c=rmX4bg==",
+      "md5=/QDbTVds1JwEVtkWZg8D/w=="
+    ],
+    "x-goog-storage-class": [
+      "MULTI_REGIONAL"
+    ],
+    "accept-ranges": [
+      "bytes"
+    ],
+    "content-length": [
+      "231"
+    ],
+    "server": [
+      "UploadServer"
+    ],
+    "via": [
+      "1.1 google"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:35:08 GMT"
+    ],
+    "last-modified": [
+      "Mon, 09 Nov 2026 10:29:14 GMT"
+    ],
+    "etag": [
+      "\"fd00db4d576cd49c0456d916660f03ff\""
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "age": [
+      "0"
+    ],
+    "cache-control": [
+      "public,max-age=0"
+    ],
+    "strict-transport-security": [
+      "max-age=63072000; includeSubDomains; preload"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-frame-options": [
+      "DENY"
+    ],
+    "content-security-policy": [
+      "default-src 'none'; script-src 'unsafe-inline'"
+    ],
+    "referrer-policy": [
+      "no-referrer"
+    ],
+    "permissions-policy": [
+      "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    ],
+    "cross-origin-opener-policy": [
+      "same-origin"
+    ],
+    "cross-origin-resource-policy": [
+      "cross-origin"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=2592000"
+    ],
+    "connection": [
+      "close"
+    ]
+  },
+  "size_bytes": 231,
+  "body_sha256": "bcd9d8dadbc36cd404eeff9be1fcb2c7be43dc598752875e0e6f540c9f469bc1"
 }

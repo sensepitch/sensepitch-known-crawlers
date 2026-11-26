@@ -1,7 +1,7 @@
 {
   "source_url": "https://search.developer.apple.com/applebot.json",
   "final_url": "https://search.developer.apple.com/applebot.json",
-  "fetched_at": "2026-11-18T04:01:54Z",
+  "fetched_at": "2026-11-26T10:34:50Z",
   "connected_peer_ip": "17.138.128.4",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,39 @@
     "not_before": "2026-11-03T03:13:46Z",
     "not_after": "2027-01-28T18:58:39Z",
     "sha256_fingerprint": "df7719bc64e9aeb05c3e71ae6f2c569e9631adcc39a9dc4bc321bf3ba4a04802"
-  }
+  },
+  "headers": {
+    "server": [
+      "AppleHttpServer/ee222ff8e77c21875b1b5f226dd480133e3701f0"
+    ],
+    "date": [
+      "Thu, 26 Nov 2026 10:34:53 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "content-length": [
+      "1640"
+    ],
+    "connection": [
+      "close"
+    ],
+    "vary": [
+      "Accept-Encoding"
+    ],
+    "last-modified": [
+      "Tue, 15 Sep 2026 08:17:14 GMT"
+    ],
+    "etag": [
+      "W/\"1640-1789460234000\""
+    ],
+    "x-b3-traceid": [
+      "35bb133da2775538"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000"
+    ]
+  },
+  "size_bytes": 1640,
+  "body_sha256": "5a5e12188891d998341f4fb50d2b31c80aba5002f5cff9d0fa110c13e4e2edd0"
 }

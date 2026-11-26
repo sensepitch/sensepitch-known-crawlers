@@ -1,7 +1,7 @@
 {
   "source_url": "https://api.ahrefs.com/v3/public/crawler-ips",
   "final_url": "https://api.ahrefs.com/v3/public/crawler-ips",
-  "fetched_at": "2026-11-18T04:01:41Z",
+  "fetched_at": "2026-11-26T10:34:43Z",
   "connected_peer_ip": "162.159.140.4",
   "proxy_used": false,
   "tls_certificate": {
@@ -10,5 +10,82 @@
     "not_before": "2026-11-17T09:35:59Z",
     "not_after": "2027-02-15T10:35:38Z",
     "sha256_fingerprint": "022376dd0c35ddc06a79c236dfcda52e402753c30ae8d57bd8a9a2a4e44e6532"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:34:46 GMT"
+    ],
+    "content-type": [
+      "application/json"
+    ],
+    "transfer-encoding": [
+      "chunked"
+    ],
+    "connection": [
+      "close"
+    ],
+    "server": [
+      "cloudflare"
+    ],
+    "cf-apo-via": [
+      "origin,host"
+    ],
+    "vary": [
+      "X-Client-Version",
+      "accept-encoding"
+    ],
+    "x-request-trace-id": [
+      "8792e86c9c6a8fc7ad4b023231fa246d-10884a7bd207615f"
+    ],
+    "traceparent": [
+      "00-8792e86c9c6a8fc7ad4b023231fa246d-a3e9887fa45580bc-01"
+    ],
+    "x-api-cache": [
+      "no_cache"
+    ],
+    "x-api-units-cost-total": [
+      "0"
+    ],
+    "x-api-units-cost-total-actual": [
+      "0"
+    ],
+    "x-api-units-cost-row": [
+      "0"
+    ],
+    "x-api-rows": [
+      "10350"
+    ],
+    "strict-transport-security": [
+      "max-age=31536000; includeSubDomains; preload"
+    ],
+    "x-frame-options": [
+      "deny"
+    ],
+    "x-content-type-options": [
+      "nosniff"
+    ],
+    "x-xss-protection": [
+      "0"
+    ],
+    "referrer-policy": [
+      "strict-origin-when-cross-origin"
+    ],
+    "x-trace-id": [
+      "8792e86c9c6a8fc7ad4b023231fa246d"
+    ],
+    "content-security-policy": [
+      "frame-ancestors 'self'"
+    ],
+    "cf-cache-status": [
+      "DYNAMIC"
+    ],
+    "cf-ray": [
+      "a6083e165f0eff8a-SIN"
+    ],
+    "alt-svc": [
+      "h3=\":443\"; ma=86400"
+    ]
+  },
+  "size_bytes": 403367,
+  "body_sha256": "1325fcf39035bb8b827b2056bec49107d21701feaf4b9716154292badee696e1"
 }

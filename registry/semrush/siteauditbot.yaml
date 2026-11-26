@@ -4,3 +4,4 @@ format: semrush-html
 types:
   - seo-tool
 tier: 2
+volatile_raw: true

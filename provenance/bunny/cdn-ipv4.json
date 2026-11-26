@@ -1,8 +1,8 @@
 {
   "source_url": "https://api.bunny.net/system/edgeserverlist/plain",
   "final_url": "https://api.bunny.net/system/edgeserverlist/plain",
-  "fetched_at": "2026-11-26T09:24:57Z",
-  "connected_peer_ip": "138.199.46.65",
+  "fetched_at": "2026-11-26T10:36:43Z",
+  "connected_peer_ip": "138.199.24.219",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=api.bunny.net",
@@ -10,5 +10,72 @@
     "not_before": "2026-11-18T12:24:42Z",
     "not_after": "2027-02-16T12:24:41Z",
     "sha256_fingerprint": "e027e0933049da87f54accb3f3fda8783c777c12c99caf9bd6ca4a4c497cf0dd"
-  }
+  },
+  "headers": {
+    "date": [
+      "Thu, 26 Nov 2026 10:36:46 GMT"
+    ],
+    "content-type": [
+      "text/plain; charset=utf-8"
+    ],
+    "content-length": [
+      "9126"
+    ],
+    "connection": [
+      "close"
+    ],
+    "vary": [
+      "Accept-Encoding"
+    ],
+    "server": [
+      "BunnyCDN-SG1-1272"
+    ],
+    "cdn-pullzone": [
+      "308006"
+    ],
+    "cdn-requestcountrycode": [
+      "SG"
+    ],
+    "cache-control": [
+      "no-cache"
+    ],
+    "etag": [
+      "\"5afc13f7-8fdd-48ec-aca8-f3719315d2f4\""
+    ],
+    "pragma": [
+      "no-cache"
+    ],
+    "x-lbserverid": [
+      "1898"
+    ],
+    "cdn-proxyver": [
+      "1.74"
+    ],
+    "cdn-requestpullsuccess": [
+      "True"
+    ],
+    "cdn-requestpullcode": [
+      "200"
+    ],
+    "cdn-cachedat": [
+      "11/26/2026 10:36:46"
+    ],
+    "cdn-edgestorageid": [
+      "978"
+    ],
+    "cdn-requestid": [
+      "fa7033c038b80fc204a0c7dd26422569"
+    ],
+    "cdn-cache": [
+      "BYPASS"
+    ],
+    "cdn-status": [
+      "200"
+    ],
+    "cdn-requesttime": [
+      "0"
+    ]
+  },
+  "size_bytes": 9126,
+  "body_sha256": "73bcd5c4f4f53008ba4e8bb6b412ae822fe29e300fc94cfea46421c5d60f9928"
 }
