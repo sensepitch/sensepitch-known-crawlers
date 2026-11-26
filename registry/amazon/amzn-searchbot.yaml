@@ -4,3 +4,4 @@ format: amazon-html
 types:
   - ai-search-crawler
 tier: 1
+volatile_raw: true

@@ -4,3 +4,4 @@ format: amazon-html
 types:
   - ai-training-crawler
 tier: 3
+volatile_raw: true

@@ -4,3 +4,4 @@ format: amazon-html
 types:
   - user-triggered-fetcher
 tier: 1
+volatile_raw: true
