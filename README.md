@@ -15,6 +15,10 @@ published in the same Google-compatible JSON format, and each feed is tagged
 with what kind of traffic it describes and a tier that indicates how readily
 it can be allowed.
 
+The project aims to be an auditable, continuously maintained IP database for
+edge gateways, reverse proxies and web application firewalls, and treats
+crawler data as a security-sensitive software supply chain.
+
 The IP ranges describe the service a publisher has declared. They do not
 alone prove the identity of a request; combine them with the user agent and,
 where a publisher documents it, reverse DNS verification.
@@ -72,10 +76,15 @@ to verify a feed's scope and check for publisher changes.
 - Custom formats use the named parsers `text`, `json-array`, `fastly`, `ahrefs`,
   `amazon-html`, `marginalia-html`, `semrush-html`, `you-html`, and `sail`.
 
+### Types
+
 Use a nonempty list of unique kebab-case labels in `types`, each defined with
 a description in `registry/types.yaml`. Add a new type there before using it.
-For a shared feed, include `mixed-pool` and each documented use. The integer `tier` applies to
-the entire feed.
+For a shared feed, include `mixed-pool` and each documented use. 
+
+### Tiers
+
+The integer `tier` applies to the entire feed.
 
 1. Default public website allow tier for mainstream web search, AI search, and
    public user-facing fetches. It includes Google's common crawlers and
@@ -227,6 +236,103 @@ replacing the previous output. The `output/` directory is ignored by Git.
 
 See `TODO.md` for sources still to be investigated. Keep company-wide network
 ranges scoped to the services they describe.
+
+## Related projects
+
+Several other projects collect crawler IP ranges. Most focus on SEO,
+analytics or blocking AI crawlers rather than on providing a reliable data
+dependency for network infrastructure.
+
+The comparison below was checked on 2026-11-26 against each project's own
+public pages and repository READMEs. It records only what those pages state;
+"—" means the topic was not documented there, not that the feature is
+missing. Projects change and the table may contain mistakes, so corrections
+and updates are welcome.
+
+**Coverage and access**
+
+| Project | Coverage (as stated) | Access and formats | Updates | License |
+|---|---|---|---|---|
+| This project | ~50 feeds, 30 publishers | Git repo, tier ZIPs; Google JSON | Every 6 hours | Apache-2.0 code, CC0 data |
+| [Verified Bots](https://verifiedbots.dev/) | 223 bots, 120 verifiable (August 2026) | Files and GitHub repo; JSON, `.ips`, RSS | Daily | MIT code, CC BY 4.0 data |
+| [ipverse bot-ip-blocks](https://github.com/ipverse/bot-ip-blocks) | Crawlers and uptime monitors | Git repo; own normalized JSON | — | CC0-1.0 |
+| [Trusted IPs whitelist](https://github.com/sefinek/trusted-ips-whitelist) | 39 services | Git repo; TXT, CSV, JSON | Every 6 hours | MIT |
+| [GoodBots](https://github.com/AnTheMaker/GoodBots) | 27 services | Git repo; CIDR `.ips` text | Daily | — |
+| [AI Bot IP Ranges](https://github.com/rxerium/ai-bot-ip-ranges) | 9 AI providers | Git repo; CIDR text | Weekly (README last updated May 2026) | MIT |
+| [CrawlGenius](https://bots.crawlgenius.com/) | 15 verifiable crawlers | Free JSON API, CIDR text | Daily | — (free, including commercial use) |
+| [CrawlCheck](https://crawlcheck.io/data/ip-ranges) | 20 feeds | JSON change log (CC BY 4.0) | Daily | CC BY 4.0 data |
+| [IPQuery](https://ipquery.io/crawlers) | 15 crawlers | Web preview; full list on request | — | — |
+| [is.bot](https://is.bot/) | 35 bots | Free lookup API, JSON | — | — |
+
+**Sourcing and classification**
+
+| Project | Fetched from publishers | Original responses kept | Classification | Granularity |
+|---|---|---|---|---|
+| This project | Yes | Yes | Types and policy tiers 1–3 | Per publisher feed, e.g. `google/common-crawlers`; no merged list |
+| Verified Bots | Yes | — | 10 categories; verifiability tiers 1–3 | Per bot; also `all.json`, per category and per tier |
+| ipverse bot-ip-blocks | Yes | — | Crawlers vs monitoring; `ip_list_authoritative` flag | Per service within two dataset files |
+| Trusted IPs whitelist | Mostly; some via RIPEstat/RADB or custom lists | — | 5 categories (crawlers, AI, monitoring, infrastructure, payments) | Per service; also merged overall and per category |
+| GoodBots | — | — | Per-service files | Per service; also merged `all.ips` |
+| AI Bot IP Ranges | Yes | — | Per-bot files | Per provider; also merged `all.txt` |
+| CrawlGenius | Yes | — | 8 traffic types | Per bot; also merged `ranges.txt` |
+| CrawlCheck | Yes | — | Per operator and feed | Per feed |
+| IPQuery | — | — | 6 service types | Per crawler |
+| is.bot | — | — | 5 bot types | Per bot (lookup result) |
+
+**Provenance and safeguards**
+
+| Project | Provenance | Faulty-data safeguards |
+|---|---|---|
+| This project | Source and final URL, time, peer IP, TLS leaf certificate, headers | Rejects empty, malformed and ≥50% coverage drops; keeps last valid data |
+| Verified Bots | — | Sanity checks, diff alarm, last-known-good fallback |
+| ipverse bot-ip-blocks | Source URL, last change, generation time | Failed fetches emit empty arrays |
+| Trusted IPs whitelist | — | — |
+| GoodBots | — | — |
+| AI Bot IP Ranges | Source URL per bot | — |
+| CrawlGenius | Source URL, check and source-update times; change history | — |
+| CrawlCheck | Read time, source URL; change history | — |
+| IPQuery | Capture date | Shows degraded or stale feed state instead of an empty list |
+| is.bot | — | — |
+
+[BlackoutMap](https://blackoutmap.net/resources/crawler-ips), which
+advertises JSON, CSV, NGINX and Apache exports, could not be checked because
+its site refused automated access. The verifiedbots.dev site could not be
+rendered, so its row is based on the author's
+[project write-up](https://www.mayankgupta.com/projects/verifiedbots/). Its
+tiers describe how reliably a bot can be verified, whereas the tiers here
+describe how permissively a service should be treated. GoodBots inspired this
+project (see [Credits](#credits)).
+
+### What sets this project apart
+
+- **Auditable supply chain.** Original publisher responses, retrieval
+  provenance and TLS certificate fingerprints are kept and committed (see
+  [Provenance](#provenance)).
+- **Defensive data ingestion.** Malformed or empty feeds and unexpected drops
+  in IP coverage are rejected and the last valid data is kept (see
+  [Failures](#failures)).
+- **Policy-oriented classification.** Types and tiers separate AI training
+  crawlers, search crawlers, user-triggered fetchers and other services (see
+  [Tiers](#tiers)).
+- **Matches keep their source.** Each publisher feed stays a separate list,
+  and the tier ZIPs carry each feed's vendor, list name, tier and types. An IP
+  that appears in several feeds matches all of them, so a proxy can tell, for
+  example, Google's crawlers from its user-triggered fetchers instead of
+  checking one merged allowlist.
+- **Self-contained distribution.** Consumers need no external API at runtime
+  (see [Edge proxy distribution](#edge-proxy-distribution)).
+- **Familiar format.** Every list uses Google's crawler IP range JSON.
+
+## License
+
+The code in this repository is licensed under the
+[Apache License 2.0](LICENSE). The registry, provenance records and the lists
+converted by this project are dedicated to the public domain under
+[CC0 1.0](LICENSE-DATA).
+
+The original publisher downloads in `raw-data/` and the lists copied verbatim
+from publishers' `json` feeds remain the publishers' content and are subject
+to their terms.
 
 ## Credits
 
