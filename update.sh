@@ -1,4 +1,35 @@
 #!/usr/bin/env bash
+#
+# Refresh every source in the registry. See README.md for usage and output.
+#
+# Implementation notes
+#
+# - Downloads use HTTP/1.1 and follow each redirect hop with a fresh connection
+#   and TLS handshake, so the recorded leaf certificate belongs to the peer that
+#   served the final response. Missing or invalid certificate metadata for an
+#   HTTPS final URL fails the source and preserves the last valid files.
+# - curl configuration and proxy settings are ignored; publisher hostnames are
+#   resolved normally and connected to directly, including after redirects.
+#   Historical provenance may still record a proxy peer or unknown proxy use.
+# - Raw downloads keep the exact publisher bytes, including line endings.
+#   `json-sanitised` lists (e.g. Microsoft's bingbot) are consolidated and
+#   written with LF endings. Converted lists keep `creationTime` while their
+#   consolidated networks are unchanged.
+# - Conditional GET: the saved ETag, or Last-Modified when no ETag exists, is
+#   sent only to the resource that supplied the saved raw bytes, and only when
+#   those bytes still match the recorded `body_sha256`. On HTTP 304 the saved
+#   bytes are validated again with the current parser and the recorded download
+#   time is kept.
+# - Provenance is refreshed when the raw data, the list or the publisher URLs
+#   change, or when older records lack `size_bytes`, `body_sha256` or `headers`
+#   (backfill). Header-only changes, such as rotating ETags or per-server
+#   Last-Modified values for identical bytes, do not trigger a refresh, which
+#   keeps runs byte-idempotent. `volatile_raw` sources keep their raw bytes and
+#   provenance until the parsed list changes.
+# - Download failures written by older versions to `.state/` (or `STATE_DIR`)
+#   are moved to `provenance/` on the next update of that source.
+# - `update_main` runs in a subshell, so sourcing this file and calling it
+#   leaves the caller's directory and shell options untouched.
 
 record_download_failure() {
   local name=$1 failure=$2 now=$3 first

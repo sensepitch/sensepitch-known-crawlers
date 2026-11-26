@@ -1,10 +1,45 @@
+# Sensepitch known crawlers
 
-Provide IPs of known crawlers and other services for decision making in an edge gateway or
-for blanking out in web analytics.
+IP ranges of well-known crawlers, AI agents and fetchers, monitoring services,
+webhook senders and CDNs, collected directly from the companies that operate
+them. The repository currently tracks about 50 feeds from 30 publishers,
+including Google, Microsoft (Bing), Apple, OpenAI, Anthropic, Perplexity,
+Mistral, DuckDuckGo, Ahrefs, Semrush, Cloudflare, Fastly, Stripe and
+UptimeRobot.
+
+The lists are meant for decision making in an edge gateway, such as
+sensepitch, where declared bots and
+services can be allowed, rate limited or labelled, and for filtering this
+traffic out of web analytics. Whatever format a publisher uses, every list is
+published in the same Google-compatible JSON format, and each feed is tagged
+with what kind of traffic it describes and a tier that indicates how readily
+it can be allowed.
+
+The IP ranges describe the service a publisher has declared. They do not
+alone prove the identity of a request; combine them with the user agent and,
+where a publisher documents it, reverse DNS verification.
 
 ## Features
 
-TODO
+- **Direct from the publisher.** Every list is downloaded from the
+  publisher's own URL. Aggregators such as GoodBots are used only to discover
+  new sources.
+- **One format.** Lists in `lists/` use Google's crawler IP range JSON.
+  Compatible downloads are copied verbatim; other formats (plain text, HTML
+  pages, vendor JSON) are converted by dedicated parsers.
+- **Typed and tiered.** Each feed carries types from `registry/types.yaml`,
+  such as `search-engine-crawler`, `ai-search-crawler`, `ai-training-crawler`,
+  `seo-tool`, `monitor`, `webhook` or `cdn`, plus a tier from 1 to 3, so
+  consumers can decide how permissive to be (see [Source registry](#source-registry)).
+- **Traceable.** The original download bytes are kept in `raw-data/`, and
+  `provenance/` records where, when and from which server and TLS certificate
+  each list was retrieved. Everything is committed, so every change shows up
+  in the Git history.
+- **Safe updates.** Empty or malformed lists and sudden drops in coverage are
+  rejected, the last valid data is kept, and persistent download failures
+  fail the run (see [Updates](#updates)). Unchanged sources produce no diff.
+- **Ready to deploy.** `release.sh` packages each tier as a reproducible ZIP
+  for edge proxies (see [Edge proxy distribution](#edge-proxy-distribution)).
 
 ## Repository layout
 
@@ -49,6 +84,10 @@ the entire feed.
 3. Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks,
    and broad service pools.
 
+Set `volatile_raw: true` on a source whose page embeds per-request values such
+as CSRF tokens or trace IDs. Its saved raw download and provenance are then
+kept until the parsed list changes or `--force-update-provenance` is used.
+
 ## Updates
 
 Run `bash update.sh` to refresh the data base and fetch new IPs from the known sources.
@@ -70,75 +109,55 @@ bunny/cdn-ipv6: updated (raw and list): 7944 -> 7940 bytes / 339 -> 339 IPs / 20
 ... truncated ...
 ````
 
-TODO: Move brief outcome description for normal users. Move rest as implementation notes into updates.sh itself.
+Each source reports `no change` or `updated` with what changed: `raw` (the
+publisher's download), `list` (the published list), `raw and list`, or
+`provenance` (only the download record was refreshed). Updates show the
+download size and the total unique IPv4 and IPv6 coverage before and after,
+followed by the UTC download time, connected peer, direct status and source
+URL, plus the final URL when a redirect changed it.
 
-Run `bash update.sh` to refresh every source in `registry/`. Set `REGISTRY_DIR`
-to use a different registry directory. The updater requires Bash, curl 7.88
-or later with a TLS backend that exposes PEM certificates in JSON write-out,
-OpenSSL 3 or later, jq, and Python 3.11 or later with PyYAML installed
-(`python3 -m pip install PyYAML`). The script can also be sourced from Bash.
-Call `update_main` to update without changing the caller's directory or shell
-settings. Run the test suite with `knockout.sh`.
-To run an individual case, use, for example,
-`bash knockout-tests/update.turbo.suite.sh text_download`.
+Unchanged publisher data is re-checked with a conditional request and leaves
+the repository untouched. Run `bash update.sh --force-update-provenance` to
+fetch every source in full and refresh its provenance.
 
-Provenance records each source's source and final URLs, UTC download time,
-connected peer IP and proxy use in `provenance/`. For a final HTTPS URL,
-`tls_certificate` records the leaf certificate's `subject`, `issuer`,
-UTC validity dates (`not_before` and `not_after`), and lowercase hex
-`sha256_fingerprint`. The value is `null` for a final URL outside HTTPS.
-The updater uses HTTP/1.1 with fresh connections and TLS handshakes across
-redirects so the recorded certificate belongs to the peer that served the
-download. Missing or invalid HTTPS certificate metadata fails the run and
-preserves the last valid files. Updates ignore curl
-configuration and proxy settings, resolve publisher hostnames normally, and
-connect directly, including after redirects. Historical provenance can still
-record a proxy peer or unknown proxy use. Raw downloads retain the exact
-publisher bytes, including line endings. Microsoft's processed list is
-consolidated and stored with LF endings in `lists/microsoft/bingbot.json`.
-Raw downloads and published lists are committed so their changes can be
-inspected. IP ranges describe the
-published service and do not alone prove the identity of a request.
-For converted lists, `creationTime` is retained when the consolidated networks
-are unchanged.
+Set `REGISTRY_DIR` to use a different registry directory. The updater
+requires Bash, curl 7.88 or later with a TLS backend that exposes PEM
+certificates in JSON write-out, OpenSSL 3 or later, jq, and Python 3.11 or
+later with PyYAML installed (`python3 -m pip install PyYAML`). The script can
+also be sourced from Bash; call `update_main` to update without changing the
+caller's directory or shell settings. Implementation notes are at the top of
+`update.sh`.
 
-Provenance includes `size_bytes` and `body_sha256` for the saved raw download.
-The `headers` object holds the final response headers as arrays under lowercase
-names, including `etag`, `last-modified` and any publisher checksum headers
-when supplied. Cookie-setting headers are omitted. A validated full download
-backfills older records and refreshes provenance when the data or publisher
-URLs change. Header changes alone, including rotating ETags or per-server
-Last-Modified values for identical bytes, do not trigger a refresh.
+Run the test suite with `knockout.sh`. To run an individual case, use, for
+example, `bash knockout-tests/update.turbo.suite.sh text_download`.
 
-Set `volatile_raw: true` on a source whose page embeds per-request values such
-as CSRF tokens or trace IDs. Its saved raw bytes and provenance are then kept
-until the parsed list changes or `--force-update-provenance` is used.
+### Provenance
 
-Updates use the saved ETag, or Last-Modified when an ETag is unavailable,
-to make a conditional GET to the resource that supplied the saved raw bytes.
-On HTTP 304, the updater validates the saved raw bytes with the current parser
-and retains the recorded download time. Run `bash update.sh --force-update-provenance`
-or pass the flag to `update_main` to fetch full bodies and refresh provenance
-for every successfully validated source.
+`provenance/<vendor>/<specialisation>.json` describes the download behind the
+saved raw data:
 
-Each successful source reports `no change` or an update identifying whether
-the raw download, the published list, or both changed. Updates show download
-size and total unique IPv4 and IPv6 coverage before and after, followed by
-the UTC download time, connected peer, direct status and source URL. A final
-URL is shown when a redirect changes it. Large address counts are abbreviated;
-exact counts are included when rounding would hide a change. A refresh of
-provenance alone is logged as `updated (provenance)`.
+- `source_url` and `final_url` (after redirects)
+- `fetched_at`, the UTC download time
+- `connected_peer_ip` and `proxy_used`; updates always connect directly
+- `tls_certificate` with the leaf certificate's `subject`, `issuer`, UTC
+  validity (`not_before`, `not_after`) and lowercase hex `sha256_fingerprint`,
+  or `null` when the final URL does not use HTTPS
+- `headers`, the final response headers as arrays under lowercase names, such
+  as `etag` and `last-modified`; cookie-setting headers are omitted
+- `size_bytes` and `body_sha256` of the saved raw download
 
-Updates reject malformed or empty lists, and reductions of at least 50% in
-unique IPv4 or IPv6 coverage compared with the previous valid list. Other
-sources are still attempted. Invalid registry entries and list validation
-errors cause a failing exit status in the same run. Download failures are
-recorded alongside provenance as
-`provenance/<vendor>/<specialisation>.failure`, containing the Unix
-timestamp of the first failure. They fail the run once they persist for 24
-hours. Commit these records to track failures. A successful update removes
-the active record, with its history retained in Git. Existing `.state/` records
-are moved to `provenance/` on the next update.
+### Failures
+
+Updates reject malformed or empty lists, and reductions of 50% or more in
+unique IPv4 or IPv6 coverage compared with the previous valid list. The last
+valid files are kept and the other sources are still attempted. Invalid
+registry entries, validation errors and missing HTTPS certificate details
+make the run exit with a failing status.
+
+A failed download is recorded as `provenance/<vendor>/<specialisation>.failure`
+containing the Unix timestamp of the first failure. It fails the run once it
+persists for 24 hours. Commit these records to track failures; the next
+successful update removes the record.
 
 ## Edge proxy distribution
 
