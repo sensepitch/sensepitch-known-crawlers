@@ -1,8 +1,8 @@
 {
   "source_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json",
   "final_url": "https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json",
-  "fetched_at": "2026-11-26T10:34:56Z",
-  "connected_peer_ip": "74.125.200.138",
+  "fetched_at": "2026-11-26T21:39:53Z",
+  "connected_peer_ip": "173.194.45.139",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=*.google.com",
@@ -16,13 +16,13 @@
       "application/json"
     ],
     "last-modified": [
-      "Wed, 25 Nov 2026 15:46:07 GMT"
+      "Thu, 26 Nov 2026 15:46:35 GMT"
     ],
     "vary": [
       "Cookie"
     ],
     "content-security-policy": [
-      "base-uri 'self'; object-src 'none'; script-src 'strict-dynamic' 'unsafe-inline' https: http: 'nonce-pInJowwLerl20lUnoxdcIHMP2toGyj' 'unsafe-eval'; frame-ancestors 'self' https://codeassist.google.com https://code-assist-free-tier.corp.google.com https://pay.google.com https://pay-merchant-console-autopush-qual.corp.google.com https://pay-merchant-console-dev.corp.google.com https://pay-merchant-console-preprod-qual.corp.google.com; report-uri https://csp.withgoogle.com/csp/devsite/v2"
+      "base-uri 'self'; object-src 'none'; script-src 'strict-dynamic' 'unsafe-inline' https: http: 'nonce-UPVvpXBdhc9Y6irVoKhmmDcKlUsbWK' 'unsafe-eval'; frame-ancestors 'self' https://codeassist.google.com https://code-assist-free-tier.corp.google.com https://pay.google.com https://pay-merchant-console-autopush-qual.corp.google.com https://pay-merchant-console-dev.corp.google.com https://pay-merchant-console-preprod-qual.corp.google.com; report-uri https://csp.withgoogle.com/csp/devsite/v2"
     ],
     "strict-transport-security": [
       "max-age=63072000; includeSubdomains; preload"
@@ -43,10 +43,10 @@
       "no-cache"
     ],
     "x-cloud-trace-context": [
-      "5a4f2bfc55aad784f554aabb777aed99"
+      "44a6ace7c9cbdbdb9ebeb88139107fbb"
     ],
     "date": [
-      "Thu, 26 Nov 2026 10:34:59 GMT"
+      "Thu, 26 Nov 2026 21:39:53 GMT"
     ],
     "server": [
       "Google Frontend"
@@ -62,5 +62,5 @@
     ]
   },
   "size_bytes": 1413,
-  "body_sha256": "7bd605a4f862ee6ccc7ed6706f06da2d863f35b17bdbfa916097feb540726a12"
+  "body_sha256": "8aba01382119defe7b5b81df2c7a33d4642937a436e48aa33e1563e5f125c8a2"
 }
