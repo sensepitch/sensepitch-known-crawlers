@@ -1,8 +1,8 @@
 {
   "source_url": "https://betteruptime.com/ips.txt",
   "final_url": "https://betteruptime.com/ips.txt",
-  "fetched_at": "2026-11-26T10:34:51Z",
-  "connected_peer_ip": "172.66.41.22",
+  "fetched_at": "2026-11-26T21:39:50Z",
+  "connected_peer_ip": "172.66.42.234",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=betteruptime.com",
@@ -13,13 +13,13 @@
   },
   "headers": {
     "date": [
-      "Thu, 26 Nov 2026 10:34:55 GMT"
+      "Thu, 26 Nov 2026 21:39:50 GMT"
     ],
     "content-type": [
       "text/plain; charset=utf-8"
     ],
     "content-length": [
-      "957"
+      "885"
     ],
     "connection": [
       "close"
@@ -55,10 +55,10 @@
       "accelerometer 'none'; autoplay 'self' https://www.youtube.com; camera 'none'; encrypted-media 'none'; fullscreen 'self' https://www.youtube.com; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'self' https://www.youtube.com; usb 'none'"
     ],
     "x-request-id": [
-      "e2179da8-4606-4c77-9a88-ed6df457831a"
+      "9717233d-9930-4df5-9795-8f15c727ae48"
     ],
     "x-runtime": [
-      "0.005039"
+      "0.005541"
     ],
     "strict-transport-security": [
       "max-age=63113904; includeSubDomains; preload"
@@ -67,27 +67,24 @@
       "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
     ],
     "last-modified": [
-      "Thu, 26 Nov 2026 09:24:59 GMT"
-    ],
-    "age": [
-      "4195"
+      "Thu, 26 Nov 2026 21:39:49 GMT"
     ],
     "accept-ranges": [
       "bytes"
     ],
     "cf-cache-status": [
-      "HIT"
+      "EXPIRED"
     ],
     "report-to": [
-      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=FI5aG%2BOWiWjwy0J8VaxN3kq0QWyAbyFZBEWqUmmkS5H6YAAhqIQ%2FUhaZQwhB%2F2lukOr57i1Z6vkpbYVMCWcgI4otSGFSqWH6wIrBVGUisAPFRbVlHz7MMxdx4ucuLQacOdo%3D\"}]}"
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=Dfra71NbccWNEZ%2B6O%2BoLmiBGJmro1GR8r2n4OIRAwhBSDMF2XCnwFjcVBeCbyDx2jqu4lnGAahGIg%2B67y4jE2RVukIMKmcWRkLptLRVVq0aPhhKC55SW6xSJiNrYmkSif6E%3D\"}]}"
     ],
     "cf-ray": [
-      "a6083e4e1e645cb5-SIN"
+      "a60c0c4cbd7486a6-IAD"
     ],
     "alt-svc": [
       "h3=\":443\"; ma=86400"
     ]
   },
-  "size_bytes": 957,
-  "body_sha256": "530e49ce3df8a197b3cce392f8bed0d22a7cf8d1093c93e002fdf11d0863925f"
+  "size_bytes": 885,
+  "body_sha256": "6f20cbc5f33fb55351de38e5c56ae3ff13cb30615733d98f1e260fb74d91987e"
 }
