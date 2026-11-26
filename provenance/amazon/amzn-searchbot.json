@@ -1,7 +1,7 @@
 {
   "source_url": "https://developer.amazon.com/amazonbot/searchbot-ip-addresses/",
   "final_url": "https://developer.amazon.com/amazonbot/searchbot-ip-addresses/",
-  "fetched_at": "2026-11-26T10:34:46Z",
+  "fetched_at": "2026-11-26T11:36:46Z",
   "connected_peer_ip": "44.215.133.6",
   "proxy_used": false,
   "tls_certificate": {
@@ -16,7 +16,7 @@
       "Server"
     ],
     "date": [
-      "Thu, 26 Nov 2026 10:34:49 GMT"
+      "Thu, 26 Nov 2026 11:36:46 GMT"
     ],
     "content-type": [
       "text/html;charset=utf-8"
@@ -56,9 +56,9 @@
       "en-US"
     ],
     "x-amz-rid": [
-      "Z0TWGSC6NVDZ6R15XJQE"
+      "D1WBT97755H13A7QJP5Q"
     ]
   },
-  "size_bytes": 129548,
-  "body_sha256": "0afea3b77e43d5dbff23674d9c1f2be14da169a9d768f9f3132812e515806ad4"
+  "size_bytes": 129546,
+  "body_sha256": "2070a438e71398b5c0b56c7707817ebff72edcd8a5c3ddc2347018d722a63f03"
 }
