@@ -156,10 +156,9 @@ allowed.
 3. Dedicated model training and dataset crawlers, CDNs, monitoring, webhooks,
    and broad service pools.
 
-### Common types
+### Types
 
-The most common `tags` values are listed below. All types and their
-descriptions are defined in `registry/types.yaml`.
+A tag that describes what the IPs in the list are intended for. Common types are:
 
 - `user-triggered-fetcher`: fetches a page in direct response to a user
   action, such as a chat prompt or an agent task; may not follow robots.txt.
@@ -176,6 +175,8 @@ descriptions are defined in `registry/types.yaml`.
 - `monitor`: uptime and performance checks.
 - `mixed-pool`: the addresses are shared by several services, and a request
   may belong to any of the feed's other types.
+  
+All types and their descriptions are defined in `registry/types.yaml`.
 
 See [Building releases](#building-releases) to build the archives locally.
 
