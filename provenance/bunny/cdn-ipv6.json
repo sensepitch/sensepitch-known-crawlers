@@ -1,8 +1,8 @@
 {
   "source_url": "https://api.bunny.net/system/edgeserverlist/ipv6/plain",
   "final_url": "https://api.bunny.net/system/edgeserverlist/ipv6/plain",
-  "fetched_at": "2026-11-26T10:36:44Z",
-  "connected_peer_ip": "156.146.56.170",
+  "fetched_at": "2026-11-27T08:43:55Z",
+  "connected_peer_ip": "169.150.221.147",
   "proxy_used": false,
   "tls_certificate": {
     "subject": "CN=api.bunny.net",
@@ -13,13 +13,13 @@
   },
   "headers": {
     "date": [
-      "Thu, 26 Nov 2026 10:36:47 GMT"
+      "Fri, 27 Nov 2026 08:43:55 GMT"
     ],
     "content-type": [
       "text/plain; charset=utf-8"
     ],
     "content-length": [
-      "7940"
+      "8180"
     ],
     "connection": [
       "close"
@@ -28,19 +28,19 @@
       "Accept-Encoding"
     ],
     "server": [
-      "BunnyCDN-SG1-978"
+      "BunnyCDN-SIL1-915"
     ],
     "cdn-pullzone": [
       "308006"
     ],
     "cdn-requestcountrycode": [
-      "SG"
+      "US"
     ],
     "cache-control": [
       "no-cache"
     ],
     "etag": [
-      "\"766ce626-d21f-43eb-8691-e8ef9e421a1c\""
+      "\"a10b602e-cb6a-4ac4-a023-46ac22f00a3f\""
     ],
     "pragma": [
       "no-cache"
@@ -58,13 +58,13 @@
       "200"
     ],
     "cdn-cachedat": [
-      "11/26/2026 10:36:47"
+      "11/27/2026 08:43:55"
     ],
     "cdn-edgestorageid": [
-      "1274"
+      "915"
     ],
     "cdn-requestid": [
-      "c09e6e5c2662ed4edeeb2eec35cb84eb"
+      "fac691d524cf67a991267376b4447ec0"
     ],
     "cdn-cache": [
       "BYPASS"
@@ -76,6 +76,6 @@
       "0"
     ]
   },
-  "size_bytes": 7940,
-  "body_sha256": "d29431b820b3876a522d568508ba65f2721b5c1240972ebfe08ea1e091aecb14"
+  "size_bytes": 8180,
+  "body_sha256": "1f62ac16b132000885350355d70510f09aee63ed0ffd8f47077056241b304550"
 }
