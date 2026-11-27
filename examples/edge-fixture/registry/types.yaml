@@ -1,0 +1,25 @@
+# Subset of registry/types.yaml used by the fixture feeds.
+
+search-engine-crawler: >-
+  Crawls the public web to build a search engine index.
+ai-search-crawler: >-
+  Crawls or fetches pages to index them for answers and citations in an AI
+  assistant or AI search product.
+ai-training-crawler: >-
+  Collects public web content that may be used to train generative AI models.
+seo-tool: >-
+  Crawls for an SEO or site auditing product, either to build its own link
+  index or to audit a customer's site.
+user-triggered-fetcher: >-
+  Fetches a page in direct response to a user action, such as a chat prompt
+  or an agent task. These fetchers may not follow robots.txt.
+webhook: >-
+  Sends event notifications from a service to an endpoint the site operator
+  has configured.
+cdn: >-
+  Edge network of a CDN or reverse proxy. Requests from these ranges are
+  forwarded on behalf of other clients, so they identify the network rather
+  than the client.
+mixed-pool: >-
+  The addresses are shared by several services or uses, and a request from
+  them may belong to any of the other types listed for the feed.

@@ -1,0 +1,6 @@
+download_url: https://example.com/example-seo/audit.json
+info_url: https://example.com/example-seo/audit
+format: json
+types:
+  - seo-tool
+tier: 2

@@ -1,0 +1,6 @@
+download_url: https://example.com/example-train/bot.json
+info_url: https://example.com/example-train/bot
+format: json
+types:
+  - ai-training-crawler
+tier: 3

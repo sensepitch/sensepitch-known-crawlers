@@ -1,0 +1,8 @@
+download_url: https://example.com/example-search/crawler.json
+info_url: https://example.com/example-search/crawler
+format: json
+types:
+  - search-engine-crawler
+  - mixed-pool
+  - seo-tool
+tier: 1

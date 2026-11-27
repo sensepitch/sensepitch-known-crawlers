@@ -1,0 +1,7 @@
+download_url: https://example.com/example-ai/user-fetcher.json
+info_url: https://example.com/example-ai/user-fetcher
+format: json
+types:
+  - user-triggered-fetcher
+  - ai-search-crawler
+tier: 1

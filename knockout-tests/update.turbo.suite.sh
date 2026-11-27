@@ -833,6 +833,24 @@ t_release_rebuild() {
   diff -r "$CASE_DIR/previous" output
 }
 
+t_edge_fixture() {
+  echo '# the edge fixture rebuilds byte for byte and matches its expectations'
+  CASE_DIR=$(mktemp -d)
+  trap 'rm -rf "$CASE_DIR"' EXIT
+  mkdir -p "$CASE_DIR/repo/lib" "$CASE_DIR/repo/examples"
+  cp "$ROOT/lib/release.py" "$ROOT/lib/registry.py" "$CASE_DIR/repo/lib/"
+  cp -r "$ROOT/examples/edge-fixture" "$CASE_DIR/repo/examples/"
+  local fixture=$CASE_DIR/repo/examples/edge-fixture
+  rm "$fixture"/*.zip
+  (cd "$CASE_DIR" && bash "$fixture/build.sh") > /dev/null
+  local tier
+  for tier in 1 2 3; do
+    cmp "$ROOT/examples/edge-fixture/sensepitch-known-crawlers-tier$tier.zip" \
+      "$fixture/sensepitch-known-crawlers-tier$tier.zip"
+  done
+  python3 -I "$fixture/check.py"
+}
+
 t_undefined_type() {
   echo '# a registry entry with a type missing from types.yaml is invalid'
   setup_case

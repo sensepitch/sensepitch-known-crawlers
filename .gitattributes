@@ -1,3 +1,5 @@
 # Downloaded bytes must survive Git's line-ending conversion unchanged.
 raw-data/** -text whitespace=cr-at-eol
 lists/** -text whitespace=cr-at-eol
+examples/**/lists/** -text whitespace=cr-at-eol
+*.zip binary

@@ -1,0 +1,6 @@
+download_url: https://example.com/example-hooks/webhooks.json
+info_url: https://example.com/example-hooks/webhooks
+format: json
+types:
+  - webhook
+tier: 3

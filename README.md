@@ -137,6 +137,13 @@ Each `info` file describes one list:
 }
 ```
 
+### Test fixture
+
+`examples/edge-fixture/` holds a static set of synthetic feeds in the same ZIP
+format, using documentation address ranges, together with expected matches
+for test addresses. Edge proxies can use it in their tests instead of live
+data (see its README).
+
 ### Tier levels
 
 The tier applies to the entire feed and indicates how readily it can be

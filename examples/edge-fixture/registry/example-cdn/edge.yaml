@@ -1,0 +1,6 @@
+download_url: https://example.com/example-cdn/edge.json
+info_url: https://example.com/example-cdn/edge
+format: json
+types:
+  - cdn
+tier: 3
